@@ -9,7 +9,7 @@ import { AlbumTagSchema } from "../models/AlbumTag.js";
 class DbContext {
   Values = mongoose.model("Value", ValueSchema);
   Account = mongoose.model("Account", AccountSchema);
-  Photo = mongoose.model("Photo", PhotoSchema);
+  Photos = mongoose.model("Photo", PhotoSchema);
   Album = mongoose.model("Album", AlbumSchema);
   Tag = mongoose.model("Tag", TagSchema);
   AlbumTag = mongoose.model("AlbumTag", AlbumTagSchema);
