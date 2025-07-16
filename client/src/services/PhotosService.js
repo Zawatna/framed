@@ -18,6 +18,14 @@ class PhotosService {
     AppState.photos = photos;
   }
 
+  async getPhotoById(photoId) {
+    AppState.photo = null;
+    const res = await api.get(`api/photos/${photoId}`);
+    logger.log('Got Photo By Id: ', res.data);
+    const photo = new Photo(res.data);
+    AppState.photo = photo;
+  }
+
 
 }
 

@@ -9,5 +9,8 @@ export const AppState = reactive({
 
   /** @type {import('./models/Photo.js').Photo[]} */
   photos: [],
+
+  /** @type {import('./models/Photo.js').Photo} */
+  photo: null,
 })
 
