@@ -6,7 +6,7 @@ import { Pop } from '@/utils/Pop.js';
 import { onMounted } from 'vue';
 
 onMounted(() => {
-  
+  getAllPhotos();
 })
 
 
@@ -26,6 +26,17 @@ catch (error){
   Pop.error(error);
 }
 }
+
+async function getAllPhotos() {
+  try {
+    await photosService.getAllPhotos();
+  }
+  catch (error){
+    Pop.error(error);
+  }
+}
+
+
 </script>
 
 <template>
