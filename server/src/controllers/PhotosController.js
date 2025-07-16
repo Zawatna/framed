@@ -1,19 +1,17 @@
 import { Auth0Provider } from "@bcwdev/auth0provider";
 import BaseController from "../utils/BaseController.js";
 import { photosService } from "../services/PhotosService.js";
-import { dbContext } from "../db/DbContext.js";
 
 export class PhotosController extends BaseController {
   constructor() {
     super("api/photos")
     this.router
       .get("", this.getAllPhotos)
-      .get('/:photoId', this.getPhotoById)
+      .get('/:photoId', this.getPhotosById)
       .use(Auth0Provider.getAuthorizedUserInfo)
+      .get('/:photoId', this.deletePhoto)
       .post("", this.createPhoto)
   }
-
-
 
   /**
     * @param {import("express").Request} request
@@ -46,25 +44,26 @@ export class PhotosController extends BaseController {
     }
   }
 
-  async getPhotoById(request, response, next) {
+  async getPhotosById(request, response, next) {
     try {
       const photoId = request.params.photoId
-      const photo = await photosService.getPhotoById(photoId)
-      response.send(photo)
+      const photos = await photosService.getPhotosById(photoId)
+      response.send(photos)
     } catch (error) {
       next(error)
     }
   }
 
-  async getPhotoByAccountId(request, response, next) {
+  async deletePhoto(request, response, next) {
     try {
-      const photoByAccountId = request.params.photoByAccountId
-      const photo = await photosService.getPhotoByAccountId(photoByAccountId)
-      response.send(photo)
-
+      const photoId = request.params.photoId
+      const userInfo = request.userInfo
+      await photosService.deletePhoto(photoId, userInfo)
+      response.send('Deleted photo!')
     } catch (error) {
-      next
+      next(error)
     }
-
   }
+
+
 }

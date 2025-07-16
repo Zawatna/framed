@@ -26,6 +26,14 @@ class PhotosService {
     AppState.photo = photo;
   }
 
+  async deletePhoto(photoId) {
+    const res = await api.delete(`api/photos/${photoId}`);
+    logger.log('Deleted Photo: ', res.data);
+    const photos = AppState.photos;
+    const photoIndex = photos.findIndex((photo) => photo.id == photoId);
+    photos.splice(photoIndex, 1);
+  }
+
 
 }
 
