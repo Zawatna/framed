@@ -7,8 +7,8 @@ export const PhotoSchema = new Schema(
     imgUrl: { type: String, required: true, maxLength: 500 },
     description: { type: String, minLength: 15, maxLength: 1000 },
     originalDate: { type: Date, required: false },
-    likes: { type: Schema.ObjectId, required: true, },
-    location: { type: String, required: true, minLength: 1, maxLength: 500 },
+    likes: { type: Schema.ObjectId, required: false, },
+    location: { type: String, required: false, minLength: 1, maxLength: 500 },
 
 
   },
