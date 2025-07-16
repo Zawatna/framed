@@ -5,7 +5,7 @@ import { Pop } from '@/utils/Pop.js';
 import { onMounted } from 'vue';
 
 onMounted(() => {
-  
+  getAllPhotos();
 })
 
 
