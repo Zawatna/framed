@@ -43,9 +43,13 @@ async function getAllPhotos() {
 
 <template>
 
-  <div class="bg-primary text-light container-fluid ">
+  <div class="bg-primary text-light container-fluid flex-grow-1">
     <div class="row ">
+      <div class="">
+        <p class="my-1">Recent Photos</p>
+      </div>
       <div class="col-12 overflow-set d-flex">
+
         <div v-for="photo in photos" :key="photo.id">
           <PhotoCard :photo="photo" />
         </div>

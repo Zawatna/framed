@@ -12,8 +12,8 @@ defineProps(
 </script>
 
 <template>
-  <div>
-    <img :src="photo.imgUrl" alt="" class=" border border-light mx-2 p-1 photo-style">
+  <div class="">
+    <img :src="photo.imgUrl" alt="" class=" border border-light mx-1 photo-style">
   </div>
 </template>
 
