@@ -6,7 +6,7 @@ export class PhotosController extends BaseController {
   constructor() {
     super("api/photos")
     this.router
-      .get("")
+      // .get("")
       .use(Auth0Provider.getAuthorizedUserInfo)
       .post("", this.createPhoto)
   }
