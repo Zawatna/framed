@@ -20,8 +20,8 @@ watch(theme, () => {
   <nav class="navbar navbar-expand-md bg-codeworks border-bottom border-vue">
     <div class="container gap-2">
       <RouterLink :to="{ name: 'Home' }" class="d-flex align-items-center text-light">
-        <img class="navbar-brand" alt="logo" src="/img/cw-logo.png" height="45" />
-        <b class="fs-5">Vue Starter</b>
+        <img class="navbar-brand" alt="logo" src="../assets/img/framed-logo.png" height="45" />
+        <b class="fs-2 framed-font text-warning">ramed</b>
       </RouterLink>
       <!-- collapse button -->
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-links"
@@ -58,6 +58,10 @@ a {
 
 .nav-link {
   text-transform: uppercase;
+}
+
+.framed-font {
+  margin-left: -10px;
 }
 
 .navbar-nav .router-link-exact-active {
