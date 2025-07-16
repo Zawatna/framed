@@ -9,7 +9,7 @@ export class PhotosController extends BaseController {
       .get("", this.getAllPhotos)
       .get('/:photoId', this.getPhotosById)
       .use(Auth0Provider.getAuthorizedUserInfo)
-      .get('/:photoId', this.deletePhoto)
+      .delete('/:photoId', this.deletePhoto)
       .post("", this.createPhoto)
   }
 
