@@ -1,31 +1,26 @@
-<script setup></script>
+<script setup>
+import { Photo } from '@/models/Photo.js';
+
+
+
+
+defineProps(
+  {
+    photo: { type: Photo, required: true }
+  }
+)
+</script>
 
 <template>
   <main class="container-fluid">
-    <div class="row align-items-center justify-content-center">
+    <div v-if="photo" class=" align-items-center row justify-content-center">
 
-      <div class="col m-2 d-flex justify-content-center horizontal-scrollable overflow-set">
+      <div class="col d-flex overflow-set my-3">
 
-          <img src="https://plus.unsplash.com/premium_photo-1752625323773-3e4de726adcd?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwxMHx8fGVufDB8fHx8fA%3D%3D" alt="" class="photo-style border border-light mx-2 p-1">
-          <img src="https://plus.unsplash.com/premium_photo-1752625323773-3e4de726adcd?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwxMHx8fGVufDB8fHx8fA%3D%3D" alt="" class="photo-style border border-light mx-2 p-1">
-          <img src="https://plus.unsplash.com/premium_photo-1752625323773-3e4de726adcd?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwxMHx8fGVufDB8fHx8fA%3D%3D" alt="" class="photo-style border border-light mx-2 p-1">
-          <img src="https://plus.unsplash.com/premium_photo-1752625323773-3e4de726adcd?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwxMHx8fGVufDB8fHx8fA%3D%3D" alt="" class="photo-style border border-light mx-2 p-1">
-          <img src="https://plus.unsplash.com/premium_photo-1752625323773-3e4de726adcd?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwxMHx8fGVufDB8fHx8fA%3D%3D" alt="" class="photo-style border border-light mx-2 p-1">
-          <img src="https://plus.unsplash.com/premium_photo-1752625323773-3e4de726adcd?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwxMHx8fGVufDB8fHx8fA%3D%3D" alt="" class="photo-style border border-light mx-2 p-1">
-          <img src="https://plus.unsplash.com/premium_photo-1752625323773-3e4de726adcd?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwxMHx8fGVufDB8fHx8fA%3D%3D" alt="" class="photo-style border border-light mx-2 p-1">
-          <img src="https://plus.unsplash.com/premium_photo-1752625323773-3e4de726adcd?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwxMHx8fGVufDB8fHx8fA%3D%3D" alt="" class="photo-style border border-light mx-2 p-1">
-          <img src="https://plus.unsplash.com/premium_photo-1752625323773-3e4de726adcd?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwxMHx8fGVufDB8fHx8fA%3D%3D" alt="" class="photo-style border border-light mx-2 p-1">
-          <img src="https://plus.unsplash.com/premium_photo-1752625323773-3e4de726adcd?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwxMHx8fGVufDB8fHx8fA%3D%3D" alt="" class="photo-style border border-light mx-2 p-1">
-          <img src="https://plus.unsplash.com/premium_photo-1752625323773-3e4de726adcd?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwxMHx8fGVufDB8fHx8fA%3D%3D" alt="" class="photo-style border border-light mx-2 p-1">
-          <img src="https://plus.unsplash.com/premium_photo-1752625323773-3e4de726adcd?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwxMHx8fGVufDB8fHx8fA%3D%3D" alt="" class="photo-style border border-light mx-2 p-1">
-          <img src="https://plus.unsplash.com/premium_photo-1752625323773-3e4de726adcd?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwxMHx8fGVufDB8fHx8fA%3D%3D" alt="" class="photo-style border border-light mx-2 p-1">
-          <img src="https://plus.unsplash.com/premium_photo-1752625323773-3e4de726adcd?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwxMHx8fGVufDB8fHx8fA%3D%3D" alt="" class="photo-style border border-light mx-2 p-1">
-          <img src="https://plus.unsplash.com/premium_photo-1752625323773-3e4de726adcd?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwxMHx8fGVufDB8fHx8fA%3D%3D" alt="" class="photo-style border border-light mx-2 p-1">
-          <img src="https://plus.unsplash.com/premium_photo-1752625323773-3e4de726adcd?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwxMHx8fGVufDB8fHx8fA%3D%3D" alt="" class="photo-style border border-light mx-2 p-1">
-        
-      
-      
-      
+
+        <img :src="photo?.imgUrl" alt="" class=" border border-light mx-2 p-1 photo-style">
+
+
       </div>
     </div>
 
@@ -33,19 +28,27 @@
 </template>
 
 <style lang="scss" scoped>
-.photo-style{
-  max-height: 155px;
+.photo-style {
+  max-height: 105px;
   aspect-ratio: 1/1;
   border-radius: 50%;
-  
-  @media screen and (max-width: 425px) {
-    max-height: 105px;
+  background-size: cover;
+
+
+
+  @media screen and (min-width: 768px) {
+    max-height: 155px;
   }
+
+  @media screen and (min-width:2560px) {
+    max-height: 255px;
+  }
+
+
 }
 
 .overflow-set {
-  overflow-x: scroll;
-margin-left: 100px;
-scrollbar-width: none;
+  overflow-x: auto;
+  scrollbar-width: none;
 }
 </style>
