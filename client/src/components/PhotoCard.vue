@@ -12,19 +12,9 @@ defineProps(
 </script>
 
 <template>
-  <main class="container-fluid">
-    <div v-if="photo" class=" align-items-center row justify-content-center">
-
-      <div class="col d-flex overflow-set my-3">
-
-
-        <img :src="photo?.imgUrl" alt="" class=" border border-light mx-2 p-1 photo-style">
-
-
-      </div>
-    </div>
-
-  </main>
+  <div>
+    <img :src="photo.imgUrl" alt="" class=" border border-light mx-2 p-1 photo-style">
+  </div>
 </template>
 
 <style lang="scss" scoped>

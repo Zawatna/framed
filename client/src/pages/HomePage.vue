@@ -43,17 +43,18 @@ async function getAllPhotos() {
 
 <template>
 
-  <main class="bg-primary text-light container-fluid">
-    <div>
-
-      <div v-for="photo in photos" :key="photo.id" class="overflow-hidden row">
-        <PhotoCard :photo="photo" />
+  <div class="bg-primary text-light container-fluid ">
+    <div class="row ">
+      <div class="col-12 overflow-set d-flex">
+        <div v-for="photo in photos" :key="photo.id">
+          <PhotoCard :photo="photo" />
+        </div>
       </div>
     </div>
     <div>
       <AlbumCard />
     </div>
-  </main>
+  </div>
 
 
 
@@ -63,4 +64,9 @@ async function getAllPhotos() {
 
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.overflow-set {
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+</style>
