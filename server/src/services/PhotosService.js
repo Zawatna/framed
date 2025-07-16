@@ -1,9 +1,21 @@
 import { dbContext } from "../db/DbContext.js"
+import { BadRequest, Forbidden } from "../utils/Errors.js"
 
 class PhotosService {
-  async getPhotoById(photoId) {
-    const photo = await dbContext.Photos.findById(photoId).populate('creator')
-    return photo
+  async deletePhoto(photoId, userInfo) {
+    const photo = await dbContext.Photos.findById(photoId)
+    if (!photo) {
+      throw new BadRequest(`Invalid id: ${photoId}`)
+    }
+    if (userInfo.id != photo.creatorId) {
+      throw new Forbidden(`You are going to jail!`)
+    }
+    await photo.deleteOne()
+  }
+
+  async getPhotosById(photoId) {
+    const photos = await dbContext.Photos.findById(photoId).populate('creator')
+    return photos
   }
   async getAllPhotos() {
     const photos = await dbContext.Photos.find().populate('creator')
@@ -15,7 +27,7 @@ class PhotosService {
     return photo
   }
 
-  
+
 
 
 }
