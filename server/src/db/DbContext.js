@@ -6,7 +6,7 @@ import { PhotoSchema } from '../models/Photo.js';
 class DbContext {
   Values = mongoose.model('Value', ValueSchema);
   Account = mongoose.model('Account', AccountSchema);
-  Photo = mongoose.model("Photo", PhotoSchema)
+  Photos = mongoose.model("Photo", PhotoSchema)
 }
 
 export const dbContext = new DbContext()
