@@ -8,6 +8,13 @@
   
 }
 
+NOTE Removes overscroll on X and Y Axis
+body {
+  width: 100%;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+
 main {
   flex-grow: 1;
   display: flex;
