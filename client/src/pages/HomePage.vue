@@ -15,6 +15,7 @@ onMounted(() => {
 })
 
 const photos = computed(() => AppState.photos)
+const albums = computed(()=>AppState.albums )
 
 
 async function createPhoto() {
