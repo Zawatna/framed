@@ -20,13 +20,26 @@ class AlbumPhotosService {
         populate: { path: "tag" },
       },
       { path: "photo" },
+      { path: "album" },
     ]);
     return albumPhotos;
   }
   async getAllPhotosInAlbum(albumId) {
     const albumPhotos = await dbContext.AlbumPhotos.find({
       albumId: albumId,
-    }).populate("photo");
+    }).populate([
+      {
+        path: "photo",
+        populate: [
+          { path: "tags", populate: "tag" },
+          {
+            path: "creator",
+            select: "name picture",
+          },
+        ],
+      },
+      { path: "creator", select: "name picture" },
+    ]);
     if (!albumPhotos) {
       throw new BadRequest(`there are no photos for album id ${albumId}`);
     }

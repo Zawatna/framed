@@ -29,24 +29,31 @@ class AlbumsService {
     return `Album ${album.name} has been archived!`;
   }
   async getAlbumById(albumId) {
-    const album = await dbContext.Album.findById(albumId).populate(
-      "creator",
-      "name picture"
-    );
-    await album.populate("photocount");
+    const album = await dbContext.Album.findById(albumId).populate([
+      {
+        path: "creator",
+        select: "name picture",
+      },
+      { path: "tags", populate: "tag" },
+      {
+        path: "photocount",
+      },
+    ]);
     if (album == null) throw new BadRequest("this album does not exist");
     return album;
   }
   async getAllAlbums() {
-    const albums = await dbContext.Album.find()
-      .populate("creator", "name picture")
-      .populate("photocount");
+    const albums = await dbContext.Album.find().populate([
+      { path: "creator", select: "name picture" },
+      { path: "photocount" },
+      { path: "tags", populate: "tag" },
+    ]);
     return albums;
   }
 
   async createAlbum(albumData) {
     const album = await dbContext.Album.create(albumData);
-    await album.populate("creator");
+    await album.populate("creator", "name picture");
     return album;
   }
 }

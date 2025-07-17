@@ -23,7 +23,7 @@ AlbumSchema.virtual("creator", {
 AlbumSchema.virtual("tags", {
   localField: "_id",
   foreignField: "albumId",
-  ref: "Tag",
+  ref: "AlbumTag",
   justOne: false,
 });
 AlbumSchema.virtual("photocount", {

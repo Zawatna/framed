@@ -29,3 +29,9 @@ AlbumPhotoSchema.virtual("tags", {
   ref: "PhotoTag",
   justOne: false,
 });
+AlbumPhotoSchema.virtual("creator", {
+  localField: "creatorId",
+  foreignField: "_id",
+  ref: "Account",
+  justOne: true,
+});

@@ -21,3 +21,8 @@ PhotoSchema.virtual("creator", {
   ref: "Account",
   justOne: true,
 });
+PhotoSchema.virtual("tags", {
+  localField: "_id",
+  foreignField: "photoId",
+  ref: "PhotoTag",
+});
