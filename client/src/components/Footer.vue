@@ -42,16 +42,16 @@ function updateImgI() {
   </section>
   
   <!-- NOTE MODAL WRAPPER SLOT FOR PHOTO Form -->
-    <ModalWrapper modalId="photoUploadForm" modalHeader="Add A Photo">
-      <PhotoUploadForm />
-    </ModalWrapper>
-    <!-- NOTE MODAL WRAPPER FOR "popChoice" MODAL -->
-    <ModalWrapper modalId="popChoice" modalHeader="What Would You Like to Create?">
-      <PopChoice />
-    </ModalWrapper>
-    <ModalWrapper modalId="albumUploadForm" modalHeader="Add An Album">
-      <AlbumForm />
-    </ModalWrapper>
+  <ModalWrapper modalId="photoUploadForm" modalHeader="Add A Photo">
+    <PhotoUploadForm />
+  </ModalWrapper>
+  <!-- NOTE MODAL WRAPPER FOR "popChoice" MODAL -->
+  <ModalWrapper modalId="popChoice" modalHeader="What Would You Like to Create?">
+    <PopChoice />
+  </ModalWrapper>
+  <ModalWrapper modalId="albumUploadForm" modalHeader="Add An Album">
+    <AlbumForm />
+  </ModalWrapper>
   
 </template>
 
