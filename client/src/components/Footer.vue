@@ -35,7 +35,7 @@ function updateImgI() {
       </div>
       <div class="col-3">
         <RouterLink :to="{ name: 'Search' }">
-          <i class="col-3 mdi mdi-magnify footer-icon text-info"></i>
+          <i class="col-3 mdi mdi-magnify footer-icon text-secondary"></i>
         </RouterLink>
       </div>
     </div>
@@ -66,7 +66,7 @@ a {
   transition: all 0.25s ease-in-out;
 
   &:hover {
-    text-shadow: 3px 3px 4px yellow, 2px 2px 3px white, 6px 6px 5px orange;
+    text-shadow: 1px 1px 2px yellow, 2px 2px 3px white, 3px 3px 2px orange;
     transition: all 0.25s linear;
   }
 
@@ -85,7 +85,5 @@ a {
     rgba(0, 0, 0, 0.6) 100%
   );
   backdrop-filter: blur(5px);
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
 }
 </style>
