@@ -1,4 +1,7 @@
 <script setup>
+import { RouterLink, useRoute } from 'vue-router';
+
+const route = useRoute();
 
 </script>
 
@@ -6,17 +9,36 @@
 <template>
   <section class="container-fluid fixed-bottom">
     <div class="row footer-wrapper">
-      <i class="col-3 mdi mdi-account footer-icon text-success"></i>
-      <i class="col-3 mdi mdi-home footer-icon text-danger"></i>
-      <i class="col-3 mdi mdi-image footer-icon text-warning">
-    </i>
-      <i class="col-3 mdi mdi-magnify footer-icon text-info"></i>
+      <div class="col-3">
+        <RouterLink :to="{ name: 'Account' }">
+          <i class=" mdi mdi-account footer-icon text-success"></i>
+        </RouterLink>
+      </div>
+      <div class="col-3">
+        <RouterLink :to="{ name: 'Home' }">
+          <i class=" mdi mdi-home footer-icon text-danger"></i>
+        </RouterLink>
+      </div>
+      <div class="col-3">
+        <!--ADD CREATE IMAGE MODAL HERE-->
+          <i class="col-3 mdi mdi-image footer-icon text-warning"></i>
+
+      </div>
+      <div class="col-3">
+        <!--ADD SEARCH ROUTER LINK HERE-->
+          <i class="col-3 mdi mdi-magnify footer-icon text-info"></i>
+
+      </div>
     </div>
   </section>
 </template>
 
 
 <style lang="scss" scoped>
+
+a {
+  text-decoration: none;
+}
 
 .footer-icon {
   font-size: 60px;
