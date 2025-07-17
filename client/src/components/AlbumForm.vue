@@ -5,6 +5,42 @@ import { ref } from 'vue';
 import ModalWrapper from './ModalWrapper.vue';
 import { Pop } from '@/utils/Pop.js';
 import { Modal } from 'bootstrap';
+import { tagsService } from '@/services/TagsService.js';
+
+
+async function createAlbum() {
+    logger.log('creating album🖼️🫙', editableAlbumData.value)
+
+    try {
+        await albumService.createAlbum(editableAlbumData.value)
+        // clear form after submit
+        editableAlbumData.value = {
+            name: '',
+            coverImg: '',
+            description: '',
+            createdAt: new Date().getFullYear,
+            updatedAt: new Date().getFullYear,
+            isArchived: false,
+            privacy: '',
+            tags: ''
+        }
+        // close the modal
+        Modal.getOrCreateInstance('#albumUploadForm').hide()
+
+        // push to the albumdetailspage?
+
+    } catch (error) {
+        Pop.error(error)
+        logger.error('Could not create 🚫✏️🖼️🫙', error)
+    }
+}
+
+function submitAlbumFormData() {
+    createAlbum()
+    submitTags()
+}
+const tagSplitOn = /,|, | |\.|-/ig
+
 
 
 
@@ -25,39 +61,29 @@ const privacyOptions = [
     "Public"
 ]
 
-async function createAlbum() {
-    logger.log('creating album🖼️🫙', editableAlbumData.value)
 
+
+
+async function submitTags() {
     try {
-        const albumId = await albumService.createAlbum(editableAlbumData.value)
-        // clear form after submit
-        editableAlbumData.value = {
-            name: '',
-            coverImg: '',
-            description: '',
-            createdAt: new Date().getFullYear,
-            updatedAt: new Date().getFullYear,
-            isArchived: false,
-            privacy: '',
-            tags: ''
-        }
-        // close the modal
-        Modal.getOrCreateInstance('#albumForm').hide()
+        const tags = tagsData.value
+            .split(tagSplitOn)
+            .map(tag => tag.trim().toLocaleLowerCase())
+            .filter(tag => tag)
+            .slice(0, 5)
+        logger.log('🏷️', tags)
+        const tagReturn = await tagsService.checkForNewTags(tags)
+        logger.log('response', tagReturn)
 
-        // push to the albumdetailspage?
+        tagsData.value = ''
 
     } catch (error) {
-        Pop.error(error)
-        logger.error('Could not create 🚫✏️🖼️🫙', error)
+        Pop.error(error);
+
     }
 }
 
-// function submitAlbumFormData() {
-//     createAlbum()
-//     submitTags()
-// }
-
-const tagSplitOn = /,|, | |\.|-/ig
+const tagsData = ref('')
 
 </script>
 
@@ -65,7 +91,7 @@ const tagSplitOn = /,|, | |\.|-/ig
 
 <!-- integrate a for each tag loop, separated by comma in a string? -->
 <template>
-    <form @submit.prevent="createAlbum()">
+    <form @submit.prevent="submitAlbumFormData()">
         <div class="form-floating mb-2">
             <input v-model="editableAlbumData.coverImg" type="url" class="form-control" id="album-coverImg"
                 placeholder="Cover Image" maxlength="500" required: true>
@@ -81,11 +107,20 @@ const tagSplitOn = /,|, | |\.|-/ig
                 placeholder="Name Album" maxlength="200" minlength="3" required: true>
             <label for="album-name">Name Your Album</label>
         </div>
-        <div class="form-floating mb-2">
+        <div>
+            <span class="bg-teal text-white rounded-pill me-1 px-2 d-inline-block"
+                v-for="tag in tagsData.split(tagSplitOn).map(tag => tag.trim()).filter(tag => tag).slice(0, 5)"
+                :key="tag">{{ tag }}</span>
+        </div>
+        <div class="col-12 form-floating mb-3 p-1">
+            <input v-model.trim="tagsData" type="text" class="form-control" id="album-tag10" placeholder="">
+            <label for="album-tag1">Example: coolcat, cooldog</label>
+        </div>
+        <!-- <div class="form-floating mb-2">
             <input v-model="editableAlbumData.tags" name="tags[]" type="text" class="form-control" id="album-tags"
                 placeholder="Tag">
             <label for="album-tags">Tag your album</label>
-        </div>
+        </div> -->
         <button type="submit" class="btn btn-success rounded-pill">Submit</button>
         <!-- <div class="form-floating mb-2">
             <select v-model="editableAlbumData.privacy" id="album-privacy-status" class="form-select"
