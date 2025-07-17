@@ -40,7 +40,7 @@ async function getAllAlbums() {
 </script>
 
 <template>
-  <main class="bg-primary text-light">
+  <div class="bg-primary text-light">
     <section>
       <div class="container-fluid flex-grow-1">
         <div class="row ">
@@ -86,7 +86,7 @@ async function getAllAlbums() {
         </div>
       </div>
     </section>
-  </main>
+  </div>
 </template>
 
 <style scoped lang="scss">
