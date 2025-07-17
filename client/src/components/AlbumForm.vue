@@ -52,10 +52,10 @@ async function createAlbum() {
     }
 }
 
-function submitAlbumFormData() {
-    createAlbum()
-    submitTags()
-}
+// function submitAlbumFormData() {
+//     createAlbum()
+//     submitTags()
+// }
 
 const tagSplitOn = /,|, | |\.|-/ig
 
