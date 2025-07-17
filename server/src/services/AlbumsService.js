@@ -33,14 +33,14 @@ class AlbumsService {
       "creator",
       "name picture"
     );
+    await album.populate("photocount");
     if (album == null) throw new BadRequest("this album does not exist");
     return album;
   }
   async getAllAlbums() {
-    const albums = await dbContext.Album.find().populate(
-      "creator",
-      "name picture"
-    );
+    const albums = await dbContext.Album.find()
+      .populate("creator", "name picture")
+      .populate("photocount");
     return albums;
   }
 

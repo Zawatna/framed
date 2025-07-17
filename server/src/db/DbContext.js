@@ -6,6 +6,7 @@ import { AlbumSchema } from "../models/Album.js";
 import { TagSchema } from "../models/Tag.js";
 import { AlbumTagSchema } from "../models/AlbumTag.js";
 import { PhotoTagSchema } from "../models/PhotoTag.js";
+import { AlbumPhotoSchema } from "../models/AlbumPhoto.js";
 
 class DbContext {
   Values = mongoose.model("Value", ValueSchema);
@@ -15,6 +16,7 @@ class DbContext {
   Tag = mongoose.model("Tag", TagSchema);
   AlbumTag = mongoose.model("AlbumTag", AlbumTagSchema);
   PhotoTags = mongoose.model("PhotoTag", PhotoTagSchema);
+  AlbumPhotos = mongoose.model("AlbumPhoto", AlbumPhotoSchema);
 }
 
 export const dbContext = new DbContext();
