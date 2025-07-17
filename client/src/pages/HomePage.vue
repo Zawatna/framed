@@ -41,7 +41,7 @@ async function getAllAlbums() {
 </script>
 
 <template>
-  <div class="bg-primary text-light">
+  <div class="text-light">
     <section>
       <div class="container-fluid flex-grow-1">
         <div class="row ">
