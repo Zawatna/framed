@@ -33,6 +33,25 @@ defineProps({album: {type: Album}})
 <!-- </div> -->
 
 <style lang="scss" scoped>
+    .grey-square{
+    height: 300px;
+    width: 30vw;
+    border: 10px;
+    border-style:ridge;
+    border-color: #bebebe;
+    }
+
+    img{
+    height: 300px;
+    width: 30vw;
+    padding: 0;
+    border: 10px;
+    border-style:ridge;
+    border-color: #bebebe;
+    object-fit:cover;
+    }
+
+@media only screen and (max-width: 600px){
 img{
     height: 15vh;
     width: 30vw;
@@ -49,5 +68,7 @@ img{
     border: 10px;
     border-style:ridge;
     border-color: #bebebe;
+}
+
 }
 </style>
