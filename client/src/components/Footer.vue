@@ -1,5 +1,9 @@
 <script setup>
+import { AppState } from '@/AppState.js';
 
+function updateImgI(){
+  AppState.choicePhotoIndex++
+}
 </script>
 
 
@@ -18,7 +22,7 @@
       </div>
       <div class="col-3">
         <!--ADD CREATE IMAGE MODAL HERE-->
-          <i class="col-3 mdi mdi-image footer-icon text-warning" role="button" data-bs-toggle="modal" data-bs-target="#photoUploadForm"></i>
+          <i class="col-3 mdi mdi-image footer-icon text-warning" role="button" data-bs-toggle="modal" data-bs-target="#popChoice" @click="updateImgI()"></i>
 
       </div>
       <div class="col-3">

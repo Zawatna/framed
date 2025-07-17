@@ -8,7 +8,6 @@ import PhotoUploadForm from '@/components/PhotoUploadForm.vue';
 import { photosService } from '@/services/PhotosService.js';
 import { Pop } from '@/utils/Pop.js';
 import { computed, onMounted } from 'vue';
-import AlbumForm from '@/components/AlbumForm.vue';
 
 onMounted(() => {
   getAllPhotos();
@@ -70,10 +69,16 @@ async function getAllAlbums() {
       </div>
       <h1 class="text-light bg-primary">Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic quibusdam vel incidunt atque cum dicta temporibus illo pariatur, illum quisquam!</h1>
     </div> -->
-      <!-- NOTE MODAL WRAPPER SLOT FOR PHOTO/Album FORM -->
+      <!-- NOTE MODAL WRAPPER SLOT FOR PHOTO Form -->
       <ModalWrapper modalId="photoUploadForm" modalHeader="Add A Photo">
-        <!-- TODO Inject actual PhotoForm component/modalId & Uncomment -->
         <PhotoUploadForm />
+      </ModalWrapper>
+      <!-- NOTE MODAL WRAPPER FOR "popChoice" MODAL -->
+      <ModalWrapper modalId="popChoice" modalHeader="What Would You Like to Create?">
+        <PopChoice />
+      </ModalWrapper>
+      <ModalWrapper modalId="albumUploadForm" modalHeader="Add An Album">
+        <AlbumForm />
       </ModalWrapper>
 
     </section>

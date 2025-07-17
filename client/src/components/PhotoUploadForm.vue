@@ -1,5 +1,6 @@
 <script setup>
 import { photosService } from '@/services/PhotosService.js';
+import { tagsService } from '@/services/TagsService.js';
 import { logger } from '@/utils/Logger.js';
 import { Pop } from '@/utils/Pop.js';
 import { Modal } from 'bootstrap';
@@ -12,10 +13,10 @@ async function createPhoto() {
 
     await photosService.createPhoto(formData.value)
 
+
     //clear the form
     formData.value = {
       description: '',
-      subjectTags: "",
       location: '',
       originalDate: '',
       imgUrl: '',
@@ -29,10 +30,35 @@ async function createPhoto() {
   }
 }
 
+function submitFormData() {
+  createPhoto()
+  submitTags()
+}
+
+const tagSplitOn = /,|, | |\.|-/ig
+
+async function submitTags() {
+  try {
+    const tags = tagsData.value
+      .split(tagSplitOn) // seperates by the const above ^^
+      .map(tag => tag.trim().toLocaleLowerCase()) // format tags
+      .filter(tag => tag) // erase accidental junk 'empties'
+    // .slice(0, 5) // limit tag count
+    logger.log('🏷️', tags)
+    const tagReturn = await tagsService.checkForNewTags(tags)
+    logger.log("response", tagReturn)
+
+    tagsData.value = ''
+
+  }
+  catch (error) {
+    Pop.error(error);
+  }
+}
+
 const formData = ref(
   {
     description: '',
-    subjectTags: "",
     location: '',
     originalDate: '',
     imgUrl: '',
@@ -40,12 +66,14 @@ const formData = ref(
   }
 )
 
+const tagsData = ref('')
+
 </script>
 
 
 <template>
 
-  <form @submit.prevent="createPhoto()" class="container-fluid">
+  <form @submit.prevent="submitFormData()" class="container-fluid">
     <div class="row">
       <div class="col-12 mt-3 d-flex flex-wrap justify-content-around">
 
@@ -59,11 +87,7 @@ const formData = ref(
             placeholder="Upload Photo" maxlength="500">
           <label for="photo-imgUrl">Upload Photo</label>
         </div>
-        <div class=" form-floating mb-3">
-          <input v-model="formData.subjectTags" type="text" class="form-control" id="photo-tags"
-            placeholder="#cats #dog #hotdogeater">
-          <label for="photo-tags">Tags go here</label>
-        </div>
+
         <div class=" form-floating mb-3">
           <input v-model="formData.location" maxlength="500" type="text" class="form-control" id="photo-location"
             placeholder="1234 W 120th, caldwell ID, 83605">
@@ -74,6 +98,30 @@ const formData = ref(
             placeholder="Title of Photo">
           <label for="photo-name">Title of Photos </label>
         </div>
+
+        <!-- NOTE Tag section here, its a work in progress -->
+        <div class="col-12 d-flex flex-wrap justify-content-center">
+          <p class="col-12 text-center text-info">TAGS</p>
+          <!-- 
+          <div v-for="(tagInput, index) in 5" :key="`tag-ingput${tagInput}`" class="col-md-4 form-floating mb-3 p-1">
+            <input v-model="tagsData[index]" type="text" class="form-control" id="photo-tag10" @keydown.space.prevent
+              placeholder="">
+            <label for="photo-tag1">Example: coolcat</label>
+          </div> -->
+          <div>
+            <span class="bg-teal text-white rounded-pill me-1 px-2 d-inline-block"
+              v-for="tag in tagsData.split(tagSplitOn).map(tag => tag.trim()).filter(tag => tag)" :key="tag">{{ tag
+              }}</span>
+          </div>
+          <div class="col-12 form-floating mb-3 p-1">
+            <input v-model.trim="tagsData" type="text" class="form-control" id="photo-tag10" placeholder="">
+            <label for="photo-tag1">Example: coolcat, cooldog</label>
+          </div>
+
+        </div>
+        <hr class="bg-info">
+        <!-- END OF TAG SECTION -->
+
         <div class="col-12 form-floating mb-3">
           <input v-model="formData.description" type="text" maxlength="50" class="form-control" id="photo-description"
             placeholder="Describe the photo">
