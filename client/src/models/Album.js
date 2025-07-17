@@ -8,6 +8,7 @@ export class Album{
         this.createdAt = new Date(data.createdAt).toLocaleDateString("en-US", {year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute:'2-digit'})
         this.updatedAt = new Date(data.updatedAt).toLocaleDateString("en-US", {year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute:'2-digit'})
         this.id = data.id || data._id
+        this.photoCount = data.photocount;
     }
 }
 

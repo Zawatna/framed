@@ -1,28 +1,60 @@
 <script setup>
+import { AppState } from '@/AppState.js';
 import { Album } from '@/models/Album.js';
+import { albumService } from '@/services/AlbumService.js';
+import { Pop } from '@/utils/Pop.js';
+import { computed, onMounted, ref } from 'vue';
 
 
+onMounted(() => {
+  getAlbumPictureById()
+})
 
-defineProps({album: {type: Album}})
+
+const album = defineProps({album: {type: Album}})
+const albumPhoto = ref([])
+
+async function getAlbumPictureById() {
+  try {
+    const albumId = album.album.id
+    albumPhoto.value = await albumService.getAlbumPictureById(albumId)
+}
+catch (error){
+    Pop.error(error);
+}
+}
 </script>
 
 
 <template>
     <div class="container justify-content-center mb-5">
         <div class="row text-center">
-            <div class="main-font">@{{ album.creator.name }}</div>
-            <h2 class="main-font">{{ album.name }}</h2>
-        </div>
+            <div class="main-font">@{{ album.album.creator.name }}</div>
+            <h2 class="main-font">{{ album.album.name }}</h2>
+        </div >
+        <div class="container" v-if="albumPhoto[3]">
             <div class="row gap-2 justify-content-center">
-                    <img :src="album.coverImg" :alt="album.name">
-                    <img :src="album.coverImg" :alt="album.name">
-            <div>
-            <div class="row gap-2 justify-content-center">
-                    <img :src="album.coverImg" :alt="album.name">
-                    <div class="grey-square bg-grey main-font d-flex align-items-center text-center">13 more photos...</div>
-            </div>
+                <img :src="albumPhoto[0]?.photo.imgUrl" :alt="album.album.name">
+                <img :src="albumPhoto[1]?.photo.imgUrl" :alt="album.album.name">
+                <div>
+                    <div class="row gap-2 justify-content-center" v-if="album.album.photoCount >= 3">
+                    <img :src="albumPhoto[2]?.photo.imgUrl" :alt="album.album.name">
+                    <div class="grey-square bg-grey main-font d-flex align-items-center text-center">{{album.album.photoCount-3}} more photos...</div>
+                </div>
+            <div class="row gap-2 justify-content-center" v-else>
+                    <img :src="albumPhoto[3]?.photo.imgUrl" :alt="album.album.name">
+                    <div class="grey-square bg-grey main-font d-flex align-items-center text-center">{{album.album.photoCount}} more photos...</div>
+                </div>
             </div>
         </div>
+
+        
+    </div>
+    <div v-else>
+            <div class="row justify-content-center">
+                <div class="col-12 grey-square bg-grey main-font d-flex align-items-center text-center">Add photos to see them here!</div>
+            </div>
+    </div>
     </div>
 </template>
 
