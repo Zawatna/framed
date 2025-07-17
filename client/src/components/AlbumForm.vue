@@ -29,7 +29,7 @@ async function createAlbum() {
     logger.log('creating album🖼️🫙', editableAlbumData.value)
 
     try {
-        const albumId = await albumService.createAlbum(editableAlbumData.value)
+        // const albumId = await albumService.createAlbum(editableAlbumData.value)
         // clear form after submit
         editableAlbumData.value = {
             name: '',
