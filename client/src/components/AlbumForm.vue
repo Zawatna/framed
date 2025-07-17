@@ -4,6 +4,7 @@ import { logger } from '@/utils/Logger.js';
 import { ref } from 'vue';
 import ModalWrapper from './ModalWrapper.vue';
 import { Pop } from '@/utils/Pop.js';
+import { Modal } from 'bootstrap';
 
 
 
@@ -26,9 +27,9 @@ const privacyOptions = [
 
 async function createAlbum() {
     logger.log('creating album🖼️🫙', editableAlbumData.value)
-    const albumId = await albumService.createAlbum(editableAlbumData.value)
 
     try {
+        const albumId = await albumService.createAlbum(editableAlbumData.value)
         // clear form after submit
         editableAlbumData.value = {
             name: '',
@@ -41,15 +42,22 @@ async function createAlbum() {
             tags: ''
         }
         // close the modal
-        ModalWrapper.getOrCreateInstance('#album').hide()
+        Modal.getOrCreateInstance('#albumForm').hide()
 
-        // push to the albumdetailspage
+        // push to the albumdetailspage?
 
     } catch (error) {
         Pop.error(error)
         logger.error('Could not create 🚫✏️🖼️🫙', error)
     }
 }
+
+function submitAlbumFormData() {
+    createAlbum()
+    submitTags()
+}
+
+const tagSplitOn = /,|, | |\.|-/ig
 
 </script>
 
