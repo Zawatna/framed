@@ -1,7 +1,9 @@
 <script setup>
 import { AppState } from '@/AppState.js';
 import AlbumCard from '@/components/AlbumCard.vue';
+import ModalWrapper from '@/components/ModalWrapper.vue';
 import PhotoCard from '@/components/PhotoCard.vue';
+import PhotoUploadForm from '@/components/PhotoUploadForm.vue';
 import { photosService } from '@/services/PhotosService.js';
 import { Pop } from '@/utils/Pop.js';
 import { computed, onMounted } from 'vue';
@@ -13,21 +15,7 @@ onMounted(() => {
 const photos = computed(() => AppState.photos)
 
 
-async function createPhoto() {
-  try {
-    //This needs to come out when the form is set up to upload a photo
-    const formData = {
-      name: "Testing",
-      imgUrl: "https://plus.unsplash.com/premium_photo-1752625323773-3e4de726adcd?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwxMHx8fGVufDB8fHx8fA%3D%3D"
-    }
 
-    // this stays in
-    await photosService.createPhoto(formData)
-  }
-  catch (error) {
-    Pop.error(error);
-  }
-}
 
 async function getAllPhotos() {
   try {
@@ -57,26 +45,26 @@ async function getAllPhotos() {
       </div>
     </div>
     <!-- !SECTION -->
-    
+
     <!-- SECTION ALBUM CARDS - Doom Scroll  -->
     <div>
       <AlbumCard />
     </div>
     <!-- !SECTION -->
+    <button type="button" data-bs-toggle="modal" data-bs-target="#photoUploadForm">Model Test for Photos</button>
   </div>
 
-<!-- NOTE For Testing/creating preset photos (delete after form is created)-->
-<!-- <button @click="createPhoto()">TEST ME</button> -->
+  <!-- NOTE For Testing/creating preset photos (delete after form is created)-->
 
   <!-- NOTE MODAL WRAPPER SLOT FOR PHOTO/Album FORM -->
-  <!-- <ModalWrapper modalId="" modalHeader="Add A Photo"> -->
+  <ModalWrapper modalId="photoUploadForm" modalHeader="Add A Photo">
     <!-- TODO Inject actual PhotoForm component/modalId & Uncomment -->
-    <!-- <PhotoForm /> 
-      </ModalWrapper> -->
-    <!-- 
-      <ModalWrapper modalId="" modalHeader="Add A Photo"> -->
-        <!-- TODO Inject actual AlbumForm component/modalId & Uncomment -->
-        <!-- <AlbumForm /> 
+    <PhotoUploadForm />
+  </ModalWrapper>
+
+  <!-- <ModalWrapper modalId="" modalHeader="Add An Album"> -->
+  <!-- TODO Inject actual AlbumForm component/modalId & Uncomment -->
+  <!-- <AlbumForm /> 
       </ModalWrapper>
     -->
 </template>
