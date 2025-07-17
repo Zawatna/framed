@@ -19,5 +19,8 @@ import { RouterView } from 'vue-router';
 
 <style lang="scss">
 
+main {
+  backdrop-filter: blur(3px);
+}
 
 </style>

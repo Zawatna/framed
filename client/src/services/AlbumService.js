@@ -20,7 +20,14 @@ class AlbumService {
     return pictures;
   }
 
-  createAlbum() {}
+
+  async createAlbum(editableAlbumData) {
+    const response = await api.post(`api/albums`, editableAlbumData);
+    logger.log('Is there a new album? 🖼️🖼️🖼️🫙', response.data)
+    const album = new Album(response.data)
+    AppState.albums.unshift(album)
+    return album.id
+  }
 
   async getAllAlbums() {
     const response = await api.get("api/albums?limit=3");

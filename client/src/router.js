@@ -28,6 +28,11 @@ const routes = [
     component: loadPage("SearchPage"),
   },
   {
+    path: "/photos/:photoId",
+    name: "Photo Details",
+    component: loadPage("PhotoDetailsPage")
+  },
+  {
     path: "/album/:albumId",
     name: "AlbumDetailsPage",
     component: loadPage("AlbumDetailsPage"),
