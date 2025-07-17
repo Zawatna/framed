@@ -60,12 +60,20 @@ async function getAllPhotos() {
     </div>
   </div>
 
+<!-- <button @click="createPhoto()">TEST ME</button> -->
 
 
-
-
-  <button @click="createPhoto()">TEST ME</button>
-
+<!--For Testing Blur Effect on Footer Nav Bar-->
+  <!-- <div class="row bg-primary text-center justify-content-center">
+    <div class="col-7">
+      <img src="https://plus.unsplash.com/premium_photo-1752367289570-090e5807428d?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" class="img-fluid">
+    </div>
+    <h1 class="text-light bg-primary">Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic quibusdam vel incidunt atque cum dicta temporibus illo pariatur, illum quisquam!</h1>
+    <div class="col-7">
+      <img src="https://plus.unsplash.com/premium_photo-1752625323773-3e4de726adcd?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwxMHx8fGVufDB8fHx8fA%3D%3D" alt="" class="img-fluid">
+    </div>
+    <h1 class="text-light bg-primary">Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic quibusdam vel incidunt atque cum dicta temporibus illo pariatur, illum quisquam!</h1>
+  </div> -->
 </template>
 
 <style scoped lang="scss">
