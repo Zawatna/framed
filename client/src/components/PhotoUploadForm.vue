@@ -43,7 +43,7 @@ async function submitTags() {
       .split(tagSplitOn) // seperates by the const above ^^
       .map(tag => tag.trim().toLocaleLowerCase()) // format tags
       .filter(tag => tag) // erase accidental junk 'empties'
-    // .slice(0, 5) // limit tag count
+      .slice(0, 5) // limit tag count
     logger.log('🏷️', tags)
     const tagReturn = await tagsService.checkForNewTags(tags)
     logger.log("response", tagReturn)
@@ -110,8 +110,8 @@ const tagsData = ref('')
           </div> -->
           <div>
             <span class="bg-teal text-white rounded-pill me-1 px-2 d-inline-block"
-              v-for="tag in tagsData.split(tagSplitOn).map(tag => tag.trim()).filter(tag => tag)" :key="tag">{{ tag
-              }}</span>
+              v-for="tag in tagsData.split(tagSplitOn).map(tag => tag.trim()).filter(tag => tag).slice(0, 5)"
+              :key="tag">{{ tag }}</span>
           </div>
           <div class="col-12 form-floating mb-3 p-1">
             <input v-model.trim="tagsData" type="text" class="form-control" id="photo-tag10" placeholder="">
