@@ -21,7 +21,7 @@ class PhotosService {
     return photos;
   }
   async getAllPhotos() {
-    const photos = await dbContext.Photos.find().populate([
+    const photos = await dbContext.Photos.find().sort({ createdAt: -1 }).populate([
       { path: "creator", select: "name picture" },
       { path: "tags", populate: "tag" },
     ]);

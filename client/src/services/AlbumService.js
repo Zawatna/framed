@@ -13,6 +13,10 @@ class AlbumService {
     return pictures;
   }
 
+
+  createAlbum() {
+  }
+
   async getAllAlbums() {
     const response = await api.get("api/albums?limit=3");
     logger.log("albums", response.data);
