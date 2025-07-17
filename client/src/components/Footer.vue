@@ -39,7 +39,20 @@ a {
 
 .footer-icon {
   font-size: 60px;
-  
+  text-shadow: 1px 1px 3px black;
+  transition: all .25s ease-in-out;
+
+  &:hover {
+    text-shadow:  3px 3px 4px yellow,
+                  2px 2px 3px white,
+                  6px 6px 5px orange;
+    transition: all .25s linear;
+  }
+
+  &:active {
+    text-shadow: 1px 1px 3px lightblue;
+    transition: none;
+  }
 }
 
 .footer-wrapper {
