@@ -80,7 +80,7 @@ async function createAlbum() {
         </div>
         <button type="submit" class="btn btn-success rounded-pill">Submit</button>
         <!-- <div class="form-floating mb-2">
-            <select v-model="editableFormData.privacy" id="album-privacy-status" class="form-select"
+            <select v-model="editableAlbumData.privacy" id="album-privacy-status" class="form-select"
                 aria-label="Privacy Setting">
                 <option selected disabled value="">Select Privacy Status</option>
                 <option value="Private">Private</option>

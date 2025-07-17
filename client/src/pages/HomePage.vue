@@ -8,6 +8,8 @@ import PhotoUploadForm from '@/components/PhotoUploadForm.vue';
 import { photosService } from '@/services/PhotosService.js';
 import { Pop } from '@/utils/Pop.js';
 import { computed, onMounted } from 'vue';
+import PopChoice from '@/components/PopChoice.vue';
+import AlbumForm from '@/components/AlbumForm.vue';
 
 onMounted(() => {
   getAllPhotos();
