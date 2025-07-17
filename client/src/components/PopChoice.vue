@@ -57,13 +57,13 @@ function openForm(choice) {
     <div class="row text-center">
       <!-- SECTION Photo Upload Choice -->
       <div class="col-6">
-        <img v-if="chosenPhoto" :src="chosenPhoto?.imgUrl" :alt="chosenPhoto?.name" class="img-fluid photo">
+        <img v-if="chosenPhoto" :src="chosenPhoto?.imgUrl" :alt="chosenPhoto?.name" class="img-fluid photo rounded">
         <button @click="openForm('photo')" type="button" class="btn btn-success mt-2">Add Photo</button>
       </div>
       <!-- !SECTION -->
       <!-- SECTION Album Upload Choice -->
       <div class="col-6">
-        <img src="https://images.unsplash.com/photo-1677658288237-2fff291a34f0?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8cGhvdG8lMjBhbGJ1bXxlbnwwfDJ8MHx8fDA%3D" alt="photo album" class="img-fluid album">
+        <img src="https://images.unsplash.com/photo-1677658288237-2fff291a34f0?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8cGhvdG8lMjBhbGJ1bXxlbnwwfDJ8MHx8fDA%3D" alt="photo album" class="img-fluid album rounded">
         <button @click="openForm('album')" type="button" class="btn btn-warning mt-2">Add Album</button>
       </div>
       <!-- !SECTION -->
@@ -77,9 +77,11 @@ function openForm(choice) {
 
 .photo {
   height: 80%;
+  border: 2px dotted #35E286;
 }
 
 .album {
   height: 80%;
+  border: 2px dotted #DA35B0;
 }
 </style>
