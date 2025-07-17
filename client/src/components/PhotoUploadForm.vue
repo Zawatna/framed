@@ -55,8 +55,8 @@ const formData = ref(
         </div>
 
         <div class=" form-floating mb-3">
-          <input v-model="formData.imgUrl" type="url" class="form-control" id="photo-imgUrl" placeholder="Upload Photo"
-            maxlength="1000">
+          <input v-model="formData.imgUrl" type="url" required class="form-control" id="photo-imgUrl"
+            placeholder="Upload Photo" maxlength="500">
           <label for="photo-imgUrl">Upload Photo</label>
         </div>
         <div class=" form-floating mb-3">
@@ -65,16 +65,17 @@ const formData = ref(
           <label for="photo-tags">Tags go here</label>
         </div>
         <div class=" form-floating mb-3">
-          <input v-model="formData.location" type="text" class="form-control" id="photo-location"
+          <input v-model="formData.location" maxlength="500" type="text" class="form-control" id="photo-location"
             placeholder="1234 W 120th, caldwell ID, 83605">
           <label for="photo-location">Address or Long / Lat</label>
         </div>
         <div class=" form-floating mb-3">
-          <input v-model="formData.name" type="text" class="form-control" id="photo-name" placeholder="Title of Photo">
+          <input v-model="formData.name" type="text" minlength="3" maxlength="50" class="form-control" id="photo-name"
+            placeholder="Title of Photo">
           <label for="photo-name">Title of Photos </label>
         </div>
         <div class="col-12 form-floating mb-3">
-          <input v-model="formData.description" type="text" class="form-control" id="photo-description"
+          <input v-model="formData.description" type="text" maxlength="50" class="form-control" id="photo-description"
             placeholder="Describe the photo">
           <label for="photo-description">Describe the Photo</label>
         </div>

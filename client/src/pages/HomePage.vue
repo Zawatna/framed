@@ -51,7 +51,8 @@ async function getAllPhotos() {
       <AlbumCard />
     </div>
     <!-- !SECTION -->
-    <button type="button" data-bs-toggle="modal" data-bs-target="#photoUploadForm">Model Test for Photos</button>
+    <!-- NOTE this is a test button, should be removed before shipping final product -->
+    <!-- <button type="button" data-bs-toggle="modal" data-bs-target="#photoUploadForm">Model Test for Photos</button> -->
   </div>
 
   <!-- NOTE For Testing/creating preset photos (delete after form is created)-->
