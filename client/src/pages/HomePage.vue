@@ -78,7 +78,7 @@ async function getAllAlbums() {
       <div class="container-fluid">
         <div class="row">
           <div v-for="album in albums" :key="album.id">
-            <AlbumCard :album="album" />
+              <AlbumCard :album="album" class="photo-malarky" />
           </div>
         </div>
       </div>
@@ -90,5 +90,10 @@ async function getAllAlbums() {
 .overflow-set {
   overflow-x: auto;
   scrollbar-width: none;
+}
+.photo-malarky{
+    text-decoration: none;
+    color: white
+    // color: var(--bs--black)
 }
 </style>

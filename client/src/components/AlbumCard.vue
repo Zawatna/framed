@@ -1,6 +1,7 @@
 <script setup>
 import { AppState } from '@/AppState.js';
 import { Album } from '@/models/Album.js';
+import AlbumDetailsPage from '@/pages/AlbumDetailsPage.vue';
 import { albumService } from '@/services/AlbumService.js';
 import { Pop } from '@/utils/Pop.js';
 import { computed, onMounted, ref } from 'vue';
@@ -27,6 +28,7 @@ catch (error){
 
 
 <template>
+    <router-link :to="{name: 'AlbumDetailsPage', params:{albumId: album.album.id}}">
     <div class="container justify-content-center mb-5">
         <div class="row text-center">
             <div class="main-font">@{{ album.album.creator.name }}</div>
@@ -56,6 +58,7 @@ catch (error){
             </div>
     </div>
     </div>
+    </router-link>
 </template>
 
 <!-- <div class="d-flex "> -->
@@ -100,6 +103,12 @@ img{
     border: 10px;
     border-style:ridge;
     border-color: #bebebe;
+}
+
+a{
+    text-decoration: none;
+    color: white
+    // color: var(--bs--black)
 }
 
 }
