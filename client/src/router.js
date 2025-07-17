@@ -27,6 +27,11 @@ const routes = [
     name: "Search",
     component: loadPage("SearchPage"),
   },
+  {
+    path: "/photos/:photoId",
+    name: "Photo Details",
+    component: loadPage("PhotoDetailsPage")
+  }
 ];
 
 export const router = createRouter({

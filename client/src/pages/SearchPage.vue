@@ -4,6 +4,7 @@ import { computed, ref } from "vue";
 
 const editableSearchTerm = ref("");
 const searchTerm = computed(() => AppState.searchTerm);
+// const searchTypes = ["photos", "albums", "profiles", "tags"];
 </script>
 
 <template>

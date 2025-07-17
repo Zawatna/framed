@@ -74,6 +74,20 @@ async function submitTags() {
         logger.log('🏷️', tags)
         const tagReturn = await tagsService.checkForNewTags(tags)
         logger.log('response', tagReturn)
+        // const albumId = await albumService.createAlbum(editableAlbumData.value)
+        // clear form after submit
+        editableAlbumData.value = {
+            name: '',
+            coverImg: '',
+            description: '',
+            createdAt: new Date().getFullYear,
+            updatedAt: new Date().getFullYear,
+            isArchived: false,
+            privacy: '',
+            tags: ''
+        }
+        // close the modal
+        Modal.getOrCreateInstance('#albumForm').hide()
 
         tagsData.value = ''
 
