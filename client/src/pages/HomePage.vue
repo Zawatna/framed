@@ -1,8 +1,10 @@
 <script setup>
 import { AppState } from '@/AppState.js';
 import AlbumCard from '@/components/AlbumCard.vue';
+import ModalWrapper from '@/components/ModalWrapper.vue';
 import PhotoCard from '@/components/PhotoCard.vue';
 import { albumService } from '@/services/AlbumService.js';
+import PhotoUploadForm from '@/components/PhotoUploadForm.vue';
 import { photosService } from '@/services/PhotosService.js';
 import { Pop } from '@/utils/Pop.js';
 import { computed, onMounted } from 'vue';
@@ -13,7 +15,6 @@ onMounted(() => {
 })
 
 const photos = computed(() => AppState.photos)
-const albums = computed(()=> AppState.albums)
 
 
 async function createPhoto() {

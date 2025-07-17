@@ -1,8 +1,8 @@
 import { Schema } from "mongoose";
 
-export const AlbumTagSchema = new Schema(
+export const PhotoTagSchema = new Schema(
   {
-    albumId: { type: Schema.ObjectId, required: true, ref: "Album" },
+    photoId: { type: Schema.ObjectId, required: true, ref: "Photo" },
     tagId: { type: Schema.ObjectId, required: true, ref: "Tag" },
     creatorId: { type: Schema.ObjectId, required: true, ref: "Account" },
   },
@@ -10,15 +10,15 @@ export const AlbumTagSchema = new Schema(
     toJSON: { virtuals: true },
   }
 );
-AlbumTagSchema.virtual("tag", {
+PhotoTagSchema.virtual("tag", {
   localField: "tagId",
   foreignField: "_id",
   ref: "Tag",
   justOne: true,
 });
-AlbumTagSchema.virtual("album", {
-  localField: "albumId",
+PhotoTagSchema.virtual("photo", {
+  localField: "photoId",
   foreignField: "_id",
-  ref: "Album",
+  ref: "Photo",
   justOne: true,
 });

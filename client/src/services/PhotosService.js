@@ -4,11 +4,13 @@ import { Photo } from "@/models/Photo.js"
 import { AppState } from "@/AppState.js"
 
 class PhotosService {
-  
+
   async createPhoto(formData) {
     const response = await api.post(`api/photos`, formData)
     logger.log("Did it work?♦️💖🗺️", response.data)
-    return response.data
+    const photo = new Photo(response.data)
+    AppState.photos.unshift(photo)
+    return photo.id
   }
 
   async getAllPhotos() {
