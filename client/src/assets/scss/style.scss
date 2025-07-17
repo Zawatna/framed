@@ -1,11 +1,10 @@
-@import '_main.scss';
-@import url('https://fonts.googleapis.com/css2?family=Fontdiner+Swanky&family=Kaushan+Script&family=Winky+Rough:ital,wght@0,300..900;1,300..900&display=swap');
+@import "_main.scss";
+@import url("https://fonts.googleapis.com/css2?family=Fontdiner+Swanky&family=Kaushan+Script&family=Winky+Rough:ital,wght@0,300..900;1,300..900&display=swap");
 
 #app {
   display: flex;
   flex-direction: column;
   min-height: 100dvh;
-  
 }
 
 // NOTE Removes overscroll on X and Y Axis
@@ -15,6 +14,9 @@ body {
   overflow-x: hidden;
   overscroll-behavior-y: none;
   overscroll-behavior-y: none;
+  background-image: url(../img/framed-bg.png);
+  background-size: cover;
+  background-position: center;
   // overflow-y: hidden;
 }
 
@@ -31,20 +33,20 @@ main {
   align-items: end;
 }
 
-.framed-font{
-font-family: "Fontdiner Swanky", serif;
+.framed-font {
+  font-family: "Fontdiner Swanky", serif;
   font-weight: 400;
   font-style: normal;
   letter-spacing: 3px;
 }
 
-.fancy-font{
+.fancy-font {
   font-family: "Kaushan Script", cursive;
   font-weight: 400;
   font-style: normal;
 }
 
-.main-font{
+.main-font {
   font-family: "Winky Rough", sans-serif;
   font-optical-sizing: auto;
   font-weight: 400;
