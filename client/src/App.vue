@@ -1,4 +1,5 @@
 <script setup>
+import Footer from './components/Footer.vue';
 import Navbar from './components/Navbar.vue';
 import { RouterView } from 'vue-router';
 
@@ -12,7 +13,7 @@ import { RouterView } from 'vue-router';
     <RouterView/>
   </main>
   <footer class=" text-center">
-    Made with <i class="mdi mdi-heart text-pink"></i> by CodeWorks
+    <Footer />
   </footer>
 </template>
 
