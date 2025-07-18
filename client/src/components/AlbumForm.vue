@@ -1,5 +1,5 @@
 <script setup>
-import { albumsService } from '@/services/AlbumService.js';
+import { albumsService } from '@/services/AlbumsService.js';
 import { logger } from '@/utils/Logger.js';
 import { ref } from 'vue';
 import { Pop } from '@/utils/Pop.js';

@@ -10,16 +10,15 @@ class AlbumTagsService {
 
     async deleteAlbumTag(albumTagId, userId) {
         const albumTag = await dbContext.AlbumTags.findById(albumTagId).populate(
-        "tag"
-    );
+            "tag"
+        );
         if (albumTag.creatorId != userId)
-        throw new Forbidden("You cannot delete another users album tag!");
+            throw new Forbidden("You cannot delete another users album tag!");
         albumTag.deleteOne();
         return `Album tag ${albumTag.tag.name} has been deleted!`;
     }
     async createAlbumTag(tagData) {
         const albumTag = await dbContext.AlbumTags.create(tagData);
-        await albumTag.populate("tag");
         return albumTag;
     }
 }

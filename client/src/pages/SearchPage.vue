@@ -1,6 +1,6 @@
 <script setup>
 import { AppState } from "@/AppState.js";
-import { albumService } from "@/services/AlbumService.js";
+import { albumsService } from "@/services/AlbumsService.js";
 import { logger } from "@/utils/Logger.js";
 import { Pop } from "@/utils/Pop.js";
 import { computed, ref, watch } from "vue";
@@ -16,7 +16,7 @@ async function searchFramed(type) {
   try {
     selectedSearch.value = type ? type : selectedSearch.value;
     if (selectedSearch.value == "albums") {
-      const albums = await albumService.getAlbumsByQuery(
+      const albums = await albumsService.getAlbumsByQuery(
         editableSearchTerm.value
       );
       logger.log(albums);
@@ -29,30 +29,21 @@ async function searchFramed(type) {
 </script>
 
 <template>
-  <div
-    class="d-flex flex-column background-blur text-center text-light ps-3 justify-content-center align-items-center"
-  >
+  <div class="d-flex flex-column background-blur text-center text-light ps-3 justify-content-center align-items-center">
     <h1 v-if="searchTerm" class="fs-1 text-light">
       Searching for {{ searchTerm }}
     </h1>
     <h1 v-else class="fs-1 text-light px-3">Start Searching</h1>
     <div class="gap-3 d-flex">
       <input v-model="editableSearchTerm" type="text" id="search-bar" />
-      <label for="search-bar"
-        ><button>Search <i class="mdi mdi-magnify"></i></button
-      ></label>
+      <label for="search-bar"><button>Search <i class="mdi mdi-magnify"></i></button></label>
     </div>
   </div>
   <section class="contiainer-fluid main-font">
     <div class="row">
       <div class="col-12">
         <div>
-          <button
-            v-for="type in searchTypes"
-            :key="type"
-            type="button"
-            @click="searchFramed(type)"
-          >
+          <button v-for="type in searchTypes" :key="type" type="button" @click="searchFramed(type)">
             {{ type }}
           </button>
         </div>

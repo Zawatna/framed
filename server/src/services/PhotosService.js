@@ -46,6 +46,7 @@ class PhotosService {
     const photoTagsToPopulate = await photoTagsService.createPhotoTag(photoTagsToCreate)
     // console.log("What came back from my tags? ♥️🎼🎼🎼🏷️", photoTagsToPopulate)
     await photo.populate({ path: 'tags', populate: { path: 'tag' } })
+    console.log("Photos tags??? 🖼️🖼️🖼️🖼️", photo)
     return photo;
   }
 }
