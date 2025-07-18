@@ -38,7 +38,7 @@ async function getPhotoById() {
         <img :src="photo.imgUrl" :alt="`${photo.creator.name}'s posted photo`" class="img-fluid">
       </div>
       <h5 class="img-username">@{{ photo.creator.name }}</h5>
-      <h4 class="img-desc main-font">{{ photo.description }}</h4>
+      <h4 class="img-desc main-font">{{ photo.name }}</h4>
       <div class="row align-items-center">
         <div class="col-6 d-flex ps-4">
           <i class="mdi mdi-comment display-3 text-light"></i>
