@@ -4,6 +4,7 @@ export class Album {
     this.coverImg = data.coverImg;
     this.creator = data.creator;
     this.isArchived = data.isArchived;
+    this.description = data.description;
     this.createdAt = new Date(data.createdAt).toLocaleDateString("en-US", {
       year: "numeric",
       month: "long",

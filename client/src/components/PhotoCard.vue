@@ -1,5 +1,6 @@
 <script setup>
 import { Photo } from '@/models/Photo.js';
+import { RouterLink } from 'vue-router';
 
 
 
@@ -12,9 +13,11 @@ defineProps(
 </script>
 
 <template>
-  <div class="">
-    <img :src="photo.imgUrl" alt="" class=" border border-light mx-1 photo-style">
-  </div>
+  <RouterLink :to="{ name: 'Photo Details', params: { photoId: photo.id }}">
+    <div class="">
+      <img :src="photo.imgUrl" alt="" class=" border border-light mx-1 photo-style">
+    </div>
+  </RouterLink>
 </template>
 
 <style lang="scss" scoped>
