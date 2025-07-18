@@ -4,7 +4,7 @@ import { dbContext } from "../db/DbContext.js"
 class AlbumTagsService {
 
     async getAlbumsbyTagId(tagId) {
-        const tags = await dbContext.AlbumTags.findById(tagId);
+        const tags = await dbContext.AlbumTags.find({tagId: tagId}).populate('album')
         return tags;
     }
 

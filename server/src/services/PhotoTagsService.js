@@ -2,6 +2,10 @@ import { dbContext } from "../db/DbContext.js";
 import { BadRequest, Forbidden } from "../utils/Errors.js";
 
 class PhotoTagsService {
+  async getPhotobyTagId(tagId) {
+    const tags = await dbContext.PhotoTags.find({tagId: tagId}).populate('photo')
+    return tags
+  }
   async createPhotoTag(photoTagData) {
     const photoTag = await dbContext.PhotoTags.create(photoTagData);
     return photoTag;
