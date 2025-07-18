@@ -71,7 +71,7 @@ catch (error){
     .grey-square{
     height: 300px;
     width: 30vw;
-    border: 10px;
+    border-width: 1.5vw;
     border-style:ridge;
     border-color: #bebebe;
     }

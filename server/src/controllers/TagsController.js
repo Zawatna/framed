@@ -11,6 +11,7 @@ export class TagsController extends BaseController{
         .post('', this.createTag)
         .delete('/:tagId', this.deleteTag)
     }
+
     async deleteTag(request, response, next) {
         const tagId = request.params.tagId
         try {
