@@ -70,6 +70,9 @@ class AlbumsService {
       { path: "creator", select: "name picture" },
       { path: "tags", populate: "tag" },
     ]);
+    if (albums.length <= 0) {
+      return `no albums found containing "${albumQuery}"`;
+    }
     return albums;
   }
 }
