@@ -5,7 +5,7 @@ defineProps({ album: { type: Album } });
 </script>
 
 <template>
-  <div>{{ album.photos[0] }}</div>
+  <div>{{ album }}</div>
 </template>
 
 <style lang="scss" scoped></style>
