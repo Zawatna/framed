@@ -57,8 +57,15 @@ class AlbumsService {
     return album;
   }
   async getAlbumsByQuery(albumQuery) {
-    const albums = await dbContext.Album.find({
-      name: { $regex: `'${albumQuery}'`, $options: "ix" },
+    const albums = await dbContext.Albums.find({
+      $or: [
+        {
+          name: { $regex: albumQuery, $options: "ix" },
+        },
+        {
+          description: { $regex: albumQuery, $options: "ix" },
+        },
+      ],
     }).populate([
       { path: "creator", select: "name picture" },
       { path: "tags", populate: "tag" },

@@ -86,7 +86,7 @@ export class AlbumsController extends BaseController {
    */
   async getAlbumsByQuery(request, response, next) {
     try {
-      const albumQuery = request.query;
+      const albumQuery = request.query.query;
       const albums = await albumsService.getAlbumsByQuery(albumQuery);
       response.send(albums);
     } catch (error) {
