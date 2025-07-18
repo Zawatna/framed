@@ -8,11 +8,13 @@ class AlbumService {
   async getAlbumById(albumId) {
     const response = await api.get(`api/albums/${albumId}`);
     logger.log("specific album!", response.data);
-    const album = response.data.map((album) => new Album(album));
+    const album = new Album(response.data);
     AppState.album = album;
+    logger.log("appstate album", AppState.album);
   }
 
   async getAlbumPictureById(albumId) {
+    AppState.album = null;
     const response = await api.get(`api/albums/${albumId}/albumphotos`);
     logger.log("album pics", response.data);
     const pictures = response.data.map((picture) => new AlbumPhoto(picture));
@@ -20,13 +22,12 @@ class AlbumService {
     return pictures;
   }
 
-
   async createAlbum(editableAlbumData) {
     const response = await api.post(`api/albums`, editableAlbumData);
-    logger.log('Is there a new album? 🖼️🖼️🖼️🫙', response.data)
-    const album = new Album(response.data)
-    AppState.albums.unshift(album)
-    return album.id
+    logger.log("Is there a new album? 🖼️🖼️🖼️🫙", response.data);
+    const album = new Album(response.data);
+    AppState.albums.unshift(album);
+    return album.id;
   }
 
   async getAllAlbums() {
