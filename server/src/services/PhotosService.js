@@ -72,6 +72,11 @@ class PhotosService {
     }
     return photos;
   }
+
+  async getPhotosByProfileId(profileId) {
+    const photos = await dbContext.Photos.find({ creatorId: profileId });
+    return photos;
+  }
 }
 
 export const photosService = new PhotosService();

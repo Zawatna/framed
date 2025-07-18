@@ -56,7 +56,6 @@ class AlbumsService {
   async createAlbum(albumData) {
     const album = await dbContext.Albums.create(albumData);
     await album.populate("creator", "name picture");
-
     const tags = albumData.tags
     const createAlbumTags = await tagsService.checkForNewTags(tags)
     console.log('🏷️', createAlbumTags)

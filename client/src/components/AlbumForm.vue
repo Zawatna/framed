@@ -9,12 +9,16 @@ import { Modal } from 'bootstrap';
 async function createAlbum() {
     logger.log('creating album🖼️🫙', editableAlbumData.value)
     try {
-
-
-
-
+        const tags = tagsData.value
+            .split(tagSplitOn)
+            .map(tag => tag.trim().toLocaleLowerCase())
+            .filter(tag => tag)
+            .slice(0, 5)
+        editableAlbumData.value.tags = tags
+        logger.log('🏷️', tags)
         await albumsService.createAlbum(editableAlbumData.value)
         // clear form after submit
+        tagsData.value = ""
         editableAlbumData.value = {
             name: '',
             coverImg: '',
@@ -75,6 +79,7 @@ async function submitTags() {
 
         // const albumId = await albumService.createAlbum(editableAlbumData.value)
         // clear form after submit
+
         editableAlbumData.value = {
             name: '',
             coverImg: '',
