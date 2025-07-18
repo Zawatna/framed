@@ -12,9 +12,9 @@ class DbContext {
   Values = mongoose.model("Value", ValueSchema);
   Account = mongoose.model("Account", AccountSchema);
   Photos = mongoose.model("Photo", PhotoSchema);
-  Album = mongoose.model("Album", AlbumSchema);
-  Tag = mongoose.model("Tag", TagSchema);
-  AlbumTag = mongoose.model("AlbumTag", AlbumTagSchema);
+  Albums = mongoose.model("Album", AlbumSchema);
+  Tags = mongoose.model("Tag", TagSchema);
+  AlbumTags = mongoose.model("AlbumTag", AlbumTagSchema);
   PhotoTags = mongoose.model("PhotoTag", PhotoTagSchema);
   AlbumPhotos = mongoose.model("AlbumPhoto", AlbumPhotoSchema);
 }
