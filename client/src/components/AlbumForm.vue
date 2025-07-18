@@ -45,7 +45,7 @@ const tagSplitOn = /,|, | |\.|-/ig
 
 
 
-
+const tagsData = ref('')
 const editableAlbumData = ref({
     name: '',
     coverImg: '',
@@ -66,42 +66,9 @@ const editableAlbumData = ref({
 
 
 
-async function submitTags() {
-    try {
-        const tags = tagsData.value
-            .split(tagSplitOn)
-            .map(tag => tag.trim().toLocaleLowerCase())
-            .filter(tag => tag)
-            .slice(0, 5)
-        editableAlbumData.value.tags = tags
-        logger.log('🏷️', tags)
-        await albumsService.createAlbum(editableAlbumData.value)
 
-        // const albumId = await albumService.createAlbum(editableAlbumData.value)
-        // clear form after submit
 
-        editableAlbumData.value = {
-            name: '',
-            coverImg: '',
-            description: '',
-            createdAt: new Date().getFullYear,
-            updatedAt: new Date().getFullYear,
-            isArchived: false,
-            privacy: '',
-            tags: []
-        }
-        // close the modal
-        Modal.getOrCreateInstance('#albumForm').hide()
 
-        tagsData.value = ''
-
-    } catch (error) {
-        Pop.error(error);
-
-    }
-}
-
-const tagsData = ref('')
 
 </script>
 
