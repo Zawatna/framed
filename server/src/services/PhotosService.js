@@ -4,6 +4,7 @@ import { photoTagsService } from "./PhotoTagsService.js";
 import { tagsService } from "./TagsService.js";
 
 class PhotosService {
+  
   async deletePhoto(photoId, userInfo) {
     const photo = await dbContext.Photos.findById(photoId);
     if (!photo) {
@@ -48,6 +49,11 @@ class PhotosService {
     await photo.populate({ path: 'tags', populate: { path: 'tag' } })
     console.log("Photos tags??? 🖼️🖼️🖼️🖼️", photo)
     return photo;
+  }
+
+  async getPhotosByProfileId(profileId) {
+    const photos = await dbContext.Photos.find({ creatorId: profileId });
+    return photos;
   }
 }
 

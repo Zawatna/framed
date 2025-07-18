@@ -35,7 +35,13 @@ class PhotosService {
     const photoIndex = photos.findIndex((photo) => photo.id == photoId);
     photos.splice(photoIndex, 1);
   }
-
+  
+  async getUserPhotos(profileId) {
+    const res = await api.get(`api/profiles/${profileId}/photos`);
+    logger.log('Got Photos by profile Id', res.data);
+    const photos = res.data.map((pojo) => new Photo(pojo));
+    AppState.photos = photos;
+  }
 
 }
 

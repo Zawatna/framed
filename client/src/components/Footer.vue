@@ -4,6 +4,9 @@ import ModalWrapper from '@/components/ModalWrapper.vue';
 import PhotoUploadForm from '@/components/PhotoUploadForm.vue';
 import PopChoice from '@/components/PopChoice.vue';
 import AlbumForm from '@/components/AlbumForm.vue';
+import { computed } from "vue";
+
+const account = computed(() => AppState.account);
 
 function updateImgI() {
   AppState.choicePhotoIndex++;
@@ -15,7 +18,8 @@ function updateImgI() {
     <div class="row footer-wrapper">
       <div class="col-3">
         <RouterLink :to="{ name: 'Account' }">
-          <i class="mdi mdi-account footer-icon text-success"></i>
+          <i v-if="account" class="mdi mdi-account footer-icon text-success"></i>
+          <i v-else class="mdi mdi-login footer-icon text-success"></i>
         </RouterLink>
       </div>
       <div class="col-3">

@@ -1,8 +1,9 @@
 <script setup>
+import { AppState } from '@/AppState.js';
 import { computed } from 'vue';
-import { AppState } from '../AppState.js';
 
-const account = computed(() => AppState.account)
+
+const account = computed(() => AppState.account);
 
 </script>
 
