@@ -56,6 +56,15 @@ class AlbumsService {
     await album.populate("creator", "name picture");
     return album;
   }
+  async getAlbumsByQuery(albumQuery) {
+    const albums = await dbContext.Album.find({
+      name: { $regex: `'${albumQuery}'`, $options: "ix" },
+    }).populate([
+      { path: "creator", select: "name picture" },
+      { path: "tags", populate: "tag" },
+    ]);
+    return albums;
+  }
 }
 
 export const albumsService = new AlbumsService();

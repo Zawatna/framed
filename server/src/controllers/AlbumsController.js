@@ -8,6 +8,7 @@ export class AlbumsController extends BaseController {
     super("api/albums");
     this.router
       .get("", this.getAllAlbums)
+      .get("/search", this.getAlbumsByQuery)
       .get("/:albumId", this.getAlbumById)
       .get("/:albumId/albumphotos", this.getAllPhotosInAlbum)
       .use(Auth0Provider.getAuthorizedUserInfo)
@@ -40,10 +41,14 @@ export class AlbumsController extends BaseController {
     }
   }
   async deleteAlbum(request, response, next) {
-    const albumId = request.params.albumId;
-    const userId = request.userInfo.id;
-    const deletedAlbum = await albumsService.deleteAlbum(albumId, userId);
-    response.send(deletedAlbum);
+    try {
+      const albumId = request.params.albumId;
+      const userId = request.userInfo.id;
+      const deletedAlbum = await albumsService.deleteAlbum(albumId, userId);
+      response.send(deletedAlbum);
+    } catch (error) {
+      next(error);
+    }
   }
   async getAlbumById(request, response, next) {
     try {
@@ -70,6 +75,20 @@ export class AlbumsController extends BaseController {
       albumData.creatorId = userInfo.id;
       const album = await albumsService.createAlbum(albumData);
       response.send(album);
+    } catch (error) {
+      next(error);
+    }
+  }
+  /**
+   * @param {import("express").Request} request,
+   * @param {import("express").Response} response,
+   * @param {import("express").NextFunction} next,
+   */
+  async getAlbumsByQuery(request, response, next) {
+    try {
+      const albumQuery = request.query;
+      const albums = await albumsService.getAlbumsByQuery(albumQuery);
+      response.send(albums);
     } catch (error) {
       next(error);
     }
