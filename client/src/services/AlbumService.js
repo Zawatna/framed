@@ -4,7 +4,7 @@ import { Album } from "@/models/Album.js";
 import { AppState } from "@/AppState.js";
 import { AlbumPhoto } from "@/models/AlbumPhoto.js";
 
-class AlbumService {
+class AlbumsService {
   async getAlbumsByQuery(searchTerm) {
     AppState.albums = [];
     const response = await api.get(`api/albums/search?query=${searchTerm}`);
@@ -47,4 +47,4 @@ class AlbumService {
   }
 }
 
-export const albumService = new AlbumService();
+export const albumsService = new AlbumsService();

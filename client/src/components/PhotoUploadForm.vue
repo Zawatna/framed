@@ -1,6 +1,5 @@
 <script setup>
 import { photosService } from '@/services/PhotosService.js';
-import { tagsService } from '@/services/TagsService.js';
 import { logger } from '@/utils/Logger.js';
 import { Pop } from '@/utils/Pop.js';
 import { Modal } from 'bootstrap';
@@ -9,12 +8,10 @@ import { ref } from 'vue';
 
 const tagSplitOn = /,|, | |\.|-/ig
 
-
-
 async function createPhoto() {
   try {
     const tags = tagsData.value
-      .split(tagSplitOn) // seperates by the const above ^^
+      .split(tagSplitOn) // seperates by the const tagSplitOn above ^^
       .map(tag => tag.trim().toLocaleLowerCase()) // format tags
       .filter(tag => tag) // erase accidental junk 'empties'
       .slice(0, 5) // limit tag count
@@ -40,15 +37,6 @@ async function createPhoto() {
   }
 }
 
-function submitFormData() {
-  createPhoto()
-
-}
-
-
-
-
-
 const formData = ref(
   {
     description: '',
@@ -67,7 +55,7 @@ const tagsData = ref('')
 
 <template>
 
-  <form @submit.prevent="submitFormData()" class="container-fluid">
+  <form @submit.prevent="createPhoto()" class="container-fluid">
     <div class="row">
       <div class="col-12 mt-3 d-flex flex-wrap justify-content-around">
 

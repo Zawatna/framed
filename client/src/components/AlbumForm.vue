@@ -1,18 +1,19 @@
 <script setup>
-import { albumService } from '@/services/AlbumService.js';
+import { albumsService } from '@/services/AlbumService.js';
 import { logger } from '@/utils/Logger.js';
 import { ref } from 'vue';
-import ModalWrapper from './ModalWrapper.vue';
 import { Pop } from '@/utils/Pop.js';
 import { Modal } from 'bootstrap';
-import { tagsService } from '@/services/TagsService.js';
 
 
 async function createAlbum() {
     logger.log('creating album🖼️🫙', editableAlbumData.value)
-
     try {
-        await albumService.createAlbum(editableAlbumData.value)
+
+
+
+
+        await albumsService.createAlbum(editableAlbumData.value)
         // clear form after submit
         editableAlbumData.value = {
             name: '',
@@ -22,7 +23,7 @@ async function createAlbum() {
             updatedAt: new Date().getFullYear,
             isArchived: false,
             privacy: '',
-            tags: ''
+            tags: []
         }
         // close the modal
         Modal.getOrCreateInstance('#albumUploadForm').hide()
@@ -35,10 +36,7 @@ async function createAlbum() {
     }
 }
 
-function submitAlbumFormData() {
-    createAlbum()
-    submitTags()
-}
+
 const tagSplitOn = /,|, | |\.|-/ig
 
 
@@ -52,14 +50,14 @@ const editableAlbumData = ref({
     updatedAt: new Date().getFullYear,
     isArchived: false,
     privacy: '',
-    tags: ''
+    tags: []
 })
 
-const privacyOptions = [
-    "Private",
-    "Following Only",
-    "Public"
-]
+// const privacyOptions = [
+//     "Private",
+//     "Following Only",
+//     "Public"
+// ]
 
 
 
@@ -71,9 +69,10 @@ async function submitTags() {
             .map(tag => tag.trim().toLocaleLowerCase())
             .filter(tag => tag)
             .slice(0, 5)
+        editableAlbumData.value.tags = tags
         logger.log('🏷️', tags)
-        const tagReturn = await tagsService.checkForNewTags(tags)
-        logger.log('response', tagReturn)
+        await albumsService.createAlbum(editableAlbumData.value)
+
         // const albumId = await albumService.createAlbum(editableAlbumData.value)
         // clear form after submit
         editableAlbumData.value = {
@@ -84,7 +83,7 @@ async function submitTags() {
             updatedAt: new Date().getFullYear,
             isArchived: false,
             privacy: '',
-            tags: ''
+            tags: []
         }
         // close the modal
         Modal.getOrCreateInstance('#albumForm').hide()
@@ -105,7 +104,7 @@ const tagsData = ref('')
 
 <!-- integrate a for each tag loop, separated by comma in a string? -->
 <template>
-    <form @submit.prevent="submitAlbumFormData()">
+    <form @submit.prevent="createAlbum()">
         <div class="form-floating mb-2">
             <input v-model="editableAlbumData.coverImg" type="url" class="form-control" id="album-coverImg"
                 placeholder="Cover Image" maxlength="500" required: true>
@@ -128,7 +127,7 @@ const tagsData = ref('')
         </div>
         <div class="col-12 form-floating mb-3 p-1">
             <input v-model.trim="tagsData" type="text" class="form-control" id="album-tag10" placeholder="">
-            <label for="album-tag1">Example: coolcat, cooldog</label>
+            <label for="album-tag1">TAGS Example: coolcat, cooldog</label>
         </div>
         <!-- <div class="form-floating mb-2">
             <input v-model="editableAlbumData.tags" name="tags[]" type="text" class="form-control" id="album-tags"

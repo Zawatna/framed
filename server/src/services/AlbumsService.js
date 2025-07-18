@@ -1,5 +1,7 @@
 import { dbContext } from "../db/DbContext.js";
 import { BadRequest, Forbidden } from "../utils/Errors.js";
+import { albumTagsService } from "./AlbumTagsService.js";
+import { tagsService } from "./TagsService.js";
 
 class AlbumsService {
   async editAlbum(albumId, editedData, userId) {
@@ -54,8 +56,26 @@ class AlbumsService {
   async createAlbum(albumData) {
     const album = await dbContext.Albums.create(albumData);
     await album.populate("creator", "name picture");
+
+    const tags = albumData.tags
+    const createAlbumTags = await tagsService.checkForNewTags(tags)
+    console.log('🏷️', createAlbumTags)
+    let albumTagsToCreate = createAlbumTags.map(tag => {
+      return {
+        albumId: album.id,
+        creatorId: album.creatorId,
+        tagId: tag.id || tag._id,
+      }
+    })
+
+    const albumTagsToPopulate = await albumTagsService.createAlbumTag(albumTagsToCreate)
+    console.log("What came back from my tags? 🏷️🎼🏷️🎼🏷️🎼🏷️", albumTagsToPopulate)
+    await album.populate({ path: 'tags', populate: { path: 'tag' } })
+
+
     return album;
   }
+
   async getAlbumsByQuery(albumQuery) {
     const albums = await dbContext.Albums.find({
       $or: [
