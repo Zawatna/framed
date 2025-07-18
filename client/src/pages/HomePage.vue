@@ -3,7 +3,7 @@ import { AppState } from '@/AppState.js';
 import AlbumCard from '@/components/AlbumCard.vue';
 
 import PhotoCard from '@/components/PhotoCard.vue';
-import { albumService } from '@/services/AlbumService.js';
+import { albumsService } from '@/services/AlbumsService.js';
 
 import { photosService } from '@/services/PhotosService.js';
 import { Pop } from '@/utils/Pop.js';
@@ -30,7 +30,7 @@ async function getAllPhotos() {
 
 async function getAllAlbums() {
   try {
-    await albumService.getAllAlbums()
+    await albumsService.getAllAlbums()
   }
   catch (error) {
     Pop.error(error);
@@ -70,7 +70,7 @@ async function getAllAlbums() {
       </div>
       <h1 class="text-light bg-primary">Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic quibusdam vel incidunt atque cum dicta temporibus illo pariatur, illum quisquam!</h1>
     </div> -->
-      
+
 
     </section>
     <br>
@@ -78,7 +78,7 @@ async function getAllAlbums() {
       <div class="container-fluid">
         <div class="row">
           <div v-for="album in albums" :key="album.id">
-              <AlbumCard :album="album" class="photo-malarky" />
+            <AlbumCard :album="album" class="photo-malarky" />
           </div>
         </div>
       </div>
@@ -91,9 +91,9 @@ async function getAllAlbums() {
   overflow-x: auto;
   scrollbar-width: none;
 }
-.photo-malarky{
-    text-decoration: none;
-    color: white
-    // color: var(--bs--black)
+
+.photo-malarky {
+  text-decoration: none;
+  color: white // color: var(--bs--black)
 }
 </style>

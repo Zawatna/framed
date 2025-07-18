@@ -1,7 +1,7 @@
 <script setup>
 import { AppState } from "@/AppState.js";
 import AlbumSearchCard from "@/components/AlbumSearchCard.vue";
-import { albumService } from "@/services/AlbumService.js";
+import { albumsService } from "@/services/AlbumsService.js";
 import { photosService } from "@/services/PhotosService.js";
 import { logger } from "@/utils/Logger.js";
 import { Pop } from "@/utils/Pop.js";

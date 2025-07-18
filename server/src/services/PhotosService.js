@@ -50,6 +50,7 @@ class PhotosService {
     );
     // console.log("What came back from my tags? ♥️🎼🎼🎼🏷️", photoTagsToPopulate)
     await photo.populate({ path: "tags", populate: { path: "tag" } });
+    console.log("Photos tags??? 🖼️🖼️🖼️🖼️", photo);
     return photo;
   }
   async getPhotosByQuery(photoQuery) {
