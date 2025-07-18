@@ -7,20 +7,30 @@ import { Modal } from 'bootstrap';
 import { ref } from 'vue';
 
 
+const tagSplitOn = /,|, | |\.|-/ig
+
+
 
 async function createPhoto() {
   try {
-
+    const tags = tagsData.value
+      .split(tagSplitOn) // seperates by the const above ^^
+      .map(tag => tag.trim().toLocaleLowerCase()) // format tags
+      .filter(tag => tag) // erase accidental junk 'empties'
+      .slice(0, 5) // limit tag count
+    formData.value.tags = tags
+    logger.log('🎼🎼🏷️', formData.value)
     await photosService.createPhoto(formData.value)
 
-
     //clear the form
+    tagsData.value = ''
     formData.value = {
       description: '',
       location: '',
       originalDate: '',
       imgUrl: '',
-      name: ''
+      name: '',
+      tags: [],
     }
     Modal.getOrCreateInstance('#photoUploadForm').hide()
   }
@@ -32,29 +42,12 @@ async function createPhoto() {
 
 function submitFormData() {
   createPhoto()
-  submitTags()
+
 }
 
-const tagSplitOn = /,|, | |\.|-/ig
 
-async function submitTags() {
-  try {
-    const tags = tagsData.value
-      .split(tagSplitOn) // seperates by the const above ^^
-      .map(tag => tag.trim().toLocaleLowerCase()) // format tags
-      .filter(tag => tag) // erase accidental junk 'empties'
-      .slice(0, 5) // limit tag count
-    logger.log('🏷️', tags)
-    const tagReturn = await tagsService.checkForNewTags(tags)
-    logger.log("response", tagReturn)
 
-    tagsData.value = ''
 
-  }
-  catch (error) {
-    Pop.error(error);
-  }
-}
 
 const formData = ref(
   {
@@ -62,7 +55,8 @@ const formData = ref(
     location: '',
     originalDate: '',
     imgUrl: '',
-    name: ''
+    name: '',
+    tags: []
   }
 )
 

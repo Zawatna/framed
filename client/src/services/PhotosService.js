@@ -5,8 +5,8 @@ import { AppState } from "@/AppState.js"
 
 class PhotosService {
 
-  async createPhoto(formData) {
-    const response = await api.post(`api/photos`, formData)
+  async createPhoto(photoData) {
+    const response = await api.post(`api/photos`, photoData)
     logger.log("Did it work?♦️💖🗺️", response.data)
     const photo = new Photo(response.data)
     AppState.photos.unshift(photo)

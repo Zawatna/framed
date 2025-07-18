@@ -29,7 +29,7 @@ class AlbumsService {
     return `Album ${album.name} has been archived!`;
   }
   async getAlbumById(albumId) {
-    const album = await dbContext.Album.findById(albumId).populate([
+    const album = await dbContext.Albums.findById(albumId).populate([
       {
         path: "creator",
         select: "name picture",
@@ -43,7 +43,7 @@ class AlbumsService {
     return album;
   }
   async getAllAlbums() {
-    const albums = await dbContext.Album.find().populate([
+    const albums = await dbContext.Albums.find().populate([
       { path: "creator", select: "name picture" },
       { path: "photocount" },
       { path: "tags", populate: "tag" },
@@ -52,7 +52,7 @@ class AlbumsService {
   }
 
   async createAlbum(albumData) {
-    const album = await dbContext.Album.create(albumData);
+    const album = await dbContext.Albums.create(albumData);
     await album.populate("creator", "name picture");
     return album;
   }

@@ -31,7 +31,12 @@ const routes = [
     path: "/photos/:photoId",
     name: "Photo Details",
     component: loadPage("PhotoDetailsPage")
-  }
+  },
+  {
+    path: "/album/:albumId",
+    name: "AlbumDetailsPage",
+    component: loadPage("AlbumDetailsPage"),
+  },
 ];
 
 export const router = createRouter({

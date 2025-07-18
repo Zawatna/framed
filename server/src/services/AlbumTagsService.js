@@ -1,15 +1,15 @@
 import { BadRequest, Forbidden } from "@bcwdev/auth0provider/lib/Errors.js"
 import { dbContext } from "../db/DbContext.js"
 
-class AlbumTagsService{
+class AlbumTagsService {
     async deleteAlbumTag(albumTagId, userId) {
-        const AlbumTag = await dbContext.AlbumTag.findById(albumTagId).populate('tag')
-        if(AlbumTag.creatorId != userId) throw new Forbidden("You cannot delete another users album tag!")
-        AlbumTag.deleteOne()
-        return `Album tag ${AlbumTag.tag.name} has been deleted!`
+        const albumTag = await dbContext.AlbumTags.findById(albumTagId).populate('tag')
+        if (albumTag.creatorId != userId) throw new Forbidden("You cannot delete another users album tag!")
+        albumTag.deleteOne()
+        return `Album tag ${albumTag.tag.name} has been deleted!`
     }
     async createAlbumTag(tagData) {
-        const albumTag = await dbContext.AlbumTag.create(tagData)
+        const albumTag = await dbContext.AlbumTags.create(tagData)
         await albumTag.populate('tag')
         return albumTag
     }

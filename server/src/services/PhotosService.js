@@ -1,5 +1,6 @@
 import { dbContext } from "../db/DbContext.js";
 import { BadRequest, Forbidden } from "../utils/Errors.js";
+import { tagsService } from "./TagsService.js";
 
 class PhotosService {
   async deletePhoto(photoId, userInfo) {
@@ -30,6 +31,8 @@ class PhotosService {
   async createPhoto(photoData) {
     const photo = await dbContext.Photos.create(photoData);
     await photo.populate("creator", "name picture");
+    const tags = photoData.tags
+    const addTagsToPhoto = await tagsService.checkForNewTags(tags)
     return photo;
   }
 }
