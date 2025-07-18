@@ -4,7 +4,6 @@ import { BadRequest, Forbidden } from "../utils/Errors.js";
 class PhotoTagsService {
   async createPhotoTag(photoTagData) {
     const photoTag = await dbContext.PhotoTags.create(photoTagData);
-    await photoTag.populate("tag");
     return photoTag;
   }
   async getAllPhotoTags() {

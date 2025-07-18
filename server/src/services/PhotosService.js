@@ -1,5 +1,6 @@
 import { dbContext } from "../db/DbContext.js";
 import { BadRequest, Forbidden } from "../utils/Errors.js";
+import { photoTagsService } from "./PhotoTagsService.js";
 import { tagsService } from "./TagsService.js";
 
 class PhotosService {
@@ -32,7 +33,19 @@ class PhotosService {
     const photo = await dbContext.Photos.create(photoData);
     await photo.populate("creator", "name picture");
     const tags = photoData.tags
-    const addTagsToPhoto = await tagsService.checkForNewTags(tags)
+    const createPhotoTags = await tagsService.checkForNewTags(tags)
+    console.log('🏷️', createPhotoTags)
+    let photoTagsToCreate = createPhotoTags.map(tag => {
+      return {
+        photoId: photo.id,
+        creatorId: photo.creatorId,
+        tagId: tag.id || tag._id,
+      }
+    })
+
+    const photoTagsToPopulate = await photoTagsService.createPhotoTag(photoTagsToCreate)
+    // console.log("What came back from my tags? ♥️🎼🎼🎼🏷️", photoTagsToPopulate)
+    await photo.populate({ path: 'tags', populate: { path: 'tag' } })
     return photo;
   }
 }
