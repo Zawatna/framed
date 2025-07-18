@@ -37,7 +37,9 @@ async function getPhotoById() {
       <div class="text-center">
         <img :src="photo.imgUrl" :alt="`${photo.creator.name}'s posted photo`" class="img-fluid">
       </div>
-      <h5 class="img-username">@{{ photo.creator.name }}</h5>
+      <RouterLink :to="{ name: 'Profile', params: { profileId: photo.creatorId} }">
+        <h5 class="img-username">@{{ photo.creator.name }}</h5>
+      </RouterLink>
       <h4 class="img-desc main-font">{{ photo.name }}</h4>
       <div class="row align-items-center">
         <div class="col-6 d-flex ps-4">
@@ -52,7 +54,11 @@ async function getPhotoById() {
     </div>
   </div>
   <div class="row text-center bg-primary">
-    <h1 class="col-12 text-light mt-3 mb-3">More Photos from <span class="username">@{{ photo.creator.name }}</span></h1>
+    <h1 class="col-12 text-light mt-3 mb-3">More Photos from 
+      <RouterLink :to="{ name: 'Profile', params: { profileId: photo.creatorId } }">
+      <span class="username">@{{ photo.creator.name }}</span>
+      </RouterLink>
+    </h1>
   </div>
   <!-- TODO CREATE V-FOR ONCE PROFILE/PROFILE IMAGES ROUTE CREATED -->
   <RouterLink :to="{ name: 'Photo Details', params: { photoId: photo.id }}">
