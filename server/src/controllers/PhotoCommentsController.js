@@ -9,6 +9,19 @@ export class PhotoCommentsController extends BaseController {
         this.router
             .use(Auth0Provider.getAuthorizedUserInfo)
             .post('', this.createPhotoComment)
+            .delete('/:commentId', this.deletePhotoComment)
+
+    }
+    async deletePhotoComment(request, response, next) {
+        // logger.log('delete Photo Comment 💥🖼️💬')
+        const photoCommentId = request.params.photoCommentId
+        const userId = request.userInfo.id
+        try {
+            const deletePhotoComment = await photoCommentsService.deletePhotoComment(photoCommentId, userId)
+            response.send(deletePhotoComment)
+        } catch (error) {
+            next(error)
+        }
 
     }
 
