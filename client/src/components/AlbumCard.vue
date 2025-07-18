@@ -80,7 +80,7 @@ catch (error){
     height: 300px;
     width: 30vw;
     padding: 0;
-    border: 10px;
+    border-width: 1.5vw;
     border-style:ridge;
     border-color: #bebebe;
     object-fit:cover;

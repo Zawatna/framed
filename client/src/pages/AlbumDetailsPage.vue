@@ -28,7 +28,7 @@ async function getAlbumPictureById() {
     try {
         const albumId = route.params.albumId
         albumPhoto.value = await albumService.getAlbumPictureById(albumId)
-        logger.log('album photo?', albumPhoto);
+        // logger.log('album photo?', albumPhoto);
     }
     catch (error){
         Pop.error(error);
@@ -49,12 +49,12 @@ onMounted(()=> {
     <div v-if="AppState.album" class="main-font">
         <div class="small-container mx-auto mt-4">
             <div class="row">
-                <h2 class="col-6">{{ album.name }}</h2>
-                <div class="col-6 d-flex justify-content-center align-items-center">
+                <h2 class="col-6 justify-content-md-end d-flex">{{ album.name }}</h2>
+                <div class="col-6 d-flex justify-content-center align-items-center justify-content-md-start">
                     <!-- TODO - make button work -->
                     <button class="fancy-font btn btn-warning rounded-pill">Follow Album</button>
                 </div>
-            <div class="row justify-content-center">
+            <div class="row justify-content-center ">
                 <h4 class="font-grey col-5 text-end">@{{ album.creator.name }}</h4>
                 <div class="col-1 text-center">||</div>
                 <h4 class="font-grey col-5">@{{ album.photoCount}}</h4>
@@ -83,7 +83,7 @@ onMounted(()=> {
     </div>
 </div>
 <div v-else>add pictures to the album to see them here!</div>
-    </template>
+</template>
 
 
 <style lang="scss" scoped>

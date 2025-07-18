@@ -7,7 +7,7 @@ import { AlbumPhoto } from "@/models/AlbumPhoto.js";
 class AlbumService {
   async getAlbumById(albumId) {
     const response = await api.get(`api/albums/${albumId}`);
-    logger.log("specific album!", response.data);
+    // logger.log("specific album!", response.data);
     const album = new Album(response.data);
     AppState.album = album;
     logger.log("appstate album", AppState.album);
@@ -16,7 +16,7 @@ class AlbumService {
   async getAlbumPictureById(albumId) {
     AppState.album = null;
     const response = await api.get(`api/albums/${albumId}/albumphotos`);
-    logger.log("album pics", response.data);
+    // logger.log("album pics", response.data);
     const pictures = response.data.map((picture) => new AlbumPhoto(picture));
     // AppState.albumPhotos = pictures;
     return pictures;
@@ -32,7 +32,7 @@ class AlbumService {
 
   async getAllAlbums() {
     const response = await api.get("api/albums?limit=3");
-    logger.log("albums", response.data);
+    // logger.log("albums", response.data);
     const albums = response.data.map((album) => new Album(album));
     logger.log("reformatted albums", albums);
     AppState.albums = albums;
