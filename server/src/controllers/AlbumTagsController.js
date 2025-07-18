@@ -6,21 +6,12 @@ export class AlbumTagsController extends BaseController{
     constructor(){
         super('api/albumtags')
         this.router
-        .get('/:tagId/albums', this.getAlbumsbyTagId)
         .use(Auth0Provider.getAuthorizedUserInfo)
         .post('', this.createAlbumTag)
         .delete('/:albumTag', this.deleteAlbumTag)
     }
 
-        async getAlbumsbyTagId(request, response, next) {
-            try {
-                const tagId = request.params.tagId
-                const albums = await albumTagsService.getAlbumsbyTagId(tagId)
-                response.send(albums)
-            } catch (error) {
-                next(error)
-            }
-        }
+
 
     async deleteAlbumTag(request, response, next) {
         const albumTagId = request.params.albumTag
