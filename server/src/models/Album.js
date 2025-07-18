@@ -33,3 +33,9 @@ AlbumSchema.virtual("photocount", {
   justOne: false,
   count: true,
 });
+AlbumSchema.virtual("photos", {
+  localField: "_id",
+  foreignField: "albumId",
+  ref: "AlbumPhoto",
+  justOne: false,
+});

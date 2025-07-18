@@ -23,30 +23,53 @@ class PhotosService {
     return photos;
   }
   async getAllPhotos() {
-    const photos = await dbContext.Photos.find().sort({ createdAt: -1 }).populate([
-      { path: "creator", select: "name picture" },
-      { path: "tags", populate: "tag" },
-    ]);
+    const photos = await dbContext.Photos.find()
+      .sort({ createdAt: -1 })
+      .populate([
+        { path: "creator", select: "name picture" },
+        { path: "tags", populate: "tag" },
+      ]);
     return photos;
   }
   async createPhoto(photoData) {
     const photo = await dbContext.Photos.create(photoData);
     await photo.populate("creator", "name picture");
-    const tags = photoData.tags
-    const createPhotoTags = await tagsService.checkForNewTags(tags)
-    console.log('🏷️', createPhotoTags)
-    let photoTagsToCreate = createPhotoTags.map(tag => {
+    const tags = photoData.tags;
+    const createPhotoTags = await tagsService.checkForNewTags(tags);
+    console.log("🏷️", createPhotoTags);
+    let photoTagsToCreate = createPhotoTags.map((tag) => {
       return {
         photoId: photo.id,
         creatorId: photo.creatorId,
         tagId: tag.id || tag._id,
-      }
-    })
+      };
+    });
 
-    const photoTagsToPopulate = await photoTagsService.createPhotoTag(photoTagsToCreate)
+    const photoTagsToPopulate = await photoTagsService.createPhotoTag(
+      photoTagsToCreate
+    );
     // console.log("What came back from my tags? ♥️🎼🎼🎼🏷️", photoTagsToPopulate)
-    await photo.populate({ path: 'tags', populate: { path: 'tag' } })
+    await photo.populate({ path: "tags", populate: { path: "tag" } });
     return photo;
+  }
+  async getPhotosByQuery(photoQuery) {
+    const photos = await dbContext.Photos.find({
+      $or: [
+        {
+          name: { $regex: photoQuery, $options: "ix" },
+        },
+        {
+          description: { $regex: photoQuery, $options: "ix" },
+        },
+      ],
+    }).populate([
+      { path: "creator", select: "name picture" },
+      { path: "tags", populate: "tag" },
+    ]);
+    if (photos.length <= 0) {
+      return `no photos found containing "${photoQuery}"`;
+    }
+    return photos;
   }
 }
 

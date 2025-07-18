@@ -1,3 +1,5 @@
+import { Photo } from "./Photo.js";
+
 export class Album {
   constructor(data) {
     this.name = data.name;
@@ -22,6 +24,7 @@ export class Album {
     this.id = data.id || data._id;
     this.photoCount = data.photocount;
     this.tags = data.tags;
+    this.photos = data.photos?.map((pojo) => new Photo(pojo));
   }
 }
 

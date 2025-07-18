@@ -4,66 +4,73 @@ import { photosService } from "../services/PhotosService.js";
 
 export class PhotosController extends BaseController {
   constructor() {
-    super("api/photos")
+    super("api/photos");
     this.router
+      .get("/search", this.getPhotosByQuery)
       .get("", this.getAllPhotos)
-      .get('/:photoId', this.getPhotosById)
+      .get("/:photoId", this.getPhotosById)
       .use(Auth0Provider.getAuthorizedUserInfo)
-      .delete('/:photoId', this.deletePhoto)
-      .post("", this.createPhoto)
+      .delete("/:photoId", this.deletePhoto)
+      .post("", this.createPhoto);
   }
 
   /**
-    * @param {import("express").Request} request
-    * @param {import("express").Response} response
-    * @param {import("express").NextFunction} next
-    */
+   * @param {import("express").Request} request
+   * @param {import("express").Response} response
+   * @param {import("express").NextFunction} next
+   */
   async createPhoto(request, response, next) {
     try {
-      const photoData = request.body
-      const userInfo = request.userInfo
-      photoData.creatorId = userInfo.id
-      const photo = await photosService.createPhoto(photoData)
-      response.send(photo)
-    }
-    catch (error) {
-      next(error)
+      const photoData = request.body;
+      const userInfo = request.userInfo;
+      photoData.creatorId = userInfo.id;
+      const photo = await photosService.createPhoto(photoData);
+      response.send(photo);
+    } catch (error) {
+      next(error);
     }
   }
   /**
-  * @param {import("express").Request} request
-  * @param {import("express").Response} response
-  * @param {import("express").NextFunction} next
-  */
+   * @param {import("express").Request} request
+   * @param {import("express").Response} response
+   * @param {import("express").NextFunction} next
+   */
   async getAllPhotos(request, response, next) {
     try {
-      const photos = await photosService.getAllPhotos()
-      response.send(photos)
+      const photos = await photosService.getAllPhotos();
+      response.send(photos);
     } catch (error) {
-      next(error)
+      next(error);
     }
   }
 
   async getPhotosById(request, response, next) {
     try {
-      const photoId = request.params.photoId
-      const photos = await photosService.getPhotosById(photoId)
-      response.send(photos)
+      const photoId = request.params.photoId;
+      const photos = await photosService.getPhotosById(photoId);
+      response.send(photos);
     } catch (error) {
-      next(error)
+      next(error);
     }
   }
 
   async deletePhoto(request, response, next) {
     try {
-      const photoId = request.params.photoId
-      const userInfo = request.userInfo
-      await photosService.deletePhoto(photoId, userInfo)
-      response.send('Deleted photo!')
+      const photoId = request.params.photoId;
+      const userInfo = request.userInfo;
+      await photosService.deletePhoto(photoId, userInfo);
+      response.send("Deleted photo!");
     } catch (error) {
-      next(error)
+      next(error);
     }
   }
-
-
+  async getPhotosByQuery(request, response, next) {
+    try {
+      const photoQuery = request.query.query;
+      const photos = await photosService.getPhotosByQuery(photoQuery);
+      response.send(photos);
+    } catch (error) {
+      next(error);
+    }
+  }
 }
