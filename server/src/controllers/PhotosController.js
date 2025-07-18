@@ -65,5 +65,7 @@ export class PhotosController extends BaseController {
     }
   }
 
+  async 
+
 
 }
