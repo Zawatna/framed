@@ -22,7 +22,7 @@ async function searchFramed(type) {
   selectedSearch.value = type;
   try {
     if (selectedSearch.value == "albums") {
-      const albums = await albumService.getAlbumsByQuery(
+      const albums = await albumsService.getAlbumsByQuery(
         editableSearchTerm.value
       );
       logger.log("getting Albums" + albums);
