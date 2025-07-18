@@ -2,7 +2,7 @@
 import { AppState } from '@/AppState.js';
 import { Album } from '@/models/Album.js';
 import AlbumDetailsPage from '@/pages/AlbumDetailsPage.vue';
-import { albumService } from '@/services/AlbumsService.js';
+import { albumsService } from '@/services/AlbumsService.js';
 import { Pop } from '@/utils/Pop.js';
 import { computed, onMounted, ref } from 'vue';
 
@@ -18,7 +18,7 @@ const albumPhoto = ref([])
 async function getAlbumPictureById() {
     try {
         const albumId = album.album.id
-        albumPhoto.value = await albumService.getAlbumPictureById(albumId)
+        albumPhoto.value = await albumsService.getAlbumPictureById(albumId)
     }
     catch (error) {
         Pop.error(error);
