@@ -7,6 +7,7 @@ import { AlbumPhoto } from "@/models/AlbumPhoto.js";
 class AlbumsService {
   async getAlbumsByQuery(searchTerm) {
     AppState.albums = [];
+    AppState.searchTerm = searchTerm;
     const response = await api.get(`api/albums/search?query=${searchTerm}`);
     logger.log(response.data);
     const albums = response.data.map((album) => new Album(album));

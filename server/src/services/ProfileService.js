@@ -1,33 +1,51 @@
-import { dbContext } from '../db/DbContext.js'
+import { BadRequest } from "@bcwdev/auth0provider/lib/Errors.js";
+import { dbContext } from "../db/DbContext.js";
 
 // IMPORTANT profiles should not be updated or modified in any way here. Use the AccountService
 
 class ProfileService {
   /**
-    * Returns a user profile from its id
-    * @param {string} id
+   * Returns a user profile from its id
+   * @param {string} id
    */
   async getProfileById(id) {
-    const profile = await dbContext.Account.findById(id)
-    return profile
+    const profile = await dbContext.Account.findById(id);
+    return profile;
   }
 
   /**
-    * Returns a list user profiles from a query search of name likeness
-    * limits to first 20 without offset
-    * @param {string} name
+   * Returns a list user profiles from a query search of name likeness
+   * limits to first 20 without offset
+   * @param {string} name
    */
-  async findProfiles(name = '', offset = 0) {
-    const filter = new RegExp(name, 'ig')
-    return await dbContext.Account
-      .aggregate([{
-        $match: { name: filter }
-      }])
-      .collation({ locale: 'en_US', strength: 1 })
+  async findProfiles(name = "", offset = 0) {
+    const filter = new RegExp(name, "ig");
+    return await dbContext.Account.aggregate([
+      {
+        $match: { name: filter },
+      },
+    ])
+      .collation({ locale: "en_US", strength: 1 })
       .skip(Number(offset))
       .limit(20)
-      .exec()
+      .exec();
+  }
+  async getProfilesByQuery(profileQuery) {
+    const profiles = await dbContext.Account.find({
+      $or: [
+        {
+          name: { $regex: profileQuery, $options: "ix" },
+        },
+        {
+          bio: { $regex: profileQuery, $options: "ix" },
+        },
+      ],
+    });
+    if (profiles.length <= 0) {
+      return `no profiles found containing "${profileQuery}"`;
+    }
+    return profiles;
   }
 }
 
-export const profileService = new ProfileService()
+export const profileService = new ProfileService();

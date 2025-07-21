@@ -6,6 +6,7 @@ import { AppState } from "@/AppState.js";
 class PhotosService {
   async getPhotosByQuery(photoQuery) {
     AppState.photos = [];
+    AppState.searchTerm = photoQuery;
     const response = await api.get(`api/photos/search?query=${photoQuery}`);
     logger.log(response.data);
     const photos = response.data.map((pojo) => new Photo(pojo));
