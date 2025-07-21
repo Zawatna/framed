@@ -99,7 +99,7 @@ onMounted(() => {
 
         <div v-for="(albumPhotos, n) in albumPhoto" :key="`albumPhotos-${n}`" :class="gridPattern[n % gridPattern.length]">
           
-            <img src="https://images.unsplash.com/photo-1611915387288-fd8d2f5f928b?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fGNhdHxlbnwwfDJ8MHx8fDA%3D" class="img-fluid w-100">
+            <img :src="albumPhotos.photo.imgUrl" class="img-fluid w-100">
           
         </div>
 
