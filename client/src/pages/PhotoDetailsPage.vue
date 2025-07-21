@@ -34,29 +34,33 @@ async function getPhotoById() {
 <template>
 <div v-if="photo && photo.creator" class="container-fluid mb-5">
   <div class="row justify-content-center mb-5">
-    <div class="frame justify-content-center mt-3 pb-1 px-1">
-      <div class="text-center">
-        <img :src="photo.imgUrl" :alt="`${photo.creator.name}'s posted photo`" class="img-fluid">
-      </div>
-      <div v-if="photo.creatorId != account?.id">
-        <RouterLink :to="{ name: 'Profile', params: { profileId: photo?.creatorId} }">
-          <h5 class="img-username">@{{ photo.creator.name }}</h5>
+    <div class="row justify-content-center mb-5">
+      <div class="frame justify-content-start mt-3 pb-1 px-1">
+        <RouterLink :to="{ name: 'Photo Details', params: { photoId: photo.id }}">
+          <div class="text-center">
+            <img :src="photo.imgUrl" :alt="`@${photo.creator.name}'s posted photo`" class="img-fluid">
+          </div>
         </RouterLink>
-      </div>
-      <div v-else>
+        <div v-if="photo.creatorId != account?.id">
+          <RouterLink :to="{ name: 'Profile', params: { profileId: photo?.creatorId} }">
+            <h5 class="img-username">@{{ photo.creator.name }}</h5>
+          </RouterLink>
+        </div>
+        <div v-else>
         <RouterLink :to="{ name: 'Profile', params: { profileId: photo?.creatorId } }">
           <h5 class="img-username">@{{ photo.creator.name }}</h5>
         </RouterLink>
       </div>
-      <h4 class="img-desc main-font">{{ photo.name }}</h4>
-      <div class="row align-items-center">
-        <div class="col-6 d-flex ps-4">
-          <i class="mdi mdi-comment display-3 text-light"></i>
-          <p class="mt-2 ms-1 fs-4">33</p>
-        </div>
-        <div class="col-6 text-end justify-content-end d-flex pe-4">
-          <p class="like-num me-1 fs-4">1.3K</p>
-          <i class=" mdi mdi-heart text-warning display-3" role="button" ></i>
+        <h4 class="img-desc main-font">{{ photo.description }}</h4>
+        <div class="row align-items-center">
+          <div class="col-6 d-flex ps-4">
+            <i class="mdi mdi-comment display-3 text-light"></i>
+            <p class="mt-2 ms-1 fs-4">33</p>
+          </div>
+          <div class="col-6 text-end justify-content-end d-flex pe-4">
+            <p class="like-num me-1 fs-4">1.3K</p>
+            <i class=" mdi mdi-heart text-warning display-3" role="button" ></i>
+          </div>
         </div>
       </div>
     </div>
@@ -74,13 +78,24 @@ async function getPhotoById() {
     </h1>
   </div>
   <!-- TODO CREATE V-FOR ONCE PROFILE/PROFILE IMAGES ROUTE CREATED -->
-  <RouterLink :to="{ name: 'Photo Details', params: { photoId: photo.id }}">
+  
     <div class="row justify-content-center mb-5">
-      <div class="frame justify-content-center mt-3 pb-1 px-1">
-        <div class="text-center">
-          <img :src="photo.imgUrl" :alt="`@${photo.creator.name}'s posted photo`" class="img-fluid">
+      <div class="frame justify-content-start mt-3 pb-1 px-1">
+        <RouterLink :to="{ name: 'Photo Details', params: { photoId: photo.id }}">
+          <div class="">
+            <img :src="photo.imgUrl" :alt="`@${photo.creator.name}'s posted photo`" class="img-fluid">
+          </div>
+        </RouterLink>
+        <div v-if="photo.creatorId != account?.id">
+          <RouterLink :to="{ name: 'Profile', params: { profileId: photo?.creatorId} }">
+            <h5 class="img-username">@{{ photo.creator.name }}</h5>
+          </RouterLink>
         </div>
-        <h5 class="img-username">@{{ photo.creator.name }}</h5>
+        <div v-else>
+        <RouterLink :to="{ name: 'Profile', params: { profileId: photo?.creatorId } }">
+          <h5 class="img-username">@{{ photo.creator.name }}</h5>
+        </RouterLink>
+      </div>
         <h4 class="img-desc main-font">{{ photo.description }}</h4>
         <div class="row align-items-center">
           <div class="col-6 d-flex ps-4">
@@ -94,7 +109,6 @@ async function getPhotoById() {
         </div>
       </div>
     </div>
-  </RouterLink>
 </div>
 <div v-else class="mt-5 container text-warning">
   <div class="row text-center">
@@ -117,15 +131,17 @@ a {
 
 img {
   aspect-ratio: 1/1;
-  width: 95%;
-  margin-top: 20px;
-
+  border-radius: 5%;
+  padding-inline: 10px;
+  padding-top: 5px;
 }
 
 .frame {
-  background: #AEA399;
-  background: linear-gradient(356deg, rgba(174, 163, 153, 1) 0%, rgba(185, 174, 162, 1) 10%, rgba(189, 177, 165, 1) 27%, rgba(199, 186, 172, 1) 37%, rgba(191, 178, 166, 1) 41%, rgba(182, 170, 159, 1) 45%, rgba(152, 144, 136, 1) 48%, rgba(163, 152, 142, 1) 53%, rgba(124, 119, 113, 1) 58%, rgba(140, 132, 123, 1) 67%, rgba(122, 117, 112, 1) 80%, rgba(140, 132, 123, 1) 88%, rgba(132, 126, 118, 1) 97%);
-  width: 800px;
+  background-image: url(https://images.rawpixel.com/image_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIyLTA1L3B4NjUwODQ3LWltYWdlLWt3dnZhaDBvLmpwZw.jpg);
+  object-fit: cover;
+  background-repeat: no-repeat;
+  border-radius: 3%;
+  width: 700px;
 }
 
 .img-desc {
