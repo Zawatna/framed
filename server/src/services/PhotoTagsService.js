@@ -2,8 +2,16 @@ import { dbContext } from "../db/DbContext.js";
 import { BadRequest, Forbidden } from "../utils/Errors.js";
 
 class PhotoTagsService {
+  async getPhotoTagsCountByProfileId(profileId) {
+    const photoTags = await dbContext.PhotoTags.find({ creatorId: profileId }).populate('tag')
+    const tagNames = await photoTags.map(photoTag => ({ name: photoTag.tag.name }))
+    const names = await tagNames.map(data => data.name)
+    return names
+
+
+  }
   async getPhotobyTagId(tagId) {
-    const tags = await dbContext.PhotoTags.find({tagId: tagId}).populate('photo')
+    const tags = await dbContext.PhotoTags.find({ tagId: tagId }).populate('photo')
     return tags
   }
   async createPhotoTag(photoTagData) {
