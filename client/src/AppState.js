@@ -8,6 +8,10 @@ export const AppState = reactive({
   account: null,
   /** @type {import('./models/Account.js').Account[]}*/
   profiles: [],
+
+  /** @type {import('./models/Account.js').Account}*/
+  profile: null,
+
   /** @type {import('./models/Photo.js').Photo[]} */
   photos: [],
 
