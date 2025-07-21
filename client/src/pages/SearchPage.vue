@@ -1,6 +1,7 @@
 <script setup>
 import { AppState } from "@/AppState.js";
 import AlbumSearchCard from "@/components/AlbumSearchCard.vue";
+import PhotoCard from "@/components/PhotoCard.vue";
 import { albumsService } from "@/services/AlbumsService.js";
 import { photosService } from "@/services/PhotosService.js";
 import { logger } from "@/utils/Logger.js";
@@ -42,7 +43,7 @@ async function searchFramed(type) {
 
 <template>
   <div
-    class="d-flex flex-column shadow text-center text-light ps-3 mb-3 justify-content-center align-items-center"
+    class="d-flex flex-column shadow text-center text-light ps-3 mb-3 justify-content-center align-items-center main-font"
   >
     <h1 v-if="searchTerm" class="fs-1 text-light">
       Searching for {{ searchTerm }}
@@ -79,8 +80,8 @@ async function searchFramed(type) {
     </div>
   </section>
   <section v-if="selectedSearch == 'albums'" class="text-light">
-    <div class="row">
-      <div class="col-md-3" v-for="album in albums" :key="album.id">
+    <div class="row d-flex gap-2">
+      <div class="col-md-3 ms-5 pt-2" v-for="album in albums" :key="album.id">
         <AlbumSearchCard :album />
       </div>
     </div>
@@ -88,7 +89,7 @@ async function searchFramed(type) {
   <section v-if="selectedSearch == 'photos'" class="text-light">
     <div class="row">
       <div class="col-md-3" v-for="photo in photos" :key="photo.id">
-        {{ photo.name }}
+        <PhotoCard :photo />
       </div>
     </div>
   </section>
