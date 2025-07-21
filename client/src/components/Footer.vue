@@ -6,7 +6,7 @@ import PopChoice from '@/components/PopChoice.vue';
 import AlbumForm from '@/components/AlbumForm.vue';
 import { computed } from "vue";
 import { AuthService } from "@/services/AuthService.js";
-import Login from "./Login.vue";
+
 
 const account = computed(() => AppState.account);
 
@@ -14,14 +14,10 @@ function updateImgI() {
   AppState.choicePhotoIndex++;
 }
 
-const identity = computed(() => AppState.identity)
-
 function login() {
   AuthService.loginWithRedirect()
 }
-function logout() {
-  AuthService.logout()
-}
+
 </script>
 
 <template>

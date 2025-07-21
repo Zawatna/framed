@@ -4,7 +4,8 @@ import { AuthService } from '@/services/AuthService.js';
 import { computed } from 'vue';
 
 
-const account = computed(() => AppState.account);const identity = computed(() => AppState.identity)
+const account = computed(() => AppState.account);
+
 
 
 function logout() {
