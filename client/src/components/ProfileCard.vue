@@ -1,5 +1,6 @@
 <script setup>
 import { AppState } from '@/AppState.js';
+import { albumsService } from '@/services/AlbumsService.js';
 import { photosService } from '@/services/PhotosService.js';
 import { profilesService } from '@/services/ProfilesService.js';
 import { logger } from '@/utils/Logger.js';
@@ -9,12 +10,13 @@ import { useRoute } from 'vue-router';
 
 
 onMounted(() => {
-  getProfileById()
+  getProfileById();
   getUserPhotos();
-
+  getTagCount();
 })
 
 const profile = computed(() => AppState.profile)
+const profileTags = computed(() => AppState.profileTags)
 
 const route = useRoute();
 
@@ -39,6 +41,20 @@ async function getUserPhotos() {
     logger.error('could not get user posts', error);
   }
 }
+
+async function getTagCount() {
+  try {
+    const profileId = route.params.profileId;
+    const albumTags = await albumsService.getMostAlbumsTagsById(profileId)
+    logger.log("Album Tags", albumTags)
+  }
+  catch (error) {
+    Pop.error(error);
+    logger.error(error)
+  }
+}
+
+
 </script>
 
 
@@ -51,7 +67,7 @@ async function getUserPhotos() {
           :alt="`picture of the profile owner: ${profile.name}`">
       </div>
       <div class="ps-md-3 ps-lg-0 col-md-9 p-0 d-flex align-items-center flex-column">
-        <h1 class="my-3 text-light text-shadow title-font">{{ profile.name }}</h1>
+        <h1 class="my-3 text-light text-shadow fancy-font">{{ profile.name }}</h1>
         <p class="text-light text-shadow main-font text-center m-0 mb-3 px-3 fs-4">{{ profile.bio }}</p>
       </div>
     </div>
@@ -65,12 +81,7 @@ async function getUserPhotos() {
           Used Tags
         </h3>
         <div class="d-flex gap-3 text-center text-shadow justify-content-around">
-          <p>Red</p>
-          <p>blue</p>
-          <p>Colors</p>
-          <p>bears</p>
-          <p>corn</p>
-
+          <p v-for="(tagObject, index) in profileTags.slice(0, 5)" :key="index">{{ tagObject.tag }}</p>
         </div>
         <!-- //TODO - Get Tags back that they use most and put them here in order with links to the search by that tag string -->
       </div>
@@ -99,11 +110,6 @@ async function getUserPhotos() {
   @media screen and (min-width:2560px) {
     height: 30dvh;
   }
-
-}
-
-.text-shadow {
-  text-shadow: 2px 2px 2px black;
 
 }
 </style>

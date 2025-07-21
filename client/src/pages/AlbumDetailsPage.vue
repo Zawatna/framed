@@ -11,6 +11,8 @@ const route = useRoute()
 const album = computed(() => AppState.album)
 const albumPhoto = ref([])
 
+const gridPattern = ref(['box-md', 'box-sm', 'box-sm', ])
+
 
 
 async function getAlbumById() {
@@ -82,21 +84,98 @@ onMounted(() => {
         </div>
     </div>
     <div v-else>loading <span class="mdi mdi-loading mdi-spin"></span></div>
+    <!-- SECTION ALBUM PHOTOS  -->
+    <!-- <div class="container-fluid" v-if="albumPhoto">
+      <div class="row gap-2 justify-content-center">
+          <div class="d-flex justify-content-center col-lg-3 mx-lg-3 col-md-5 mx-md-2" v-for="albumPhotos in albumPhoto" :key="albumPhotos.id">
+              <img class="album-image border-cream" :src="albumPhotos.photo.imgUrl"
+                  :alt="albumPhotos.photo.creator.name">
+              
+          </div>
+      </div>
+    </div> -->
     <div class="container-fluid" v-if="albumPhoto">
-        <div class="row gap-2 justify-content-center">
-            <div class="d-flex justify-content-center col-lg-3 mx-lg-3 col-md-5 mx-md-2" v-for="albumPhotos in albumPhoto" :key="albumPhotos.id">
-                <img class="album-image border-cream" :src="albumPhotos.photo.imgUrl"
-                    :alt="albumPhotos.photo.creator.name">
-                <!-- {{ albumPhotos.photo.imgUrl }} -->
-            </div>
+      <div class="wrapper">
+
+        <div v-for="(albumPhotos, n) in albumPhoto" :key="`albumPhotos-${n}`" :class="gridPattern[n % gridPattern.length]">
+          
+            <img src="https://images.unsplash.com/photo-1611915387288-fd8d2f5f928b?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fGNhdHxlbnwwfDJ8MHx8fDA%3D" class="img-fluid w-100">
+          
         </div>
+
+      </div>
     </div>
-    <div v-else>add pictures to the album to see them here!</div>
+    <!-- !SECTION -->
+    <!-- <div v-else>add pictures to the album to see them here!</div> -->
 
 </template>
 
 
 <style lang="scss" scoped>
+
+img {
+  border: 2px solid tan;
+}
+
+.wrapper {
+  display: grid;
+  // grid-auto-flow: column;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+}
+
+.box-md{
+  grid-column: auto / span 2;
+  grid-row: auto / span 2;
+}
+
+.box-sm{
+grid-column: auto / span 1;
+  grid-row: auto / span 1;
+}
+
+// .box0 {
+//   grid-column-start: 1;
+//   grid-column-end: 3;
+//   grid-row-start: 1;
+//   grid-row-end: 5;
+// }
+
+// .box1 {
+//   grid-column-start: 3;
+//   grid-column-end: 4;
+//   grid-row-start: 1;
+//   grid-row-end: 3;
+// }
+
+// .box2 {
+//   grid-column-start: 4;
+//   grid-column-end: 5;
+//   grid-row-start: 1;
+//   grid-row-end: 3;
+// }
+
+// .box3 {
+//   grid-column-start: 3;
+//   grid-column-end: 5;
+//   grid-row-start: 2;
+//   grid-row-end: 4;
+// }
+
+// .box4 {
+//   grid-column-start: 1;
+//   grid-column-end: 2;
+//   grid-row-start: 3;
+//   grid-row-end: 4;
+// }
+
+// .box5 {
+//   grid-column-start: 2;
+//   grid-column-end: 3;
+//   grid-row-start: 3;
+//   grid-row-end: 4;
+// }
+
 * {
     color: white
 }
@@ -264,6 +343,8 @@ body {
   color: #c0c0d8;
 }
 
+
+
 // img{
 // height: 500px;
 // width: 30vw;
@@ -272,4 +353,4 @@ body {
 // border-style:ridge;
 // border-color: #bebebe;
 // object-fit:cover;
-// }</style>
+</style>

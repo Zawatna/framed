@@ -2,9 +2,15 @@ import { BadRequest, Forbidden } from "@bcwdev/auth0provider/lib/Errors.js"
 import { dbContext } from "../db/DbContext.js"
 
 class AlbumTagsService {
+    async getAlbumTagsCountByProfileId(profileId) {
+        const albumTags = await dbContext.AlbumTags.find({ creatorId: profileId }).populate('tag')
+        const tagNames = await albumTags.map(albumTag => ({ name: albumTag.tag.name }))
+        const names = await tagNames.map(data => data.name)
+        return names
+    }
 
     async getAlbumsbyTagId(tagId) {
-        const tags = await dbContext.AlbumTags.find({tagId: tagId}).populate('album')
+        const tags = await dbContext.AlbumTags.find({ tagId: tagId }).populate('album')
         return tags;
     }
 

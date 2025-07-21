@@ -1,4 +1,7 @@
+import { Aggregate } from "mongoose";
+import { albumTagsService } from "../services/AlbumTagsService.js";
 import { photosService } from "../services/PhotosService.js";
+import { photoTagsService } from "../services/PhotoTagsService.js";
 import { profileService } from "../services/ProfileService.js";
 import BaseController from "../utils/BaseController.js";
 
@@ -9,7 +12,8 @@ export class ProfilesController extends BaseController {
       .get("/search", this.getProfilesByQuery)
       .get("", this.getProfiles)
       .get("/:id", this.getProfile)
-      .get("/:id/photos", this.getPhotosByProfileId);
+      .get("/:id/photos", this.getPhotosByProfileId)
+      .get("/:id/tags", this.getTagsByProfileId);
   }
 
   async getProfiles(req, res, next) {
