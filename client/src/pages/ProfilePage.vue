@@ -25,9 +25,9 @@ async function getUserPhotos() {
 
 
 <template>
-<section>
-  hello world
-</section>
+  <section>
+    
+  </section>
 </template>
 
 

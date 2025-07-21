@@ -55,8 +55,12 @@ onMounted(() => {
                     <!-- <button class="fancy-font btn btn-warning rounded-pill">Follow Album</button> -->
                     <button class="button-92" role="button">Follow Album</button>
                 </div>
-                <div class="row justify-content-center ">
-                    <h4 class="font-grey col-5 text-end">@{{ album.creator.name }}</h4>
+                <div class="row justify-content-center mt-3">
+                  <div class="col-5">
+                    <RouterLink :to="{ name: 'Profile', params: { profileId: album.creator.id } }">
+                      <h4 class="font-grey text-end">@{{ album.creator.name }}</h4>
+                    </RouterLink>
+                  </div>
                     <div class="col-1 text-center">||</div>
                     <h4 class="font-grey col-5">{{ album.photoCount }} photos</h4>
                 </div>
@@ -95,6 +99,11 @@ onMounted(() => {
 <style lang="scss" scoped>
 * {
     color: white
+}
+
+a {
+  text-decoration: none;
+  color: rgb(163, 162, 162);
 }
 
 .font-grey {
