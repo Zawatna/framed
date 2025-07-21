@@ -1,4 +1,4 @@
-import { Photo } from "./Photo.js";
+import { Photo } from "../models/Photo.js";
 
 export class AlbumPhoto {
   constructor(data) {
@@ -6,6 +6,7 @@ export class AlbumPhoto {
     this.creatorId = data.creatorId;
     this.id = data.id || data._id;
     this.photoId = data.photoId;
+    /** @type {import('../models/Photo.js').Photo} */
     this.photo = new Photo(data.photo);
   }
 }
