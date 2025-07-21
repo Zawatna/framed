@@ -1,9 +1,15 @@
 <script setup>
 import { AppState } from '@/AppState.js';
+import { AuthService } from '@/services/AuthService.js';
 import { computed } from 'vue';
 
 
-const account = computed(() => AppState.account);
+const account = computed(() => AppState.account);const identity = computed(() => AppState.identity)
+
+
+function logout() {
+  AuthService.logout()
+}
 
 </script>
 
@@ -23,6 +29,7 @@ const account = computed(() => AppState.account);
 
 
     <button type="button" class="framed-font ">Edit Profile</button>
+    <button @click="logout()" type="button" class="framed-font">Log Out</button>
   </div>
 </template>
 

@@ -8,6 +8,7 @@ import { RouterLink, useRoute } from 'vue-router';
 
 onMounted(() => {
 getPhotoById();
+// getPhotosByCreatorId();
 });
 
 const route = useRoute();
@@ -27,6 +28,16 @@ async function getPhotoById() {
     logger.log('could not get photo by id', error)
   }
 }
+
+// async function getPhotosByCreatorId() {
+//   try {
+//     const creatorId = account;
+//     await photosService.getUserPhotos(creatorId);
+//   }
+//   catch (error){
+//     Pop.error(error);
+//   }
+// }
 
 </script>
 
