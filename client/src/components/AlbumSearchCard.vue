@@ -1,104 +1,113 @@
 <script setup>
 import { Album } from "@/models/Album.js";
+import { RouterLink } from "vue-router";
 
 defineProps({ album: { type: Album } });
 </script>
 
 <template>
   <div v-if="album.photos.length > 0" class="album-card">
-    <div>
-      <p class="album-title fw-bold">
-        {{ album.name }} by {{ album.creator.name }}
-      </p>
-    </div>
-    <div class="">
-      <img
-        src="../assets/img/polaroid-frame-PNG-for-photoshop.png"
-        class="polaroid-frame-1"
-        :class="album.photos[0] ? '' : 'd-none'"
-      />
-      <img
-        class="album-photo photo-1 polaroid-frame"
-        :src="album.photos[0]?.photo.imgUrl"
-        :alt="album.photos[0]?.photo.name"
-        :class="album.photos[0] ? '' : 'd-none'"
-      />
-    </div>
-    <div class="position-relative">
-      <img
-        src="../assets/img/polaroid-frame-PNG-for-photoshop.png"
-        class="polaroid-frame-2"
-        :class="album.photos[0] ? '' : 'd-none'"
-      />
-      <img
-        class="album-photo photo-2 polaroid-frame"
-        :src="album.photos[0]?.photo.imgUrl"
-        :alt="album.photos[0]?.photo.name"
-        :class="album.photos[0] ? '' : 'd-none'"
-      />
-    </div>
-    <div class="position-relative">
+    <RouterLink
+      :to="{ name: 'AlbumDetailsPage', params: { albumId: album.id } }"
+    >
       <div>
+        <p class="album-title fw-bold">
+          {{ album.name }} by {{ album.creator.name }}
+        </p>
+      </div>
+      <div class="">
         <img
           src="../assets/img/polaroid-frame-PNG-for-photoshop.png"
-          class="polaroid-frame-3"
+          class="polaroid-frame-1"
           :class="album.photos[0] ? '' : 'd-none'"
         />
         <img
-          class="album-photo photo-3 polaroid-frame"
+          class="album-photo photo-1 polaroid-frame"
           :src="album.photos[0]?.photo.imgUrl"
           :alt="album.photos[0]?.photo.name"
           :class="album.photos[0] ? '' : 'd-none'"
         />
       </div>
-    </div>
-  </div>
-  <div v-else class="album-card">
-    <div>
-      <p class="album-title fw-bold">
-        {{ album.name }} by {{ album.creator.name }}
-      </p>
-    </div>
-    <div>
-      <p class="album-title fw-bold">
-        {{ album.name }} by {{ album.creator.name }}
-      </p>
-    </div>
-    <div class="position-relative">
-      <img
-        src="../assets/img/polaroid-frame-PNG-for-photoshop.png"
-        class="polaroid-frame-1"
-      />
-      <img
-        class="album-photo photo-1 polaroid-frame"
-        src="../assets/img/framed-logo.png"
-        alt="framed logo"
-      />
-    </div>
-    <div class="position-relative">
-      <img
-        src="../assets/img/polaroid-frame-PNG-for-photoshop.png"
-        class="polaroid-frame-2"
-      />
-      <img
-        class="album-photo photo-2 polaroid-frame"
-        src="../assets/img/framed-logo.png"
-        alt="framed logo"
-      />
-    </div>
-    <div class="position-relative">
-      <div>
+      <div class="position-relative">
         <img
           src="../assets/img/polaroid-frame-PNG-for-photoshop.png"
-          class="polaroid-frame-3"
+          class="polaroid-frame-2"
+          :class="album.photos[0] ? '' : 'd-none'"
         />
         <img
-          class="album-photo photo-3 polaroid-frame"
+          class="album-photo photo-2 polaroid-frame"
+          :src="album.photos[0]?.photo.imgUrl"
+          :alt="album.photos[0]?.photo.name"
+          :class="album.photos[0] ? '' : 'd-none'"
+        />
+      </div>
+      <div class="position-relative">
+        <div>
+          <img
+            src="../assets/img/polaroid-frame-PNG-for-photoshop.png"
+            class="polaroid-frame-3"
+            :class="album.photos[0] ? '' : 'd-none'"
+          />
+          <img
+            class="album-photo photo-3 polaroid-frame"
+            :src="album.photos[0]?.photo.imgUrl"
+            :alt="album.photos[0]?.photo.name"
+            :class="album.photos[0] ? '' : 'd-none'"
+          />
+        </div>
+      </div>
+    </RouterLink>
+  </div>
+  <div v-else class="album-card">
+    <RouterLink
+      :to="{ name: 'AlbumDetailsPage', params: { albumId: album.id } }"
+    >
+      <div>
+        <p class="album-title fw-bold">
+          {{ album.name }} by {{ album.creator.name }}
+        </p>
+      </div>
+      <div>
+        <p class="album-title fw-bold">
+          {{ album.name }} by {{ album.creator.name }}
+        </p>
+      </div>
+      <div class="position-relative">
+        <img
+          src="../assets/img/polaroid-frame-PNG-for-photoshop.png"
+          class="polaroid-frame-1"
+        />
+        <img
+          class="album-photo photo-1 polaroid-frame"
           src="../assets/img/framed-logo.png"
           alt="framed logo"
         />
       </div>
-    </div>
+      <div class="position-relative">
+        <img
+          src="../assets/img/polaroid-frame-PNG-for-photoshop.png"
+          class="polaroid-frame-2"
+        />
+        <img
+          class="album-photo photo-2 polaroid-frame"
+          src="../assets/img/framed-logo.png"
+          alt="framed logo"
+        />
+      </div>
+      <div class="position-relative">
+        <div>
+          <img
+            src="../assets/img/polaroid-frame-PNG-for-photoshop.png"
+            class="polaroid-frame-3"
+          />
+          <img
+            class="album-photo photo-3 polaroid-frame"
+            src="../assets/img/framed-logo.png"
+            alt="framed logo"
+          />
+        </div>
+      </div>
+    </RouterLink>
   </div>
 </template>
 
