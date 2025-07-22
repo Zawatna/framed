@@ -28,6 +28,8 @@ export const AppState = reactive({
 
   /**@type {import ('./models/Album.js').Album} */
   album: null,
+  /**@type {import ('./models/Album.js').Album[]}*/
+  userAlbums: [],
   searchTerm: null,
 
   // NOTE Used to select which photo to draw in popChoice modal vp

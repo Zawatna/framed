@@ -56,21 +56,25 @@ class AlbumsService {
   async createAlbum(albumData) {
     const album = await dbContext.Albums.create(albumData);
     await album.populate("creator", "name picture");
-    const tags = albumData.tags
-    const createAlbumTags = await tagsService.checkForNewTags(tags)
-    console.log('🏷️', createAlbumTags)
-    let albumTagsToCreate = createAlbumTags.map(tag => {
+    const tags = albumData.tags;
+    const createAlbumTags = await tagsService.checkForNewTags(tags);
+    console.log("🏷️", createAlbumTags);
+    let albumTagsToCreate = createAlbumTags.map((tag) => {
       return {
         albumId: album.id,
         creatorId: album.creatorId,
         tagId: tag.id || tag._id,
-      }
-    })
+      };
+    });
 
-    const albumTagsToPopulate = await albumTagsService.createAlbumTag(albumTagsToCreate)
-    console.log("What came back from my tags? 🏷️🎼🏷️🎼🏷️🎼🏷️", albumTagsToPopulate)
-    await album.populate({ path: 'tags', populate: { path: 'tag' } })
-
+    const albumTagsToPopulate = await albumTagsService.createAlbumTag(
+      albumTagsToCreate
+    );
+    console.log(
+      "What came back from my tags? 🏷️🎼🏷️🎼🏷️🎼🏷️",
+      albumTagsToPopulate
+    );
+    await album.populate({ path: "tags", populate: { path: "tag" } });
 
     return album;
   }
@@ -86,6 +90,18 @@ class AlbumsService {
         },
       ],
     }).populate([
+      { path: "creator", select: "name picture" },
+      { path: "tags", populate: "tag" },
+      { path: "photos", options: { limit: 3 }, populate: { path: "photo" } },
+      { path: "photocount" },
+    ]);
+    if (albums.length <= 0) {
+      return `no albums found containing "${albumQuery}"`;
+    }
+    return albums;
+  }
+  async getUserAlbums(userId) {
+    const albums = await dbContext.Albums.find({ creatorId: userId }).populate([
       { path: "creator", select: "name picture" },
       { path: "tags", populate: "tag" },
       { path: "photos", options: { limit: 3 }, populate: { path: "photo" } },

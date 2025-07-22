@@ -22,6 +22,8 @@ main {
   // TODO add blur back to bg image
   background-image: url(../img/framed-bg.png);
   background-size: cover contain;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
   background-position: top;
 }
 
@@ -54,11 +56,9 @@ main {
 
 .text-shadow {
   text-shadow: 2px 2px 2px black;
-
 }
 
-.tag-style{
+.tag-style {
   background-color: teal;
   color: white;
-  
 }

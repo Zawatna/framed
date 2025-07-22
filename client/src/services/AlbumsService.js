@@ -3,8 +3,6 @@ import { api } from "./AxiosService.js";
 import { Album } from "@/models/Album.js";
 import { AppState } from "@/AppState.js";
 import { AlbumPhoto } from "@/models/AlbumPhoto.js";
-import { Tag } from "@/models/Tag.js";
-import { AlbumTag } from "@/models/AlbumTag.js";
 
 class AlbumsService {
   async getMostAlbumsTagsById(profileId) {

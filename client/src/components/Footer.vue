@@ -6,6 +6,7 @@ import PopChoice from "@/components/PopChoice.vue";
 import AlbumForm from "@/components/AlbumForm.vue";
 import { computed } from "vue";
 import { AuthService } from "@/services/AuthService.js";
+import AlbumPhotoForm from "./AlbumPhotoForm.vue";
 
 const account = computed(() => AppState.account);
 
@@ -77,6 +78,7 @@ function login() {
     modalId="albumPhoto"
     modalHeader="Which album would you like to add this photo to?"
   >
+    <AlbumPhotoForm />
   </ModalWrapper>
 </template>
 

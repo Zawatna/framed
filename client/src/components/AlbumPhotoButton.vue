@@ -1,14 +1,14 @@
 <script setup></script>
 
 <template>
-  <div>
+  <div class="mb-3">
     <button
       type="button"
-      class="btn btn-primary"
+      class="btn btn-success"
       data-bs-toggle="modal"
       data-bs-target="#albumPhoto"
     >
-      Add this photo to your albums
+      Add this photo to an album
     </button>
   </div>
 </template>

@@ -86,7 +86,7 @@ export class AlbumsController extends BaseController {
    */
   async getAlbumsByQuery(request, response, next) {
     try {
-      const albumQuery = request.query.query;
+      const albumQuery = request.query.query; //the first 'query' tells it to look at what comes after the question mark (?) in the router link. the second 'query' is the key to the key:value pair that is pulling. on the client side this looks like "?query=query.value"
       const albums = await albumsService.getAlbumsByQuery(albumQuery);
       response.send(albums);
     } catch (error) {

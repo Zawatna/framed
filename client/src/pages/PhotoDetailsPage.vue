@@ -41,7 +41,7 @@ async function getPhotoById() {
 </script>
 
 <template>
-  <div v-if="photo && photo.creator" class="container-fluid mb-5">
+  <div v-if="photo && photo.creator" class="container-fluid mb-5 main-font">
     <div class="row justify-content-center mb-5">
       <div class="row justify-content-center mb-5">
         <div class="frame justify-content-start mt-3 pb-1 px-1">
@@ -147,7 +147,7 @@ async function getPhotoById() {
       </div>
     </div>
   </div>
-  <div v-else class="mt-5 container text-warning">
+  <div v-else class="mt-5 container text-warning main-font">
     <div class="row text-center">
       <div class="col-12 display-1">
         Loading
