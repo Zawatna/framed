@@ -1,6 +1,7 @@
 <script setup>
 import { AppState } from "@/AppState.js";
 import AlbumPhotoButton from "@/components/AlbumPhotoButton.vue";
+import ModalWrapper from '@/components/ModalWrapper.vue';
 import { photosService } from "@/services/PhotosService.js";
 import { logger } from "@/utils/Logger.js";
 import { Pop } from "@/utils/Pop.js";
@@ -29,6 +30,19 @@ async function getPhotoById() {
   }
 }
 
+async function deletePhoto(){
+  const confirmed = await Pop.confirm('Are you sure you want to delete your photo?')
+  if(!confirmed) return
+  try {
+    const photoId = route.params.photoId
+    await photosService.deletePhoto(photoId)
+  }
+  catch (error){
+    Pop.error(error);
+  }
+
+}
+
 // async function getPhotosByCreatorId() {
 //   try {
 //     const creatorId = account;
@@ -45,38 +59,31 @@ async function getPhotoById() {
     <div class="row justify-content-center mb-5">
       <div class="row justify-content-center mb-5">
         <div class="frame justify-content-start mt-3 pb-1 px-1">
-          <RouterLink
-            :to="{ name: 'Photo Details', params: { photoId: photo.id } }"
-          >
+          <RouterLink :to="{ name: 'Photo Details', params: { photoId: photo.id } }">
             <div class="text-center">
-              <img
-                :src="photo.imgUrl"
-                :alt="`@${photo.creator.name}'s posted photo`"
-                class="img-fluid"
-              />
+              <img :src="photo.imgUrl" :alt="`@${photo.creator.name}'s posted photo`" class="img-fluid" />
             </div>
           </RouterLink>
           <div v-if="photo.creatorId != account?.id">
-            <RouterLink
-              :to="{ name: 'Profile', params: { profileId: photo?.creatorId } }"
-            >
+            <RouterLink :to="{ name: 'Profile', params: { profileId: photo?.creatorId } }">
               <h5 class="img-username">@{{ photo.creator.name }}</h5>
             </RouterLink>
           </div>
           <div v-else>
-            <RouterLink
-              :to="{ name: 'Profile', params: { profileId: photo?.creatorId } }"
-            >
+            <RouterLink :to="{ name: 'Profile', params: { profileId: photo?.creatorId } }">
               <h5 class="img-username">@{{ photo.creator.name }}</h5>
             </RouterLink>
           </div>
           <h4 class="img-desc main-font">{{ photo.description }}</h4>
           <div class="row align-items-center">
-            <div class="col-6 d-flex ps-4">
+            <div class="col-4 d-flex ps-4">
               <i class="mdi mdi-comment display-3 text-light"></i>
               <p class="mt-2 ms-1 fs-4">33</p>
             </div>
-            <div class="col-6 text-end justify-content-end d-flex pe-4">
+            <div class="col-4 text-center" v-if="photo.creatorId == account?.id">
+              <button @click="deletePhoto()" type="button" class="btn btn-danger fs-5" >Delete</button>
+            </div>
+            <div class="col-4 text-end justify-content-end d-flex pe-4">
               <p class="like-num me-1 fs-4">1.3K</p>
               <i class="mdi mdi-heart text-warning display-3" role="button"></i>
             </div>
@@ -86,14 +93,9 @@ async function getPhotoById() {
     </div>
     <AlbumPhotoButton />
     <div class="row text-center bg-primary">
-      <h1
-        v-if="photo.creatorId != account?.id"
-        class="col-12 text-light mt-3 mb-3"
-      >
+      <h1 v-if="photo.creatorId != account?.id" class="col-12 text-light mt-3 mb-3">
         More Photos from
-        <RouterLink
-          :to="{ name: 'Profile', params: { profileId: photo.creatorId } }"
-        >
+        <RouterLink :to="{ name: 'Profile', params: { profileId: photo.creatorId } }">
           <span class="username">@{{ photo.creator.name }}</span>
         </RouterLink>
       </h1>
@@ -108,28 +110,18 @@ async function getPhotoById() {
 
     <div class="row justify-content-center mb-5">
       <div class="frame justify-content-start mt-3 pb-1 px-1">
-        <RouterLink
-          :to="{ name: 'Photo Details', params: { photoId: photo.id } }"
-        >
+        <RouterLink :to="{ name: 'Photo Details', params: { photoId: photo.id } }">
           <div class="">
-            <img
-              :src="photo.imgUrl"
-              :alt="`@${photo.creator.name}'s posted photo`"
-              class="img-fluid"
-            />
+            <img :src="photo.imgUrl" :alt="`@${photo.creator.name}'s posted photo`" class="img-fluid" />
           </div>
         </RouterLink>
         <div v-if="photo.creatorId != account?.id">
-          <RouterLink
-            :to="{ name: 'Profile', params: { profileId: photo?.creatorId } }"
-          >
+          <RouterLink :to="{ name: 'Profile', params: { profileId: photo?.creatorId } }">
             <h5 class="img-username">@{{ photo.creator.name }}</h5>
           </RouterLink>
         </div>
         <div v-else>
-          <RouterLink
-            :to="{ name: 'Profile', params: { profileId: photo?.creatorId } }"
-          >
+          <RouterLink :to="{ name: 'Profile', params: { profileId: photo?.creatorId } }">
             <h5 class="img-username">@{{ photo.creator.name }}</h5>
           </RouterLink>
         </div>
@@ -146,6 +138,9 @@ async function getPhotoById() {
         </div>
       </div>
     </div>
+    <ModalWrapper modalId="commentModal" modalHeader="comments go here">
+      what's up
+    </ModalWrapper>
   </div>
   <div v-else class="mt-5 container text-warning main-font">
     <div class="row text-center">
@@ -186,6 +181,7 @@ img {
 
 .username {
   color: rgb(163, 162, 162) !important;
+
 }
 
 .img-username {
