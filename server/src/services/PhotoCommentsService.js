@@ -1,6 +1,7 @@
 import { dbContext } from "../db/DbContext.js";
 import { BadRequest, Forbidden } from "../utils/Errors.js";
 import { logger } from "../utils/Logger.js";
+import { get } from "mongoose";
 
 class PhotoCommentsService {
 
@@ -17,10 +18,14 @@ class PhotoCommentsService {
         await photoComment.deleteOne();
 
         return `The comment "${photoComment.body}" has been deleted!`
-
-
-
     }
+
+    async getCommentsByPhotoId(photoId) {
+        const comments = await dbContext.PhotoComments.find({ photoId: photoId }).populate('creator', 'name picture')
+        return comments
+    }
+
+
     async createPhotoComment(photoCommentData) {
 
         // logger.log('creating photo comments🏃‍♀️🏃‍♀️🖼️💬💬😀', photoCommentData)

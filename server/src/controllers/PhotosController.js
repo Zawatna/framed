@@ -1,6 +1,7 @@
 import { Auth0Provider } from "@bcwdev/auth0provider";
 import BaseController from "../utils/BaseController.js";
 import { photosService } from "../services/PhotosService.js";
+import { photoCommentsService } from "../services/PhotoCommentsService.js";
 
 export class PhotosController extends BaseController {
   constructor() {
@@ -9,6 +10,7 @@ export class PhotosController extends BaseController {
       .get("/search", this.getPhotosByQuery)
       .get("", this.getAllPhotos)
       .get("/:photoId", this.getPhotosById)
+      .get("/:photoId/comments", this.getCommentsByPhotoId)
       .use(Auth0Provider.getAuthorizedUserInfo)
       .delete("/:photoId", this.deletePhoto)
       .post("", this.createPhoto);
@@ -71,6 +73,17 @@ export class PhotosController extends BaseController {
       response.send(photos);
     } catch (error) {
       next(error);
+    }
+  }
+
+  async getCommentsByPhotoId(request, response, next) {
+    // response.send('🏃‍♀️💬💬🖼️🪪 Get photo comments')
+    try {
+      const photoId = request.params.photoId
+      const photoComments = await photoCommentsService.getCommentsByPhotoId(photoId)
+      response.send(photoComments)
+    } catch (error) {
+      next(error)
     }
   }
 }

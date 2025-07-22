@@ -22,7 +22,6 @@ export class PhotoCommentsController extends BaseController {
         } catch (error) {
             next(error)
         }
-
     }
 
     async createPhotoComment(request, response, next) {

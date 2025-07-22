@@ -26,3 +26,10 @@ PhotoSchema.virtual("tags", {
   foreignField: "photoId",
   ref: "PhotoTag",
 });
+PhotoSchema.virtual("photoComments", {
+  localField: "_id",
+  foreignField: "photoId",
+  ref: "PhotoComments",
+})
+
+

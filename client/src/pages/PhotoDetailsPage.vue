@@ -2,6 +2,7 @@
 import { AppState } from "@/AppState.js";
 import AlbumPhotoButton from "@/components/AlbumPhotoButton.vue";
 import ModalWrapper from '@/components/ModalWrapper.vue';
+import { photoCommentsService } from "@/services/PhotoCommentsService.js";
 import { photosService } from "@/services/PhotosService.js";
 import { logger } from "@/utils/Logger.js";
 import { Pop } from "@/utils/Pop.js";
@@ -10,12 +11,14 @@ import { RouterLink, useRoute } from "vue-router";
 
 onMounted(() => {
   getPhotoById();
+  getPhotoComments();
   // getPhotosByCreatorId();
 });
 
 const route = useRoute();
 const photo = computed(() => AppState.photo);
 const account = computed(() => AppState.account);
+const photoComments = computed(() => AppState.photoComments)
 // TODO Add Tags once populated in appstate
 // TODO Add Comments once populated in appstate
 // TODO Add Profile once BE Getter is created
@@ -36,6 +39,18 @@ async function deletePhoto() {
   try {
     const photoId = route.params.photoId
     await photosService.deletePhoto(photoId)
+  }
+  catch (error) {
+    Pop.error(error);
+  }
+
+}
+
+async function getPhotoComments() {
+  logger.log('get photo comments 🏃‍♀️🖼️💬')
+  try {
+    const photoId = route.params.photoId
+    await photoCommentsService.getPhotoComments(photoId)
   }
   catch (error) {
     Pop.error(error);
@@ -79,7 +94,6 @@ async function deletePhoto() {
             <div class="col-6 d-flex ps-4">
               <button class="btn btn-success fixed-button m-2" type="button" data-bs-toggle="modal"
                 data-bs-target="#commentModal">
-                ????
                 <i class="mdi mdi-comment display-3 text-light"></i>
               </button>
               <p class="mt-2 ms-1 fs-4">33</p>
