@@ -1,6 +1,7 @@
 <script setup>
 import { AppState } from "@/AppState.js";
 import AlbumPhotoButton from "@/components/AlbumPhotoButton.vue";
+import ModalWrapper from '@/components/ModalWrapper.vue';
 import { photosService } from "@/services/PhotosService.js";
 import { logger } from "@/utils/Logger.js";
 import { Pop } from "@/utils/Pop.js";
@@ -58,28 +59,18 @@ async function deletePhoto(){
     <div class="row justify-content-center mb-5">
       <div class="row justify-content-center mb-5">
         <div class="frame justify-content-start mt-3 pb-1 px-1">
-          <RouterLink
-            :to="{ name: 'Photo Details', params: { photoId: photo.id } }"
-          >
+          <RouterLink :to="{ name: 'Photo Details', params: { photoId: photo.id } }">
             <div class="text-center">
-              <img
-                :src="photo.imgUrl"
-                :alt="`@${photo.creator.name}'s posted photo`"
-                class="img-fluid"
-              />
+              <img :src="photo.imgUrl" :alt="`@${photo.creator.name}'s posted photo`" class="img-fluid" />
             </div>
           </RouterLink>
           <div v-if="photo.creatorId != account?.id">
-            <RouterLink
-              :to="{ name: 'Profile', params: { profileId: photo?.creatorId } }"
-            >
+            <RouterLink :to="{ name: 'Profile', params: { profileId: photo?.creatorId } }">
               <h5 class="img-username">@{{ photo.creator.name }}</h5>
             </RouterLink>
           </div>
           <div v-else>
-            <RouterLink
-              :to="{ name: 'Profile', params: { profileId: photo?.creatorId } }"
-            >
+            <RouterLink :to="{ name: 'Profile', params: { profileId: photo?.creatorId } }">
               <h5 class="img-username">@{{ photo.creator.name }}</h5>
             </RouterLink>
           </div>
@@ -102,14 +93,9 @@ async function deletePhoto(){
     </div>
     <AlbumPhotoButton />
     <div class="row text-center bg-primary">
-      <h1
-        v-if="photo.creatorId != account?.id"
-        class="col-12 text-light mt-3 mb-3"
-      >
+      <h1 v-if="photo.creatorId != account?.id" class="col-12 text-light mt-3 mb-3">
         More Photos from
-        <RouterLink
-          :to="{ name: 'Profile', params: { profileId: photo.creatorId } }"
-        >
+        <RouterLink :to="{ name: 'Profile', params: { profileId: photo.creatorId } }">
           <span class="username">@{{ photo.creator.name }}</span>
         </RouterLink>
       </h1>
@@ -124,28 +110,18 @@ async function deletePhoto(){
 
     <div class="row justify-content-center mb-5">
       <div class="frame justify-content-start mt-3 pb-1 px-1">
-        <RouterLink
-          :to="{ name: 'Photo Details', params: { photoId: photo.id } }"
-        >
+        <RouterLink :to="{ name: 'Photo Details', params: { photoId: photo.id } }">
           <div class="">
-            <img
-              :src="photo.imgUrl"
-              :alt="`@${photo.creator.name}'s posted photo`"
-              class="img-fluid"
-            />
+            <img :src="photo.imgUrl" :alt="`@${photo.creator.name}'s posted photo`" class="img-fluid" />
           </div>
         </RouterLink>
         <div v-if="photo.creatorId != account?.id">
-          <RouterLink
-            :to="{ name: 'Profile', params: { profileId: photo?.creatorId } }"
-          >
+          <RouterLink :to="{ name: 'Profile', params: { profileId: photo?.creatorId } }">
             <h5 class="img-username">@{{ photo.creator.name }}</h5>
           </RouterLink>
         </div>
         <div v-else>
-          <RouterLink
-            :to="{ name: 'Profile', params: { profileId: photo?.creatorId } }"
-          >
+          <RouterLink :to="{ name: 'Profile', params: { profileId: photo?.creatorId } }">
             <h5 class="img-username">@{{ photo.creator.name }}</h5>
           </RouterLink>
         </div>
@@ -162,6 +138,9 @@ async function deletePhoto(){
         </div>
       </div>
     </div>
+    <ModalWrapper modalId="commentModal" modalHeader="comments go here">
+      what's up
+    </ModalWrapper>
   </div>
   <div v-else class="mt-5 container text-warning">
     <div class="row text-center">
@@ -202,6 +181,7 @@ img {
 
 .username {
   color: rgb(163, 162, 162) !important;
+
 }
 
 .img-username {
