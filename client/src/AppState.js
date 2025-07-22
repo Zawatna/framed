@@ -14,6 +14,9 @@ export const AppState = reactive({
 
   profileTags: [],
 
+  albumTagsThatMatchSearch: [],
+  photoTagsThatMatchSearch: [],
+
   /** @type {import('./models/Photo.js').Photo[]} */
   photos: [],
 
@@ -27,7 +30,7 @@ export const AppState = reactive({
   album: null,
   searchTerm: null,
 
-  // NOTE Used to select which photo to draw in popChoice modal vp, please leave alone!!!!
+  // NOTE Used to select which photo to draw in popChoice modal vp
   choicePhotoIndex: 0,
 
   /**@type {import('./models/AlbumPhoto.js').AlbumPhoto[]} */

@@ -1,11 +1,12 @@
 <script setup>
-import { AppState } from '@/AppState.js';
+import { AppState } from "@/AppState.js";
+import AlbumPhotoButton from "@/components/AlbumPhotoButton.vue";
 import ModalWrapper from '@/components/ModalWrapper.vue';
-import { photosService } from '@/services/PhotosService.js';
-import { logger } from '@/utils/Logger.js';
-import { Pop } from '@/utils/Pop.js';
-import { computed, onMounted } from 'vue';
-import { RouterLink, useRoute } from 'vue-router';
+import { photosService } from "@/services/PhotosService.js";
+import { logger } from "@/utils/Logger.js";
+import { Pop } from "@/utils/Pop.js";
+import { computed, onMounted } from "vue";
+import { RouterLink, useRoute } from "vue-router";
 
 onMounted(() => {
   getPhotoById();
@@ -15,18 +16,17 @@ onMounted(() => {
 const route = useRoute();
 const photo = computed(() => AppState.photo);
 const account = computed(() => AppState.account);
-// TODO Add Tags once populated in appstate 
-// TODO Add Comments once populated in appstate 
+// TODO Add Tags once populated in appstate
+// TODO Add Comments once populated in appstate
 // TODO Add Profile once BE Getter is created
 
 async function getPhotoById() {
   try {
     const photoId = route.params.photoId;
     await photosService.getPhotoById(photoId);
-  }
-  catch (error) {
+  } catch (error) {
     Pop.error(error);
-    logger.log('could not get photo by id', error)
+    logger.log("could not get photo by id", error);
   }
 }
 
@@ -39,9 +39,7 @@ async function getPhotoById() {
 //     Pop.error(error);
 //   }
 // }
-
 </script>
-
 
 <template>
   <div v-if="photo && photo.creator" class="container-fluid mb-5">
@@ -50,7 +48,7 @@ async function getPhotoById() {
         <div class="frame justify-content-start mt-3 pb-1 px-1">
           <RouterLink :to="{ name: 'Photo Details', params: { photoId: photo.id } }">
             <div class="text-center">
-              <img :src="photo.imgUrl" :alt="`@${photo.creator.name}'s posted photo`" class="img-fluid">
+              <img :src="photo.imgUrl" :alt="`@${photo.creator.name}'s posted photo`" class="img-fluid" />
             </div>
           </RouterLink>
           <div v-if="photo.creatorId != account?.id">
@@ -71,19 +69,22 @@ async function getPhotoById() {
             </div>
             <div class="col-6 text-end justify-content-end d-flex pe-4">
               <p class="like-num me-1 fs-4">1.3K</p>
-              <i class=" mdi mdi-heart text-warning display-3" role="button"></i>
+              <i class="mdi mdi-heart text-warning display-3" role="button"></i>
             </div>
           </div>
         </div>
       </div>
     </div>
+    <AlbumPhotoButton />
     <div class="row text-center bg-primary">
-      <h1 v-if="photo.creatorId != account?.id" class="col-12 text-light mt-3 mb-3">More Photos from
+      <h1 v-if="photo.creatorId != account?.id" class="col-12 text-light mt-3 mb-3">
+        More Photos from
         <RouterLink :to="{ name: 'Profile', params: { profileId: photo.creatorId } }">
           <span class="username">@{{ photo.creator.name }}</span>
         </RouterLink>
       </h1>
-      <h1 v-else class="col-12 text-light mt-3 mb-3">More Photos from
+      <h1 v-else class="col-12 text-light mt-3 mb-3">
+        More Photos from
         <RouterLink :to="{ name: 'Account' }">
           <span class="username">@{{ photo.creator.name }}</span>
         </RouterLink>
@@ -95,7 +96,7 @@ async function getPhotoById() {
       <div class="frame justify-content-start mt-3 pb-1 px-1">
         <RouterLink :to="{ name: 'Photo Details', params: { photoId: photo.id } }">
           <div class="">
-            <img :src="photo.imgUrl" :alt="`@${photo.creator.name}'s posted photo`" class="img-fluid">
+            <img :src="photo.imgUrl" :alt="`@${photo.creator.name}'s posted photo`" class="img-fluid" />
           </div>
         </RouterLink>
         <div v-if="photo.creatorId != account?.id">
@@ -116,7 +117,7 @@ async function getPhotoById() {
           </div>
           <div class="col-6 text-end justify-content-end d-flex pe-4">
             <p class="like-num me-1 fs-4">1.3K</p>
-            <i class=" mdi mdi-heart text-warning display-3" role="button"></i>
+            <i class="mdi mdi-heart text-warning display-3" role="button"></i>
           </div>
         </div>
       </div>
@@ -135,7 +136,6 @@ async function getPhotoById() {
     </div>
   </div>
 </template>
-
 
 <style lang="scss" scoped>
 a {
