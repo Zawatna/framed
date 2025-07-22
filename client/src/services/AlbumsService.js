@@ -23,7 +23,7 @@ class AlbumsService {
   async getAlbumById(albumId) {
     AppState.album = null;
     const response = await api.get(`api/albums/${albumId}`);
-    // logger.log("specific album!", response.data);
+    logger.log("specific album!", response.data);
     const album = new Album(response.data);
     AppState.album = album;
     logger.log("appstate album", AppState.album);
