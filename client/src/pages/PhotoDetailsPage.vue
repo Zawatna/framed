@@ -1,5 +1,6 @@
 <script setup>
 import { AppState } from '@/AppState.js';
+import ModalWrapper from '@/components/ModalWrapper.vue';
 import { photosService } from '@/services/PhotosService.js';
 import { logger } from '@/utils/Logger.js';
 import { Pop } from '@/utils/Pop.js';
@@ -7,8 +8,8 @@ import { computed, onMounted } from 'vue';
 import { RouterLink, useRoute } from 'vue-router';
 
 onMounted(() => {
-getPhotoById();
-// getPhotosByCreatorId();
+  getPhotoById();
+  // getPhotosByCreatorId();
 });
 
 const route = useRoute();
@@ -23,7 +24,7 @@ async function getPhotoById() {
     const photoId = route.params.photoId;
     await photosService.getPhotoById(photoId);
   }
-  catch (error){
+  catch (error) {
     Pop.error(error);
     logger.log('could not get photo by id', error)
   }
@@ -43,70 +44,70 @@ async function getPhotoById() {
 
 
 <template>
-<div v-if="photo && photo.creator" class="container-fluid mb-5">
-  <div class="row justify-content-center mb-5">
+  <div v-if="photo && photo.creator" class="container-fluid mb-5">
     <div class="row justify-content-center mb-5">
-      <div class="frame justify-content-start mt-3 pb-1 px-1">
-        <RouterLink :to="{ name: 'Photo Details', params: { photoId: photo.id }}">
-          <div class="text-center">
-            <img :src="photo.imgUrl" :alt="`@${photo.creator.name}'s posted photo`" class="img-fluid">
-          </div>
-        </RouterLink>
-        <div v-if="photo.creatorId != account?.id">
-          <RouterLink :to="{ name: 'Profile', params: { profileId: photo?.creatorId} }">
-            <h5 class="img-username">@{{ photo.creator.name }}</h5>
+      <div class="row justify-content-center mb-5">
+        <div class="frame justify-content-start mt-3 pb-1 px-1">
+          <RouterLink :to="{ name: 'Photo Details', params: { photoId: photo.id } }">
+            <div class="text-center">
+              <img :src="photo.imgUrl" :alt="`@${photo.creator.name}'s posted photo`" class="img-fluid">
+            </div>
           </RouterLink>
-        </div>
-        <div v-else>
-        <RouterLink :to="{ name: 'Profile', params: { profileId: photo?.creatorId } }">
-          <h5 class="img-username">@{{ photo.creator.name }}</h5>
-        </RouterLink>
-      </div>
-        <h4 class="img-desc main-font">{{ photo.description }}</h4>
-        <div class="row align-items-center">
-          <div class="col-6 d-flex ps-4">
-            <i class="mdi mdi-comment display-3 text-light"></i>
-            <p class="mt-2 ms-1 fs-4">33</p>
+          <div v-if="photo.creatorId != account?.id">
+            <RouterLink :to="{ name: 'Profile', params: { profileId: photo?.creatorId } }">
+              <h5 class="img-username">@{{ photo.creator.name }}</h5>
+            </RouterLink>
           </div>
-          <div class="col-6 text-end justify-content-end d-flex pe-4">
-            <p class="like-num me-1 fs-4">1.3K</p>
-            <i class=" mdi mdi-heart text-warning display-3" role="button" ></i>
+          <div v-else>
+            <RouterLink :to="{ name: 'Profile', params: { profileId: photo?.creatorId } }">
+              <h5 class="img-username">@{{ photo.creator.name }}</h5>
+            </RouterLink>
+          </div>
+          <h4 class="img-desc main-font">{{ photo.description }}</h4>
+          <div class="row align-items-center">
+            <div class="col-6 d-flex ps-4">
+              <i class="mdi mdi-comment display-3 text-light"></i>
+              <p class="mt-2 ms-1 fs-4">33</p>
+            </div>
+            <div class="col-6 text-end justify-content-end d-flex pe-4">
+              <p class="like-num me-1 fs-4">1.3K</p>
+              <i class=" mdi mdi-heart text-warning display-3" role="button"></i>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <div class="row text-center bg-primary">
-    <h1 v-if="photo.creatorId != account?.id" class="col-12 text-light mt-3 mb-3">More Photos from 
-      <RouterLink :to="{ name: 'Profile', params: { profileId: photo.creatorId } }">
-      <span class="username">@{{ photo.creator.name }}</span>
-      </RouterLink>
-    </h1>
-    <h1 v-else class="col-12 text-light mt-3 mb-3">More Photos from 
-      <RouterLink :to="{ name: 'Account' }">
-      <span class="username">@{{ photo.creator.name }}</span>
-      </RouterLink>
-    </h1>
-  </div>
-  <!-- TODO CREATE V-FOR ONCE PROFILE/PROFILE IMAGES ROUTE CREATED -->
-  
+    <div class="row text-center bg-primary">
+      <h1 v-if="photo.creatorId != account?.id" class="col-12 text-light mt-3 mb-3">More Photos from
+        <RouterLink :to="{ name: 'Profile', params: { profileId: photo.creatorId } }">
+          <span class="username">@{{ photo.creator.name }}</span>
+        </RouterLink>
+      </h1>
+      <h1 v-else class="col-12 text-light mt-3 mb-3">More Photos from
+        <RouterLink :to="{ name: 'Account' }">
+          <span class="username">@{{ photo.creator.name }}</span>
+        </RouterLink>
+      </h1>
+    </div>
+    <!-- TODO CREATE V-FOR ONCE PROFILE/PROFILE IMAGES ROUTE CREATED -->
+
     <div class="row justify-content-center mb-5">
       <div class="frame justify-content-start mt-3 pb-1 px-1">
-        <RouterLink :to="{ name: 'Photo Details', params: { photoId: photo.id }}">
+        <RouterLink :to="{ name: 'Photo Details', params: { photoId: photo.id } }">
           <div class="">
             <img :src="photo.imgUrl" :alt="`@${photo.creator.name}'s posted photo`" class="img-fluid">
           </div>
         </RouterLink>
         <div v-if="photo.creatorId != account?.id">
-          <RouterLink :to="{ name: 'Profile', params: { profileId: photo?.creatorId} }">
+          <RouterLink :to="{ name: 'Profile', params: { profileId: photo?.creatorId } }">
             <h5 class="img-username">@{{ photo.creator.name }}</h5>
           </RouterLink>
         </div>
         <div v-else>
-        <RouterLink :to="{ name: 'Profile', params: { profileId: photo?.creatorId } }">
-          <h5 class="img-username">@{{ photo.creator.name }}</h5>
-        </RouterLink>
-      </div>
+          <RouterLink :to="{ name: 'Profile', params: { profileId: photo?.creatorId } }">
+            <h5 class="img-username">@{{ photo.creator.name }}</h5>
+          </RouterLink>
+        </div>
         <h4 class="img-desc main-font">{{ photo.description }}</h4>
         <div class="row align-items-center">
           <div class="col-6 d-flex ps-4">
@@ -115,26 +116,28 @@ async function getPhotoById() {
           </div>
           <div class="col-6 text-end justify-content-end d-flex pe-4">
             <p class="like-num me-1 fs-4">1.3K</p>
-            <i class=" mdi mdi-heart text-warning display-3" role="button" ></i>
+            <i class=" mdi mdi-heart text-warning display-3" role="button"></i>
           </div>
         </div>
       </div>
     </div>
-</div>
-<div v-else class="mt-5 container text-warning">
-  <div class="row text-center">
-    <div class="col-12 display-1">
-      Loading
-      <i class="mdi mdi-fan mdi-spin display-1"></i>
-      ...
+    <ModalWrapper modalId="commentModal" modalHeader="comments go here">
+      what's up
+    </ModalWrapper>
+  </div>
+  <div v-else class="mt-5 container text-warning">
+    <div class="row text-center">
+      <div class="col-12 display-1">
+        Loading
+        <i class="mdi mdi-fan mdi-spin display-1"></i>
+        ...
+      </div>
     </div>
   </div>
-</div>
 </template>
 
 
 <style lang="scss" scoped>
-
 a {
   text-decoration: none;
   color: black;
@@ -156,13 +159,13 @@ img {
 }
 
 .img-desc {
-margin-left: 20px;
-margin-top: 0px;
+  margin-left: 20px;
+  margin-top: 0px;
 }
 
 .username {
   color: rgb(163, 162, 162) !important;
-  
+
 }
 
 .img-username {
@@ -175,5 +178,4 @@ p {
   margin-top: 10px;
   margin-bottom: 0px;
 }
-
 </style>
