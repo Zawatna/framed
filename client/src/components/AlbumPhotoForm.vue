@@ -4,6 +4,7 @@ import { accountService } from "@/services/AccountService.js";
 import { albumsService } from "@/services/AlbumsService.js";
 import { logger } from "@/utils/Logger.js";
 import { Pop } from "@/utils/Pop.js";
+import { Modal } from "bootstrap";
 import { computed, ref, watch } from "vue";
 import { useRoute } from "vue-router";
 const account = computed(() => AppState.account);
@@ -32,6 +33,8 @@ async function addPhotoToAlbum() {
     const album = albumId.value;
     logger.log(photoId, album);
     const albumPhoto = await albumsService.addPhotoToAlbum(photoId, album);
+    Modal.getOrCreateInstance("#albumPhoto").hide();
+    albumId.value = "";
     Pop.success(albumPhoto);
   } catch (error) {
     logger.error(error);

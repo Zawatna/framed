@@ -34,13 +34,14 @@ async function getPhotoById() {
 }
 
 async function deletePhoto() {
-  const confirmed = await Pop.confirm('Are you sure you want to delete your photo?')
-  if (!confirmed) return
+  const confirmed = await Pop.confirm(
+    "Are you sure you want to delete your photo?"
+  );
+  if (!confirmed) return;
   try {
-    const photoId = route.params.photoId
-    await photosService.deletePhoto(photoId)
-  }
-  catch (error) {
+    const photoId = route.params.photoId;
+    await photosService.deletePhoto(photoId);
+  } catch (error) {
     Pop.error(error);
   }
 
@@ -94,12 +95,15 @@ async function getPhotoComments() {
             <div class="col-6 d-flex ps-4">
               <button class="btn btn-success fixed-button m-2" type="button" data-bs-toggle="modal"
                 data-bs-target="#commentModal">
+                ????
                 <i class="mdi mdi-comment display-3 text-light"></i>
               </button>
               <p class="mt-2 ms-1 fs-4">33</p>
             </div>
             <div class="col-4 text-center" v-if="photo.creatorId == account?.id">
-              <button @click="deletePhoto()" type="button" class="btn btn-danger fs-5">Delete</button>
+              <button @click="deletePhoto()" type="button" class="btn btn-danger fs-5">
+                Delete
+              </button>
             </div>
             <div class="col-4 text-end justify-content-end d-flex pe-4">
               <p class="like-num me-1 fs-4">1.3K</p>
@@ -109,7 +113,9 @@ async function getPhotoComments() {
         </div>
       </div>
     </div>
-    <AlbumPhotoButton />
+    <div v-if="account" class="ms-5">
+      <AlbumPhotoButton />
+    </div>
     <div class="row text-center bg-primary">
       <h1 v-if="photo.creatorId != account?.id" class="col-12 text-light mt-3 mb-3">
         More Photos from
@@ -125,7 +131,6 @@ async function getPhotoComments() {
       </h1>
     </div>
     <!-- TODO CREATE V-FOR ONCE PROFILE/PROFILE IMAGES ROUTE CREATED -->
-
   </div>
   <div v-else class="mt-5 container text-warning main-font">
     <div class="row text-center">
@@ -166,7 +171,6 @@ img {
 
 .username {
   color: rgb(163, 162, 162) !important;
-
 }
 
 .img-username {

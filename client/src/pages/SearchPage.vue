@@ -30,23 +30,22 @@ async function searchFramed(type) {
   selectedSearch.value = type;
   const queryTerm = editableSearchTerm.value || editableSearchTerm.value;
   try {
-    if (selectedSearch.value == "albums") {
+    if (type == "albums") {
       const albums = await albumsService.getAlbumsByQuery(queryTerm);
       logger.log("getting Albums" + albums);
     }
-    if (selectedSearch.value == "photos") {
+    if (type == "photos") {
       const photos = await photosService.getPhotosByQuery(queryTerm);
       logger.log("here are the photos", photos);
     }
-    if (selectedSearch.value == "profiles") {
+    if (type == "profiles") {
       const profiles = await profilesService.getProfilesByQuery(queryTerm);
       logger.log("getting profiles", profiles);
     }
-    if (selectedSearch.value == "tags") {
+    if (type == "tags") {
       const photoTags = await tagsService.getPhotoTagsByQuery(queryTerm);
       // const albumTags = await tagsService.getAlbumTagsByQuery(queryTerm);
       logger.log("getting Albums", photoTags);
-
     }
   } catch (error) {
     Pop.error(error);
@@ -57,25 +56,40 @@ async function searchFramed(type) {
 
 <template>
   <div
-    class="d-flex flex-column shadow text-center text-light ps-3 mb-3 justify-content-center align-items-center main-font">
+    class="d-flex flex-column shadow text-center text-light ps-3 mb-3 justify-content-center align-items-center main-font"
+  >
     <h1 v-if="searchTerm" class="fs-1 text-light">
-      Searching for {{ searchTerm }}
+      Searching for {{ searchTerm }} {{ selectedSearch }}
     </h1>
     <h1 v-else class="fs-1 text-light px-3">Start Searching</h1>
-    <div class="gap-3 d-flex">
-      <input v-model="editableSearchTerm" type="text" id="search-bar" />
-      <label for="search-bar"><button type="button" @click="searchFramed(selectedSearch)">
-          Search <i class="mdi mdi-magnify"></i></button></label>
-    </div>
+    <form @submit.prevent="searchFramed(selectedSearch)">
+      <div class="gap-3 d-flex">
+        <input v-model="editableSearchTerm" type="text" id="search-bar" />
+        <label
+          for="search-bar"
+          aria-label="search bar"
+          aria-labelledby="search bar"
+        ></label>
+        <button type="submit">Search<i class="mdi mdi-magnify"></i></button>
+      </div>
+    </form>
   </div>
   <section class="contiainer main-font">
     <div class="row">
       <div class="col-12">
         <div class="d-flex gap-2 justify-content-center">
-          <button v-for="type in searchTypes" :key="type" type="button" @click="searchFramed(type)" :class="selectedSearch != type
-              ? 'btn-warning text-light'
-              : 'btn-success fw-bold'
-            " class="btn fs-5">
+          <button
+            v-for="type in searchTypes"
+            :key="type"
+            type="button"
+            @click="searchFramed(type)"
+            :class="
+              selectedSearch != type
+                ? 'btn-warning text-light'
+                : 'btn-success fw-bold'
+            "
+            class="btn fs-5"
+          >
             {{ type }}
           </button>
         </div>
@@ -83,27 +97,60 @@ async function searchFramed(type) {
     </div>
     <section v-if="selectedSearch == 'albums'" class="text-light">
       <div class="row d-flex mb-5 mx-3">
-        <div class="col-lg-3 col-md-6 pt-2" v-for="album in albums" :key="album.id">
+        <div
+          class="col-lg-3 col-md-6 pt-2"
+          v-for="album in albums"
+          :key="album.id"
+        >
           <AlbumSearchCard :album />
         </div>
       </div>
     </section>
     <section v-if="selectedSearch == 'photos'" class="text-light">
       <div class="row d-flex mb-5 mx-3">
-        <div class="col-lg-3 col-md-6 pt-2" v-for="photo in photos" :key="photo.id">
+        <div
+          class="col-lg-3 col-md-6 pt-2"
+          v-for="photo in photos"
+          :key="photo.id"
+        >
           <PhotoSearchCard :photo />
         </div>
       </div>
     </section>
     <section v-if="selectedSearch == 'profiles'" class="text-light">
       <div class="row d-flex mb-5 mx-3">
-        <div class="col-md-3 pt-2" v-for="profile in profiles" :key="profile.id">
+        <div
+          class="col-md-3 pt-2"
+          v-for="profile in profiles"
+          :key="profile.id"
+        >
           <ProfileSearchCard :profile />
         </div>
       </div>
     </section>
     <section v-if="selectedSearch == 'tags'" class="text-light">
-      Showing Tags
+      <div class="row d-flex mb-5 mx-3">
+        <div class="col-md-6">
+          <div class="my-2">
+            <span class="fs-1 search-label">Photos</span>
+          </div>
+          <div class="row">
+            <div class="col-lg-6" v-for="photo in photos" :key="photo.id">
+              <PhotoSearchCard :photo />
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 border-start">
+          <div class="my-2">
+            <span class="fs-1 search-label">Albums</span>
+          </div>
+          <div class="row">
+            <div class="col-lg-6" v-for="album in albums" :key="album.id">
+              <AlbumSearchCard :album />
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
   </section>
 </template>
@@ -111,5 +158,17 @@ async function searchFramed(type) {
 <style lang="scss" scoped>
 .shadow {
   text-shadow: 0px 1px 3px black;
+}
+.search-label {
+  position: sticky;
+  top: 0;
+  z-index: 9999;
+  text-shadow: 0px 1px 3px black;
+  background-color: var(--bs-primary);
+  padding: 0.3rem;
+  padding-top: 0;
+  margin-bottom: 3rem;
+  border-radius: 20px;
+  box-shadow: 0px 1px 3px var(--bs-secondary);
 }
 </style>
