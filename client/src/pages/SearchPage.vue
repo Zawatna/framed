@@ -6,6 +6,7 @@ import ProfileSearchCard from "@/components/ProfileSearchCard.vue";
 import { albumsService } from "@/services/AlbumsService.js";
 import { photosService } from "@/services/PhotosService.js";
 import { profilesService } from "@/services/ProfilesService.js";
+import { tagsService } from "@/services/TagsService.js";
 import { logger } from "@/utils/Logger.js";
 import { Pop } from "@/utils/Pop.js";
 import { computed, onMounted, ref } from "vue";
@@ -35,11 +36,17 @@ async function searchFramed(type) {
     }
     if (selectedSearch.value == "photos") {
       const photos = await photosService.getPhotosByQuery(queryTerm);
-      logger.log(photos);
+      logger.log("here are the photos", photos);
     }
     if (selectedSearch.value == "profiles") {
       const profiles = await profilesService.getProfilesByQuery(queryTerm);
       logger.log("getting profiles", profiles);
+    }
+    if (selectedSearch.value == "tags") {
+      const photoTags = await tagsService.getPhotoTagsByQuery(queryTerm);
+      // const albumTags = await tagsService.getAlbumTagsByQuery(queryTerm);
+      logger.log("getting Albums", photoTags);
+
     }
   } catch (error) {
     Pop.error(error);
@@ -50,36 +57,25 @@ async function searchFramed(type) {
 
 <template>
   <div
-    class="d-flex flex-column shadow text-center text-light ps-3 mb-3 justify-content-center align-items-center main-font"
-  >
+    class="d-flex flex-column shadow text-center text-light ps-3 mb-3 justify-content-center align-items-center main-font">
     <h1 v-if="searchTerm" class="fs-1 text-light">
       Searching for {{ searchTerm }}
     </h1>
     <h1 v-else class="fs-1 text-light px-3">Start Searching</h1>
     <div class="gap-3 d-flex">
       <input v-model="editableSearchTerm" type="text" id="search-bar" />
-      <label for="search-bar"
-        ><button type="button" @click="searchFramed(selectedSearch)">
-          Search <i class="mdi mdi-magnify"></i></button
-      ></label>
+      <label for="search-bar"><button type="button" @click="searchFramed(selectedSearch)">
+          Search <i class="mdi mdi-magnify"></i></button></label>
     </div>
   </div>
   <section class="contiainer main-font">
     <div class="row">
       <div class="col-12">
         <div class="d-flex gap-2 justify-content-center">
-          <button
-            v-for="type in searchTypes"
-            :key="type"
-            type="button"
-            @click="searchFramed(type)"
-            :class="
-              selectedSearch != type
-                ? 'btn-warning text-light'
-                : 'btn-success fw-bold'
-            "
-            class="btn fs-5"
-          >
+          <button v-for="type in searchTypes" :key="type" type="button" @click="searchFramed(type)" :class="selectedSearch != type
+              ? 'btn-warning text-light'
+              : 'btn-success fw-bold'
+            " class="btn fs-5">
             {{ type }}
           </button>
         </div>
@@ -87,33 +83,21 @@ async function searchFramed(type) {
     </div>
     <section v-if="selectedSearch == 'albums'" class="text-light">
       <div class="row d-flex mb-5 mx-3">
-        <div
-          class="col-lg-3 col-md-6 pt-2"
-          v-for="album in albums"
-          :key="album.id"
-        >
+        <div class="col-lg-3 col-md-6 pt-2" v-for="album in albums" :key="album.id">
           <AlbumSearchCard :album />
         </div>
       </div>
     </section>
     <section v-if="selectedSearch == 'photos'" class="text-light">
       <div class="row d-flex mb-5 mx-3">
-        <div
-          class="col-lg-3 col-md-6 pt-2"
-          v-for="photo in photos"
-          :key="photo.id"
-        >
+        <div class="col-lg-3 col-md-6 pt-2" v-for="photo in photos" :key="photo.id">
           <PhotoSearchCard :photo />
         </div>
       </div>
     </section>
     <section v-if="selectedSearch == 'profiles'" class="text-light">
       <div class="row d-flex mb-5 mx-3">
-        <div
-          class="col-md-3 pt-2"
-          v-for="profile in profiles"
-          :key="profile.id"
-        >
+        <div class="col-md-3 pt-2" v-for="profile in profiles" :key="profile.id">
           <ProfileSearchCard :profile />
         </div>
       </div>
