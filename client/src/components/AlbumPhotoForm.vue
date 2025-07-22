@@ -1,6 +1,7 @@
 <script setup>
 import { AppState } from "@/AppState.js";
 import { accountService } from "@/services/AccountService.js";
+import { albumsService } from "@/services/AlbumsService.js";
 import { logger } from "@/utils/Logger.js";
 import { Pop } from "@/utils/Pop.js";
 import { computed, ref, watch } from "vue";
@@ -19,7 +20,7 @@ async function getAlbumsByProfileId() {
   }
   try {
     const albums = await accountService.getAlbumsByAccountId();
-    logger.log(albums);
+    logger.log("getting your albums" + albums);
   } catch (error) {
     logger.error(error);
     Pop.error(error);
@@ -27,7 +28,11 @@ async function getAlbumsByProfileId() {
 }
 async function addPhotoToAlbum() {
   try {
-    logger.log(albumId.value);
+    const photoId = route.params.photoId;
+    const album = albumId.value;
+    logger.log(photoId, album);
+    const albumPhoto = await albumsService.addPhotoToAlbum(photoId, album);
+    Pop.success(albumPhoto);
   } catch (error) {
     logger.error(error);
     Pop.error(error);

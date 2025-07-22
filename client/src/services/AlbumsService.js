@@ -5,6 +5,14 @@ import { AppState } from "@/AppState.js";
 import { AlbumPhoto } from "@/models/AlbumPhoto.js";
 
 class AlbumsService {
+  async addPhotoToAlbum(photoId, albumId) {
+    logger.log(photoId, albumId, "service");
+    const response = await api.post("api/albumphotos", {
+      albumId: albumId,
+      photoId: photoId,
+    });
+    logger.log(response.data);
+  }
   async getMostAlbumsTagsById(profileId) {
     const response = await api.get(`api/profiles/${profileId}/tags`);
     AppState.profileTags = response.data;
