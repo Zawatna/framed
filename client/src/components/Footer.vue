@@ -5,12 +5,19 @@ import PhotoUploadForm from '@/components/PhotoUploadForm.vue';
 import PopChoice from '@/components/PopChoice.vue';
 import AlbumForm from '@/components/AlbumForm.vue';
 import { computed } from "vue";
+import { AuthService } from "@/services/AuthService.js";
+
 
 const account = computed(() => AppState.account);
 
 function updateImgI() {
   AppState.choicePhotoIndex++;
 }
+
+function login() {
+  AuthService.loginWithRedirect()
+}
+
 </script>
 
 <template>
@@ -19,7 +26,7 @@ function updateImgI() {
       <div class="col-3">
         <RouterLink :to="{ name: 'Account' }">
           <i v-if="account" class="mdi mdi-account footer-icon text-success"></i>
-          <i v-else class="mdi mdi-login footer-icon text-success"></i>
+          <i v-else @click="login()" role="button" class="mdi mdi-login footer-icon text-success"></i>
         </RouterLink>
       </div>
       <div class="col-3">

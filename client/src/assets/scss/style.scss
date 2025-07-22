@@ -13,16 +13,16 @@ body {
   height: 100%;
   overflow-x: hidden;
   overscroll-behavior-y: none;
-  background-image: url(../img/framed-bg.png);
-  background-size: cover;
-  background-position: top;
-  // overflow-y: hidden;
 }
 
 main {
   flex-grow: 1;
   display: flex;
   flex-direction: column;
+  // TODO add blur back to bg image
+  background-image: url(../img/framed-bg.png);
+  background-size: cover contain;
+  background-position: top;
 }
 
 #pop-toast-container {
