@@ -11,9 +11,8 @@ export class ProfilesController extends BaseController {
     this.router
       .get("/search", this.getProfilesByQuery)
       .get("", this.getProfiles)
-      .get("/:id", this.getProfile)
       .get("/:id/photos", this.getPhotosByProfileId)
-      .get("/:id/tags", this.getTagsByProfileId);
+      .get("/:id", this.getProfile);
   }
 
   async getProfiles(req, res, next) {
