@@ -13,6 +13,10 @@ class AlbumsService {
     });
     logger.log(response.data);
   }
+  async archiveAlbum(albumId) {
+    const response = await api.delete(`api/albums/${albumId}`);
+    logger.log("api response", response.data);
+  }
   async getMostAlbumsTagsById(profileId) {
     const response = await api.get(`api/profiles/${profileId}/tags`);
     AppState.profileTags = response.data;
