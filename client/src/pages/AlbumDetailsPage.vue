@@ -9,6 +9,7 @@ import { albumsService } from '@/services/AlbumsService.js';
 const route = useRoute()
 
 const album = computed(() => AppState.album)
+const account = computed(() => AppState.account);
 // const albumPhoto = ref([])
 
 const gridPattern = ref(['box-md', 'box-sm', 'box-sm', ])
@@ -24,6 +25,19 @@ async function getAlbumById() {
         Pop.error(error);
         logger.error(error)
     }
+}
+
+async function archiveAlbum(){
+  const confirmed = await Pop.confirm('Are you sure you want to archive this album?')
+  if(!confirmed) return
+  try {
+    const albumId = route.params.albumId
+    await albumsService.archiveAlbum(albumId)
+    
+  } catch (error) {
+    Pop.error(error)
+    logger.error(error)
+  }
 }
 
 // async function getAlbumPictureById() {
@@ -55,9 +69,17 @@ onMounted(() => {
           <h1 class="display-1 fw-bold">Just Cats</h1>
         </div>
         <div class="col-6">
-          <button class="rounded pill text-light btn btn-warning fs-4">
-            Follow Album
-          </button>
+          <div v-if="album.creator.id != account?.id">
+            <button class="rounded pill text-light btn btn-warning fs-4">
+              Follow Album
+            </button>
+          </div>
+          <div v-else>
+            <button class="rounded pill text-light btn btn-danger fs-4" @click="archiveAlbum()" :disabled="album.isArchived">
+              Archive Album
+            </button>
+            <div v-if="album.isArchived">Album is archived</div>
+          </div>
         </div>
       </div>
     </div>
