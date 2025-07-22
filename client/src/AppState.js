@@ -14,6 +14,9 @@ export const AppState = reactive({
 
   profileTags: [],
 
+  albumTagsThatMatchSearch: [],
+  photoTagsThatMatchSearch: [],
+
   /** @type {import('./models/Photo.js').Photo[]} */
   photos: [],
 
