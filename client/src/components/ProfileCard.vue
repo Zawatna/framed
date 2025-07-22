@@ -77,11 +77,14 @@ async function getTagCount() {
   <section v-if="profile" class="container-fluid text-light border-bottom ">
     <div class="row">
       <div class="col mt-3">
-        <h3 class="text-light text-shadow text-start text-decoration-underline">{{ profile.name }}'s Most
+        <h3 class="text-light text-shadow text-start text-decoration-underline m-0">{{ profile.name }}'s Most
           Used Tags
         </h3>
-        <div class="d-flex gap-3 text-center text-shadow justify-content-around">
-          <p v-for="(tagObject, index) in profileTags.slice(0, 5)" :key="index">{{ tagObject.tag }}</p>
+        <div class="d-flex gap-3 text-center text-shadow justify-content-around ">
+          <p v-for="(tagObject, index) in profileTags.slice(0, 5)" :key="index"
+            class=" my-3 tag-style px-2 rounded-pill">{{
+              tagObject.tag }}
+          </p>
         </div>
         <!-- //TODO - Get Tags back that they use most and put them here in order with links to the search by that tag string -->
       </div>
