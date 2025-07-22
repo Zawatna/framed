@@ -78,6 +78,9 @@ function login() {
     modalId="albumPhoto"
     modalHeader="Which album would you like to add this photo to?"
   >
+  </ModalWrapper>
+  <ModalWrapper modalId="commentModal" modalHeader="comments go here">
+    what's up
     <AlbumPhotoForm />
   </ModalWrapper>
 </template>
