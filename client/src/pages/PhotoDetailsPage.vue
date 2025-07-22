@@ -30,6 +30,19 @@ async function getPhotoById() {
   }
 }
 
+async function deletePhoto() {
+  const confirmed = await Pop.confirm('Are you sure you want to delete your photo?')
+  if (!confirmed) return
+  try {
+    const photoId = route.params.photoId
+    await photosService.deletePhoto(photoId)
+  }
+  catch (error) {
+    Pop.error(error);
+  }
+
+}
+
 // async function getPhotosByCreatorId() {
 //   try {
 //     const creatorId = account;
@@ -71,7 +84,10 @@ async function getPhotoById() {
               </button>
               <p class="mt-2 ms-1 fs-4">33</p>
             </div>
-            <div class="col-6 text-end justify-content-end d-flex pe-4">
+            <div class="col-4 text-center" v-if="photo.creatorId == account?.id">
+              <button @click="deletePhoto()" type="button" class="btn btn-danger fs-5">Delete</button>
+            </div>
+            <div class="col-4 text-end justify-content-end d-flex pe-4">
               <p class="like-num me-1 fs-4">1.3K</p>
               <i class="mdi mdi-heart text-warning display-3" role="button"></i>
             </div>
