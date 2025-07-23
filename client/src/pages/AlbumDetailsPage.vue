@@ -9,13 +9,12 @@ import { albumsService } from '@/services/AlbumsService.js';
 const route = useRoute()
 
 const album = computed(() => AppState.album)
-const account = computed(() => AppState.account);
+// const account = computed(() => AppState.account);
 const photos = computed(()=> AppState.album.photos);
 // const albumPhoto = ref([])
 
 
-const gridPattern = ref(['box-md', 'box-sm', 'box-sm', ])
-
+// const gridPattern = ref(['box-md', 'box-sm', 'box-sm', ])
 
 
 async function getAlbumById() {
@@ -67,13 +66,13 @@ onMounted(() => {
 
 <template>
   <div v-if="AppState.album" class="main-font text-light rounded">
-    <div class="container mx-auto mt-5 glass-bg pb-3">
+    <div class="container mx-auto mt-3 glass-bg pb-3">
       <!-- TODO Create Media Query for lg screens to align top/align center on xl screens (bootstrap sucks) -->
-      <div class="d-inline-flex align-items-xl-center">
+      <div class="d-inline-flex align-items-xl-center ms-3">
         <div class="">
           <h1 class="display-1 fw-bold">{{ album.name }}</h1>
         </div>
-        <div class="ms-5">
+        <!-- <div class="ms-5">
           <div v-if="album.creator.id != account?.id">
             <button class="rounded pill text-light btn btn-warning fs-4">
               Follow Album
@@ -85,20 +84,20 @@ onMounted(() => {
             </button>
             <div v-if="album.isArchived">Album is archived</div>
           </div>
-        </div>
+        </div> -->
       </div>
-      <div class="d-inline-flex flex-wrap profile-text">
+      <div class="d-flex flex-wrap profile-text ms-3">
         <RouterLink :to="{ name: 'Profile', params: { profileId: album.creator.id } }">
           <h1>@{{ album.creator.name }}</h1>
         </RouterLink>
-        <span class="fs-3 ms-2 me-2">||</span>
+        <span class="fs-2 ms-2 me-2">||</span>
         <h1>{{ album.photoCount }} Photos</h1>
       </div>
       <div class="d-flex flex-wrap ms-3">
-        <p class="fs-2">{{ album.description }} Lorem ipsum dolor sit, amet consectetur adipisicing elit. Totam omnis enim iste tenetur, facilis modi quaerat assumenda id earum consectetur quod autem minima, esse nisi eos maiores quas ea sapiente.</p>
+        <p class="fs-2">{{ album.description }}</p>
       </div>
-      <div v-for="tag in album.tags" :key="tag.id" class="d-flex flex-wrap justify-content-center align-items-center">
-        <div class="badge border rounded bg-success text-light fs-5 px-1 me-2 ms-2 mb-2">{{ tag.tag.name }}</div>
+      <div class="d-flex flex-wrap justify-content-center align-items-center">
+        <div v-for="tag in album.tags" :key="tag.id" class="badge border rounded bg-success text-light fs-5 px-1 me-2 ms-2 mb-2">{{ tag.tag.name }}</div>
       </div>
     </div>
 
@@ -149,20 +148,28 @@ onMounted(() => {
           </div>
       </div>
     </div> -->
-    <div class="container-fluid mt-4 page-mb" v-if="album">
-      <div class="wrapper">
+  <div class="container mt-4 mt-xl-5 page-mb " v-if="album">
+    <!-- NOTE If all images were 1/1 Aspect Ratio, use this Masonry -->
+    <!-- <div class="wrapper">
+      <div v-for="(albumPhoto, i) in photos" :key="`photo${i}`" :class="gridPattern[i % gridPattern.length]">
+        <RouterLink :to="{ name: 'Photo Details', params: { photoId: albumPhoto.photoId } }">
+          <img :src="albumPhoto.photo.imgUrl" class="img-fluid w-100">
+        </RouterLink>
+      </div>
+    </div> -->
 
-        <div v-for="(albumPhoto, i) in photos" :key="`photo${i}`" :class="gridPattern[i % gridPattern.length]">
-          
-            <img :src="albumPhoto.photo.imgUrl" class="img-fluid w-100">
-          
-        </div>
-
+      <!--NOTE differing dimension photos - Masonry formatting -->
+    <div class="masonry-wrapper flex-wrap">
+      <div class="" v-for="(albumPhoto, i) in photos" :key="albumPhoto[i]">
+        <RouterLink :to="{ name: 'Photo Details', params: { photoId: albumPhoto.photoId } }">
+          <img :src="album.photos[i].photo.imgUrl" :alt="`${album.photos[i].photo.creator?.name}'s Photograph`" class="img-fluid item">
+        </RouterLink>
       </div>
     </div>
+  </div>
 
-    <!-- !SECTION -->
-    <!-- <div v-else>add pictures to the album to see them here!</div> -->
+  <!-- !SECTION -->
+  <!-- <div v-else>add pictures to the album to see them here!</div> -->
 
 
 </template>
@@ -170,12 +177,16 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 
+  
+
 .page-mb {
   margin-bottom: 90px;
 }
 
 img {
   border: 2px solid tan;
+  max-width: 100%,
+
 }
 
 a {
@@ -191,6 +202,13 @@ p {
   line-height: 110%;  
 }
 
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: masonry;
+
+}
+
 .profile-text {
   color: rgba(163, 162, 162, 0.862);
 }
@@ -204,6 +222,39 @@ p {
       rgba(0, 0, 0, 0.6) 100%);
   backdrop-filter: blur(5px);
   border-radius: 30px;
+}
+
+@media  (max-width: 1024px) {
+  .masonry-wrapper {
+    column-count: 2;
+    column-gap: 0;
+  }
+
+  .item {
+    break-inside:avoid;
+  }
+}
+
+@media (min-width: 1025px) and (max-width: 1199px) {
+  .masonry-wrapper {
+    column-count: 3;
+    column-gap: 0;
+  }
+
+  .item {
+    break-inside:avoid;
+  }
+}
+
+@media (min-width: 1200px) {
+  .masonry-wrapper {
+    column-count: 4;
+    column-gap: 0;
+  }
+
+  .item {
+    break-inside:avoid;
+  }
 }
 
 
