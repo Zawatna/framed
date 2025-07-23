@@ -63,8 +63,8 @@ async function getTagCount() {
 <template>
   <section v-if="profile" class="container-fluid">
 
-    <button v-if="account" class="btn bg-secondary fixed-button m-2" type="button" data-bs-toggle="modal"
-      data-bs-target="#editProfile">
+    <button v-if="account?.id == profile.id" class="btn bg-secondary fixed-button m-2" type="button"
+      data-bs-toggle="modal" data-bs-target="#editProfile">
       Edit Profile
     </button>
 
@@ -79,6 +79,13 @@ async function getTagCount() {
       </div>
     </div>
 
+  </section>
+  <!-- //NOTE - if page doesnt load -->
+  <section class="container-fluid " v-else>
+    <div class="row text-center mt-5">
+
+      <h1 class="col-12 text center text-white ">LOADING <i class="mdi mdi-loading mdi-spin"></i></h1>
+    </div>
   </section>
 
   <section v-if="profile" class="container-fluid text-light border-bottom ">

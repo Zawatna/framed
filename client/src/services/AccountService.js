@@ -9,6 +9,7 @@ class AccountService {
     const response = await api.put(`/account`, profileEditData)
     const updatedAccountData = new Account(response.data)
     AppState.account = updatedAccountData
+    AppState.profile = updatedAccountData
   }
   async getAlbumsByAccountId() {
     const response = await api.get(`/account/albums`);

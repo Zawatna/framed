@@ -3,7 +3,7 @@ import { AppState } from '@/AppState.js';
 import { accountService } from '@/services/AccountService.js';
 import { Pop } from '@/utils/Pop.js';
 import { Modal } from 'bootstrap';
-import { onMounted, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 
 
 
@@ -12,17 +12,13 @@ onMounted(() => {
 
 })
 
-const profile = AppState.profile
+const profile = computed(() => AppState.account)
 
 async function editProfile() {
   try {
     await accountService.editAccountInfo(formData.value)
 
-    formData.value = {
-      bio: '',
-      picture: '',
-      name: '',
-    }
+
     Modal.getOrCreateInstance('#editProfile').hide()
 
   }
@@ -34,9 +30,9 @@ async function editProfile() {
 
 const formData = ref(
   {
-    bio: profile.bio ? profile.bio : 'No current Bio',
-    picture: profile.picture,
-    name: profile.name,
+    bio: profile.value.bio ? profile.value.bio : 'No current Bio',
+    picture: profile.value.picture,
+    name: profile.value.name,
     // email: ''
   }
 )
