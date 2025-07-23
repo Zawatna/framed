@@ -10,7 +10,9 @@ const route = useRoute()
 
 const album = computed(() => AppState.album)
 const account = computed(() => AppState.account);
+const photos = computed(()=> AppState.album.photos);
 // const albumPhoto = ref([])
+
 
 const gridPattern = ref(['box-md', 'box-sm', 'box-sm', ])
 
@@ -58,17 +60,20 @@ onMounted(() => {
     // getAlbumPictureById()
 })
 
+
+
 </script>
 
 
 <template>
-  <div v-if="AppState.album" class="main-font text-light">
-    <div class="container mx-auto mt-5">
-      <div class="row align-items-center">
-        <div class="col-6">
-          <h1 class="display-1 fw-bold">Just Cats</h1>
+  <div v-if="AppState.album" class="main-font text-light rounded">
+    <div class="container mx-auto mt-5 glass-bg pb-3">
+      <!-- TODO Create Media Query for lg screens to align top/align center on xl screens (bootstrap sucks) -->
+      <div class="d-inline-flex align-items-xl-center">
+        <div class="">
+          <h1 class="display-1 fw-bold">{{ album.name }}</h1>
         </div>
-        <div class="col-6">
+        <div class="ms-5">
           <div v-if="album.creator.id != account?.id">
             <button class="rounded pill text-light btn btn-warning fs-4">
               Follow Album
@@ -81,6 +86,19 @@ onMounted(() => {
             <div v-if="album.isArchived">Album is archived</div>
           </div>
         </div>
+      </div>
+      <div class="d-inline-flex flex-wrap profile-text">
+        <RouterLink :to="{ name: 'Profile', params: { profileId: album.creator.id } }">
+          <h1>@{{ album.creator.name }}</h1>
+        </RouterLink>
+        <span class="fs-3 ms-2 me-2">||</span>
+        <h1>{{ album.photoCount }} Photos</h1>
+      </div>
+      <div class="d-flex flex-wrap ms-3">
+        <p class="fs-2">{{ album.description }} Lorem ipsum dolor sit, amet consectetur adipisicing elit. Totam omnis enim iste tenetur, facilis modi quaerat assumenda id earum consectetur quod autem minima, esse nisi eos maiores quas ea sapiente.</p>
+      </div>
+      <div v-for="tag in album.tags" :key="tag.id" class="d-flex flex-wrap justify-content-center align-items-center">
+        <div class="badge border rounded bg-success text-light fs-5 px-1 me-2 ms-2 mb-2">{{ tag.tag.name }}</div>
       </div>
     </div>
 
@@ -131,17 +149,18 @@ onMounted(() => {
           </div>
       </div>
     </div> -->
-    <!-- <div class="container-fluid" v-if="albumPhoto">
+    <div class="container-fluid mt-4 page-mb" v-if="album">
       <div class="wrapper">
 
-        <div v-for="(albumPhotos, n) in albumPhoto" :key="`albumPhotos-${n}`" :class="gridPattern[n % gridPattern.length]">
+        <div v-for="(albumPhoto, i) in photos" :key="`photo${i}`" :class="gridPattern[i % gridPattern.length]">
           
-            <img :src="albumPhotos.photo.imgUrl" class="img-fluid w-100">
+            <img :src="albumPhoto.photo.imgUrl" class="img-fluid w-100">
           
         </div>
 
       </div>
-    </div> -->
+    </div>
+
     <!-- !SECTION -->
     <!-- <div v-else>add pictures to the album to see them here!</div> -->
 
@@ -151,9 +170,42 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 
+.page-mb {
+  margin-bottom: 90px;
+}
+
 img {
   border: 2px solid tan;
 }
+
+a {
+  text-decoration: none;
+  color: rgba(163, 162, 162, 0.862);
+
+  &:hover {
+    color: rgba(163, 162, 162, 1)
+  }
+}
+
+p {
+  line-height: 110%;  
+}
+
+.profile-text {
+  color: rgba(163, 162, 162, 0.862);
+}
+
+
+.glass-bg {
+  padding-top: 2rem;
+  background: #0f0050;
+  background: radial-gradient(circle,
+      rgba(15, 0, 80, 0.53) 33%,
+      rgba(0, 0, 0, 0.6) 100%);
+  backdrop-filter: blur(5px);
+  border-radius: 30px;
+}
+
 
 .wrapper {
   display: grid;
