@@ -2,6 +2,7 @@ import { Auth0Provider } from "@bcwdev/auth0provider";
 import BaseController from "../utils/BaseController.js";
 import { albumsService } from "../services/AlbumsService.js";
 import { albumPhotosService } from "../services/AlbumPhotosService.js";
+import { dbContext } from "../db/DbContext.js";
 
 export class AlbumsController extends BaseController {
   constructor() {
@@ -44,6 +45,8 @@ export class AlbumsController extends BaseController {
     try {
       const albumId = request.params.albumId;
       const userId = request.userInfo.id;
+      const album = await albumsService.getAlbumById(albumId)
+      if(album.creatorId != userId) response.send('you cant archive another users album!')
       const deletedAlbum = await albumsService.deleteAlbum(albumId, userId);
       response.send(deletedAlbum);
     } catch (error) {

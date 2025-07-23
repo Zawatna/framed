@@ -95,7 +95,7 @@ onMounted(() => {
         <h1>{{ album.photoCount }} Photos</h1>
       </div>
       <div class="d-flex flex-wrap ms-3">
-        <p class="fs-2">{{ album.description }} Lorem ipsum dolor sit, amet consectetur adipisicing elit. Totam omnis enim iste tenetur, facilis modi quaerat assumenda id earum consectetur quod autem minima, esse nisi eos maiores quas ea sapiente.</p>
+        <p class="fs-2">{{ album.description }}</p>
       </div>
       <div v-for="tag in album.tags" :key="tag.id" class="d-flex flex-wrap justify-content-center align-items-center">
         <div class="badge border rounded bg-success text-light fs-5 px-1 me-2 ms-2 mb-2">{{ tag.tag.name }}</div>
