@@ -44,7 +44,7 @@ class AlbumsService {
     ]);
     if (album == null) throw new BadRequest("this album does not exist");
     return album;
-  };
+  }
   async getAllAlbums() {
     const albums = await dbContext.Albums.find().populate([
       { path: "creator", select: "name picture" },
@@ -110,7 +110,7 @@ class AlbumsService {
       { path: "photocount" },
     ]);
     if (albums.length <= 0) {
-      return `no albums found containing`;
+      return "no user albums found";
     }
     return albums;
   }
