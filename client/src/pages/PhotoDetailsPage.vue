@@ -1,7 +1,7 @@
 <script setup>
 import { AppState } from "@/AppState.js";
 import AlbumPhotoButton from "@/components/AlbumPhotoButton.vue";
-import ModalWrapper from '@/components/ModalWrapper.vue';
+import ModalWrapper from "@/components/ModalWrapper.vue";
 import { photoCommentsService } from "@/services/PhotoCommentsService.js";
 import { photosService } from "@/services/PhotosService.js";
 import { logger } from "@/utils/Logger.js";
@@ -19,7 +19,7 @@ const route = useRoute();
 const router = useRouter()
 const photo = computed(() => AppState.photo);
 const account = computed(() => AppState.account);
-const photoComments = computed(() => AppState.photoComments)
+const photoComments = computed(() => AppState.photoComments);
 // TODO Add Tags once populated in appstate
 // TODO Add Comments once populated in appstate
 // TODO Add Profile once BE Getter is created
@@ -48,21 +48,27 @@ async function deletePhoto() {
   } catch (error) {
     Pop.error(error);
   }
-
 }
 
 async function getPhotoComments() {
-  logger.log('get photo comments 🏃‍♀️🖼️💬')
+  logger.log("get photo comments 🏃‍♀️🖼️💬");
   try {
-    const photoId = route.params.photoId
-    await photoCommentsService.getPhotoComments(photoId)
-  }
-  catch (error) {
+    const photoId = route.params.photoId;
+    await photoCommentsService.getPhotoComments(photoId);
+  } catch (error) {
     Pop.error(error);
   }
-
 }
-
+async function likePhoto() {
+  try {
+    const photoId = photo.value.id;
+    logger.log(photo.value.id);
+    await photosService.likePhoto(photoId);
+  } catch (error) {
+    Pop.error(error);
+    logger.error(error, "could not like photo");
+  }
+}
 // async function getPhotosByCreatorId() {
 //   try {
 //     const creatorId = account;
@@ -75,55 +81,90 @@ async function getPhotoComments() {
 </script>
 
 <template>
-  <div v-if="photo && photo.creator" class="container-fluid mb-5 main-font">
+  <div v-if="photo" class="container-fluid mb-5 main-font">
     <div class="row justify-content-center mb-5">
       <div class="row justify-content-center mb-5">
         <div class="frame justify-content-start mt-3 pb-1 px-1">
-          <RouterLink :to="{ name: 'Photo Details', params: { photoId: photo.id } }">
+          <RouterLink
+            :to="{ name: 'Photo Details', params: { photoId: photo.id } }"
+          >
             <div class="text-center">
-              <img :src="photo.imgUrl" :alt="`@${photo.creator.name}'s posted photo`" class="img-fluid" />
+              <img
+                :src="photo.imgUrl"
+                :alt="`@${photo.creator.name}'s posted photo`"
+                class="img-fluid"
+              />
             </div>
           </RouterLink>
           <div v-if="photo.creatorId != account?.id">
-            <RouterLink :to="{ name: 'Profile', params: { profileId: photo?.creatorId } }">
+            <RouterLink
+              :to="{ name: 'Profile', params: { profileId: photo?.creatorId } }"
+            >
               <h5 class="img-username">@{{ photo.creator.name }}</h5>
             </RouterLink>
           </div>
           <div v-else>
-            <RouterLink :to="{ name: 'Profile', params: { profileId: photo?.creatorId } }">
+            <RouterLink
+              :to="{ name: 'Profile', params: { profileId: photo?.creatorId } }"
+            >
               <h5 class="img-username">@{{ photo.creator.name }}</h5>
             </RouterLink>
           </div>
           <h4 class="img-desc main-font">{{ photo.description }}</h4>
           <div class="row align-items-center">
-            <div class="col-6 d-flex ps-4">
-              <button class="btn btn-success fixed-button m-2" type="button" data-bs-toggle="modal"
-                data-bs-target="#commentModal">
-                ????
-                <i class="mdi mdi-comment display-3 text-light"></i>
-              </button>
-              <p class="mt-2 ms-1 fs-4">33</p>
-            </div>
-            <div class="col-4 text-center" v-if="photo.creatorId == account?.id">
-              <button @click="deletePhoto()" type="button" class="btn btn-danger fs-5">
-                Delete
-              </button>
-            </div>
-            <div class="col-4 text-end justify-content-end d-flex pe-4">
-              <p class="like-num me-1 fs-4">1.3K</p>
-              <i class="mdi mdi-heart text-warning display-3" role="button"></i>
+            <div
+              class="col-12 d-flex ps-4 align-items-center justify-content-between"
+            >
+              <div>
+                <button
+                  class="btn fixed-button m-2"
+                  type="button"
+                  data-bs-toggle="modal"
+                  data-bs-target="#commentModal"
+                >
+                  <i
+                    class="mdi mdi-comment mdi-flip-h fs-1 text-light text-shadow"
+                  ></i>
+                </button>
+                <span class="mt-2 ms-1 fs-3">{{ photoComments.length }}</span>
+              </div>
+              <div class="d-flex align-items-center">
+                <p class="like-num me-1 fs-4">{{ photo.likes.length }}</p>
+                <button
+                  @click="likePhoto()"
+                  class="btn fs-1 text-warning text-shadow"
+                >
+                  <i v-if="photo.likes == account.id" class="mdi mdi-heart"></i>
+                  <i v-else class="mdi mdi-heart-outline"></i>
+                </button>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <div v-if="account" class="ms-5">
-      <AlbumPhotoButton />
+    <div class="ms-5 display-inline d-flex gap-4">
+      <AlbumPhotoButton v-if="account" />
+      <div>
+        <button
+          v-if="photo.creatorId == account?.id"
+          @click="deletePhoto()"
+          type="button"
+          class="btn btn-danger text-light text-shadow"
+        >
+          Delete this photo
+        </button>
+      </div>
     </div>
     <div class="row text-center bg-primary">
-      <h1 v-if="photo.creatorId != account?.id" class="col-12 text-light mt-3 mb-3">
+      <h1
+        v-if="photo.creatorId != account?.id"
+        class="col-12 text-light mt-3 mb-3"
+      >
         More Photos from
-        <RouterLink :to="{ name: 'Profile', params: { profileId: photo.creatorId } }">
+        <RouterLink
+          :to="{ name: 'Profile', params: { profileId: photo.creatorId } }"
+        >
           <span class="username">@{{ photo.creator.name }}</span>
         </RouterLink>
       </h1>

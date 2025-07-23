@@ -77,6 +77,21 @@ class PhotosService {
     const photos = await dbContext.Photos.find({ creatorId: profileId });
     return photos;
   }
+  async likePhoto(photoId, userId) {
+    const likedPhoto = await dbContext.Photos.findById(photoId).populate([
+      { path: "creator", select: "name picture" },
+      { path: "tags", populate: "tag" },
+    ]);
+    if (likedPhoto.likes.includes(userId)) {
+      const userIndex = likedPhoto.likes.findIndex((id) => id == userId);
+      likedPhoto.likes.splice(userIndex, 1);
+      likedPhoto.save();
+      return likedPhoto;
+    }
+    likedPhoto.likes.push(userId);
+    likedPhoto.save();
+    return likedPhoto;
+  }
 }
 
 export const photosService = new PhotosService();

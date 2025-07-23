@@ -6,6 +6,7 @@ export const AlbumSchema = new Schema(
     coverImg: { type: String, required: true, maxLength: 500 },
     description: { type: String, maxLength: 1000 },
     name: { type: String, maxlength: 200, minLength: 3, required: true },
+    likes: { type: [Schema.ObjectId], required: false },
     isArchived: { type: Boolean, default: false },
   },
   {

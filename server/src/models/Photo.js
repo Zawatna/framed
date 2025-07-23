@@ -7,7 +7,7 @@ export const PhotoSchema = new Schema(
     imgUrl: { type: String, required: true, maxLength: 500 },
     description: { type: String, maxLength: 100 },
     originalDate: { type: Date, required: false },
-    likes: { type: Schema.ObjectId, required: false },
+    likes: { type: [Schema.ObjectId], required: false },
     location: { type: String, required: false, maxLength: 500 },
   },
   {
@@ -30,6 +30,4 @@ PhotoSchema.virtual("photoComments", {
   localField: "_id",
   foreignField: "photoId",
   ref: "PhotoComments",
-})
-
-
+});

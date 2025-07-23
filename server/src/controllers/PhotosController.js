@@ -12,6 +12,7 @@ export class PhotosController extends BaseController {
       .get("/:photoId", this.getPhotosById)
       .get("/:photoId/comments", this.getCommentsByPhotoId)
       .use(Auth0Provider.getAuthorizedUserInfo)
+      .put("/:photoId/like", this.likePhoto)
       .delete("/:photoId", this.deletePhoto)
       .post("", this.createPhoto);
   }
@@ -75,15 +76,27 @@ export class PhotosController extends BaseController {
       next(error);
     }
   }
+  async likePhoto(request, response, next) {
+    try {
+      const photoId = request.params.photoId;
+      const userId = request.userInfo.id;
+      const likedPhoto = await photosService.likePhoto(photoId, userId);
+      response.send(likedPhoto);
+    } catch (error) {
+      next(error);
+    }
+  }
 
   async getCommentsByPhotoId(request, response, next) {
     // response.send('🏃‍♀️💬💬🖼️🪪 Get photo comments')
     try {
-      const photoId = request.params.photoId
-      const photoComments = await photoCommentsService.getCommentsByPhotoId(photoId)
-      response.send(photoComments)
+      const photoId = request.params.photoId;
+      const photoComments = await photoCommentsService.getCommentsByPhotoId(
+        photoId
+      );
+      response.send(photoComments);
     } catch (error) {
-      next(error)
+      next(error);
     }
   }
 }

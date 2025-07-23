@@ -4,6 +4,12 @@ import { Photo } from "@/models/Photo.js";
 import { AppState } from "@/AppState.js";
 
 class PhotosService {
+  async likePhoto(photoId) {
+    const response = await api.put(`api/photos/${photoId}/like`);
+    logger.log(response.data);
+    const photo = new Photo(response.data);
+    AppState.photo = photo;
+  }
   async getPhotosByQuery(photoQuery) {
     AppState.photos = [];
     AppState.searchTerm = photoQuery;

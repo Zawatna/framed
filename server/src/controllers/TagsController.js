@@ -69,8 +69,6 @@ export class TagsController extends BaseController {
       const tagsQuery = request.query.query;
       const photoTags = await tagsService.getPhotoTagsByQuery(tagsQuery);
       const albumTags = await tagsService.getAlbumTagsByQuery(tagsQuery);
-      // const combinedTagsArr = await [photoTags, albumTags] //the code below these two lines accomplishes the same thing but only sends back
-      //   response.send(combinedTagsArr); //two arrays with ONLY the actual objects *ie. no tag data comes back, only photos and albums*
       if (photoTags.length > 0) {
         photoTags[0].photoTags.forEach((photoTag) =>
           tagArray.photos.push(photoTag.photo)
