@@ -7,7 +7,7 @@ import { photosService } from "@/services/PhotosService.js";
 import { logger } from "@/utils/Logger.js";
 import { Pop } from "@/utils/Pop.js";
 import { computed, onMounted } from "vue";
-import { RouterLink, useRoute } from "vue-router";
+import { RouterLink, useRoute, useRouter } from "vue-router";
 
 onMounted(() => {
   getPhotoById();
@@ -16,6 +16,7 @@ onMounted(() => {
 });
 
 const route = useRoute();
+const router = useRouter()
 const photo = computed(() => AppState.photo);
 const account = computed(() => AppState.account);
 const photoComments = computed(() => AppState.photoComments)
@@ -40,7 +41,10 @@ async function deletePhoto() {
   if (!confirmed) return;
   try {
     const photoId = route.params.photoId;
+    await photosService.deleteAlbumPhoto(photoId)
     await photosService.deletePhoto(photoId);
+
+    router.push({name:'Home'})
   } catch (error) {
     Pop.error(error);
   }

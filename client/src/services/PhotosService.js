@@ -36,6 +36,16 @@ class PhotosService {
     AppState.photo = photo;
   }
 
+async deleteAlbumPhoto(photoId){
+  const response = await api.get(`api/albumphotos/${photoId}`)
+  logger.log('albumphotos with photoid', response.data)
+  const albumPhotos = response.data
+  for (const albumPhoto of albumPhotos){
+    await api.delete(`api/albumphotos/${albumPhoto.id}`)
+    logger.log(`deleted photo with id of ${albumPhoto.photoId} off of the album ${albumPhoto.albumId}`)
+  }
+}
+
   async deletePhoto(photoId) {
     const res = await api.delete(`api/photos/${photoId}`);
     logger.log("Deleted Photo: ", res.data);

@@ -7,10 +7,12 @@ export class AlbumPhotosController extends BaseController {
     super("api/albumphotos");
     this.router
       .get("", this.getAllAlbumPhotos)
+      .get("/:photoId", this.getAlbumPhotosbyPhotoId)
       .use(Auth0Provider.getAuthorizedUserInfo)
       .post("", this.addAlbumPhoto)
       .delete("/:albumPhotoId", this.removeAlbumPhoto);
   }
+
   async addAlbumPhoto(request, response, next) {
     try {
       const albumPhotoData = request.body;
@@ -29,6 +31,16 @@ export class AlbumPhotosController extends BaseController {
     } catch (error) {
       next(error);
     }
+  }
+
+    async getAlbumPhotosbyPhotoId(request, response, next) {
+      try {
+        const photoId = request.params.photoId
+        const albumPhotos = await albumPhotosService.getAlbumPhotosbyPhotoId(photoId)
+        response.send(albumPhotos)
+      } catch (error) {
+        next(error)
+      }
   }
   async removeAlbumPhoto(request, response, next) {
     try {

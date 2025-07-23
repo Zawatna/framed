@@ -2,6 +2,7 @@ import { dbContext } from "../db/DbContext.js";
 import { BadRequest, Forbidden } from "../utils/Errors.js";
 
 class AlbumPhotosService {
+
   async addAlbumPhoto(albumPhotoData) {
     const albumPhoto = await dbContext.AlbumPhotos.create(albumPhotoData);
     await albumPhoto.populate([
@@ -24,6 +25,12 @@ class AlbumPhotosService {
     ]);
     return albumPhotos;
   }
+
+    async getAlbumPhotosbyPhotoId(photoId) {
+      const albumPhotos = await dbContext.AlbumPhotos.find({photoId: photoId})
+      return albumPhotos
+  }
+
   async getAllPhotosInAlbum(albumId) {
     const albumPhotos = await dbContext.AlbumPhotos.find({
       albumId: albumId,
