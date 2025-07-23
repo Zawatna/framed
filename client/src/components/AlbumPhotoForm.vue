@@ -9,7 +9,7 @@ import { computed, ref, watch } from "vue";
 import { useRoute } from "vue-router";
 const account = computed(() => AppState.account);
 const route = useRoute();
-const userAlbums = computed(() => AppState.userAlbums);
+const userAlbums = computed(() => AppState.userAlbums.filter(album => album.isArchived == false));
 
 watch(account, getAlbumsByProfileId);
 
@@ -48,16 +48,18 @@ async function addPhotoToAlbum() {
     <div>
       <select
         v-model="albumId"
-        class="form-select"
+        class="form-select mb-2"
         aria-label="Default select example"
         required
       >
         <option selected disabled>Select Your Album</option>
         <option v-for="album in userAlbums" :key="album.id" :value="album.id">
-          {{ album.name }}
+            {{ album.name }}
         </option>
       </select>
-      <button type="submit">Add this photo to your album</button>
+      <button class="btn btn-success" type="submit">
+        Add this photo to your album
+      </button>
     </div>
   </form>
 </template>

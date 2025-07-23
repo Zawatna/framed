@@ -2,6 +2,7 @@ import { Auth0Provider } from "@bcwdev/auth0provider";
 import BaseController from "../utils/BaseController.js";
 import { albumsService } from "../services/AlbumsService.js";
 import { albumPhotosService } from "../services/AlbumPhotosService.js";
+import { dbContext } from "../db/DbContext.js";
 
 export class AlbumsController extends BaseController {
   constructor() {
@@ -12,6 +13,7 @@ export class AlbumsController extends BaseController {
       .get("/:albumId", this.getAlbumById)
       .get("/:albumId/albumphotos", this.getAllPhotosInAlbum)
       .use(Auth0Provider.getAuthorizedUserInfo)
+      .put("/:albumId/likes", this.likeAlbum)
       .post("", this.createAlbum)
       .delete("/:albumId", this.deleteAlbum)
       .put("/:albumId", this.editAlbum);
@@ -44,6 +46,8 @@ export class AlbumsController extends BaseController {
     try {
       const albumId = request.params.albumId;
       const userId = request.userInfo.id;
+      const album = await albumsService.getAlbumById(albumId)
+      if(album.creatorId != userId) response.send('you cant archive another users album!')
       const deletedAlbum = await albumsService.deleteAlbum(albumId, userId);
       response.send(deletedAlbum);
     } catch (error) {
@@ -89,6 +93,16 @@ export class AlbumsController extends BaseController {
       const albumQuery = request.query.query; //the first 'query' tells it to look at what comes after the question mark (?) in the router link. the second 'query' is the key to the key:value pair that is pulling. on the client side this looks like "?query=query.value"
       const albums = await albumsService.getAlbumsByQuery(albumQuery);
       response.send(albums);
+    } catch (error) {
+      next(error);
+    }
+  }
+  async likeAlbum(request, response, next) {
+    try {
+      const albumId = request.params.albumId;
+      const userId = request.userInfo.id;
+      const likedAlbum = await albumsService.likeAlbum(albumId, userId);
+      response.send(likedAlbum);
     } catch (error) {
       next(error);
     }

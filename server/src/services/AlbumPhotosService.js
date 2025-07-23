@@ -2,7 +2,6 @@ import { dbContext } from "../db/DbContext.js";
 import { BadRequest, Forbidden } from "../utils/Errors.js";
 
 class AlbumPhotosService {
-
   async addAlbumPhoto(albumPhotoData) {
     const albumPhoto = await dbContext.AlbumPhotos.create(albumPhotoData);
     await albumPhoto.populate([
@@ -26,9 +25,9 @@ class AlbumPhotosService {
     return albumPhotos;
   }
 
-    async getAlbumPhotosbyPhotoId(photoId) {
-      const albumPhotos = await dbContext.AlbumPhotos.find({photoId: photoId})
-      return albumPhotos
+  async getAlbumPhotosbyPhotoId(photoId) {
+    const albumPhotos = await dbContext.AlbumPhotos.find({ photoId: photoId });
+    return albumPhotos;
   }
 
   async getAllPhotosInAlbum(albumId) {
@@ -56,6 +55,10 @@ class AlbumPhotosService {
     const photoToRemove = await dbContext.AlbumPhotos.findById(
       albumPhotoId
     ).populate("photo album");
+    if (photoToRemove.photo.creatorId == userInfo.id) {
+      await photoToRemove.deleteOne();
+      return `${photoToRemove.photo.name} has been removed from all albums`;
+    }
     if (photoToRemove.creatorId != userInfo.id) {
       throw new Forbidden(
         `You cannot remove a photo from someone else's album, ${userInfo.nickname}`

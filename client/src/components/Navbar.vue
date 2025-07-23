@@ -1,12 +1,18 @@
-<script setup>
-
-</script>
+<script setup></script>
 
 <template>
-  <nav class=" bg-primary border-bottom border-vue">
-    <div class="container">
-      <RouterLink :to="{ name: 'Home' }" class="d-flex align-items-center text-light">
-        <img class="navbar-brand" alt="logo" src="../assets/img/framed-logo.png" height="45" />
+  <nav class="bg-primary border-bottom border-vue">
+    <div class="container-fluid">
+      <RouterLink
+        :to="{ name: 'Home' }"
+        class="d-flex align-items-center text-light"
+      >
+        <img
+          class="navbar-brand ms-4"
+          alt="logo"
+          src="../assets/img/framed-logo.png"
+          height="45"
+        />
         <b class="fs-2 framed-font text-warning ms-1 mt-4">ramed</b>
       </RouterLink>
     </div>

@@ -1,16 +1,16 @@
 <script setup>
-import { onMounted, computed, ref } from 'vue';
-import { useRoute } from 'vue-router';
-import { AppState } from '@/AppState.js';
-import { Pop } from '@/utils/Pop.js';
-import { logger } from "@/utils/Logger.js"
-import { albumsService } from '@/services/AlbumsService.js';
+import { onMounted, computed, ref } from "vue";
+import { useRoute } from "vue-router";
+import { AppState } from "@/AppState.js";
+import { Pop } from "@/utils/Pop.js";
+import { logger } from "@/utils/Logger.js";
+import { albumsService } from "@/services/AlbumsService.js";
 
-const route = useRoute()
+const route = useRoute();
 
-const album = computed(() => AppState.album)
-// const account = computed(() => AppState.account);
-const photos = computed(()=> AppState.album.photos);
+const album = computed(() => AppState.album);
+const account = computed(() => AppState.account);
+const photos = computed(() => AppState.album.photos);
 // const albumPhoto = ref([])
 
 
@@ -18,29 +18,38 @@ const photos = computed(()=> AppState.album.photos);
 
 
 async function getAlbumById() {
-    try {
-        const albumId = route.params.albumId
-        await albumsService.getAlbumById(albumId)
-    }
-    catch (error) {
-        Pop.error(error);
-        logger.error(error)
-    }
-}
-
-async function archiveAlbum(){
-  const confirmed = await Pop.confirm('Are you sure you want to archive this album?')
-  if(!confirmed) return
   try {
-    const albumId = route.params.albumId
-    await albumsService.archiveAlbum(albumId)
-    
+    const albumId = route.params.albumId;
+    await albumsService.getAlbumById(albumId);
   } catch (error) {
-    Pop.error(error)
-    logger.error(error)
+    Pop.error(error);
+    logger.error(error);
   }
 }
 
+async function archiveAlbum() {
+  const confirmed = await Pop.confirm(
+    "Are you sure you want to archive this album?"
+  );
+  if (!confirmed) return;
+  try {
+    const albumId = route.params.albumId;
+    await albumsService.archiveAlbum(albumId);
+  } catch (error) {
+    Pop.error(error);
+    logger.error(error);
+  }
+}
+async function likeAlbum() {
+  try {
+    const albumId = album.value.id;
+    logger.log(album.value.id);
+    await albumsService.likeAlbum(albumId);
+  } catch (error) {
+    Pop.error(error);
+    logger.error(error, "could not like photo");
+  }
+}
 // async function getAlbumPictureById() {
 //     try {
 //         const albumId = route.params.albumId
@@ -53,16 +62,11 @@ async function archiveAlbum(){
 //     }
 // }
 
-
 onMounted(() => {
-    getAlbumById()
-    // getAlbumPictureById()
-})
-
-
-
+  getAlbumById();
+  // getAlbumPictureById()
+});
 </script>
-
 
 <template>
   <div v-if="AppState.album" class="main-font text-light rounded">
@@ -79,19 +83,39 @@ onMounted(() => {
             </button>
           </div>
           <div v-else>
-            <button class="rounded pill text-light btn btn-danger fs-4" @click="archiveAlbum()" :disabled="album.isArchived">
+            <button
+              class="rounded pill text-light btn btn-danger fs-4"
+              @click="archiveAlbum()"
+              :disabled="album.isArchived"
+            >
               Archive Album
             </button>
-            <div v-if="album.isArchived">Album is archived</div>
+          </div>
+          <div v-if="album.isArchived">
+            <span class="fs-2">Album is archived</span>
           </div>
         </div> -->
       </div>
-      <div class="d-flex flex-wrap profile-text ms-3">
-        <RouterLink :to="{ name: 'Profile', params: { profileId: album.creator.id } }">
-          <h1>@{{ album.creator.name }}</h1>
-        </RouterLink>
-        <span class="fs-2 ms-2 me-2">||</span>
-        <h1>{{ album.photoCount }} Photos</h1>
+      <div class="d-flex d-flex justify-content-between align-items-center">
+        <div class="d-inline-flex flex-wrap profile-text ms-2">
+          <RouterLink
+            :to="{ name: 'Profile', params: { profileId: album.creator.id } }"
+          >
+            <h1>@{{ album.creator.name }}</h1>
+          </RouterLink>
+          <span class="fs-3 ms-2 me-2">||</span>
+          <h1>{{ album.photoCount }} Photos</h1>
+        </div>
+        <div class="align-items-center d-flex">
+          <span class="fs-2">{{ album.likes.length }}</span>
+          <button @click="likeAlbum()" class="btn text-warning text-end fs-2">
+            <i
+              v-if="album.likes.find((id) => id == account?.id)"
+              class="mdi mdi-heart"
+            ></i>
+            <i v-else class="mdi mdi-heart-outline"></i>
+          </button>
+        </div>
       </div>
       <div class="d-flex flex-wrap ms-3">
         <p class="fs-2">{{ album.description }}</p>
@@ -101,10 +125,7 @@ onMounted(() => {
       </div>
     </div>
 
-
-
-
-      <!-- <div class="small-container mx-auto mt-4">
+    <!-- <div class="small-container mx-auto mt-4">
           <div class="row">
               <h2 class="col-6 justify-content-md-end d-flex">{{ album.name }}</h2>
               <div class="col-6 d-flex justify-content-center align-items-center justify-content-md-start">
@@ -138,8 +159,8 @@ onMounted(() => {
       </div> -->
   </div>
   <div v-else>loading <span class="mdi mdi-loading mdi-spin"></span></div>
-    <!-- SECTION ALBUM PHOTOS  -->
-    <!-- <div class="container-fluid" v-if="albumPhoto">
+  <!-- SECTION ALBUM PHOTOS  -->
+  <!-- <div class="container-fluid" v-if="albumPhoto">
       <div class="row gap-2 justify-content-center">
           <div class="d-flex justify-content-center col-lg-3 mx-lg-3 col-md-5 mx-md-2" v-for="albumPhotos in albumPhoto" :key="albumPhotos.id">
               <img class="album-image border-cream" :src="albumPhotos.photo.imgUrl"
@@ -174,11 +195,7 @@ onMounted(() => {
 
 </template>
 
-
 <style lang="scss" scoped>
-
-  
-
 .page-mb {
   margin-bottom: 90px;
 }
@@ -194,12 +211,12 @@ a {
   color: rgba(163, 162, 162, 0.862);
 
   &:hover {
-    color: rgba(163, 162, 162, 1)
+    color: rgba(163, 162, 162, 1);
   }
 }
 
 p {
-  line-height: 110%;  
+  line-height: 110%;
 }
 
 .grid-container {
@@ -213,13 +230,14 @@ p {
   color: rgba(163, 162, 162, 0.862);
 }
 
-
 .glass-bg {
   padding-top: 2rem;
   background: #0f0050;
-  background: radial-gradient(circle,
-      rgba(15, 0, 80, 0.53) 33%,
-      rgba(0, 0, 0, 0.6) 100%);
+  background: radial-gradient(
+    circle,
+    rgba(15, 0, 80, 0.53) 33%,
+    rgba(0, 0, 0, 0.6) 100%
+  );
   backdrop-filter: blur(5px);
   border-radius: 30px;
 }
@@ -265,13 +283,13 @@ p {
   grid-template-rows: repeat(3, 1fr);
 }
 
-.box-md{
+.box-md {
   grid-column: auto / span 2;
   grid-row: auto / span 2;
 }
 
-.box-sm{
-grid-column: auto / span 1;
+.box-sm {
+  grid-column: auto / span 1;
   grid-row: auto / span 1;
 }
 
@@ -346,14 +364,12 @@ grid-column: auto / span 1;
 //     border-color: #bebebe;
 // }
 
-
-
 // .button-92 {
 //   --c: #fff;
-  /* text color */
-  // background: linear-gradient(90deg, #0000 33%, #fff5, #0000 67%) var(--_p,100%)/300% no-repeat,
-    // #004dff;
-  /* background color */
+/* text color */
+// background: linear-gradient(90deg, #0000 33%, #fff5, #0000 67%) var(--_p,100%)/300% no-repeat,
+// #004dff;
+/* background color */
 //   color: #0000;
 //   border: none;
 //   transform: perspective(500px) rotateY(calc(20deg*var(--_i,-1)));
@@ -421,7 +437,7 @@ grid-column: auto / span 1;
 //   text-shadow: 0 1px 1px #116ee7;
 //   transition-property: border-color, transform, background-color;
 //   transition-duration: .2s;
-  
+
 //   &::after {
 //     content: '';
 //     position: absolute;
@@ -434,11 +450,11 @@ grid-column: auto / span 1;
 //     background-image: linear-gradient(to bottom, #f4feff, transparent);
 //     opacity: .75;
 //   }
-  
+
 //   &:hover {
 //     transform: scale(1.04);
 //   }
-  
+
 //   &:active {
 //     border-color: #0048d5;
 //     transform: scale(.96);
@@ -454,7 +470,7 @@ grid-column: auto / span 1;
 //   padding: 8px 16px;
 //   min-width: 8em;
 //   background-image: linear-gradient(180deg, #4098ff, #4058ff 62%, #4075ff);
-//   box-shadow: 
+//   box-shadow:
 //     inset 0 1px 0px rgba(255, 255, 255, .2),
 //     inset 0 -1px 0px rgba(0, 0, 0, .2),
 //     0 1px 2px rgba(0, 0, 0, .2);
@@ -466,7 +482,7 @@ grid-column: auto / span 1;
 //   transition-property: border-color, transform;
 //   transition-duration: .2s;
 //   will-change: transform;
-  
+
 //   @media (hover: hover) {
 //     &:hover {
 //       transform: scale(1.04);
@@ -483,8 +499,6 @@ grid-column: auto / span 1;
 //   font-style: italic;
 //   color: #c0c0d8;
 // }
-
-
 
 // img{
 // height: 500px;
