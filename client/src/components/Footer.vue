@@ -7,8 +7,11 @@ import AlbumForm from "@/components/AlbumForm.vue";
 import { computed } from "vue";
 import { AuthService } from "@/services/AuthService.js";
 import AlbumPhotoForm from "./AlbumPhotoForm.vue";
+import EditProfileForm from "./EditProfileForm.vue";
+import ModalWrapperXL from "./ModalWrapperXL.vue";
 
 const account = computed(() => AppState.account);
+
 
 function updateImgI() {
   AppState.choicePhotoIndex++;
@@ -70,6 +73,11 @@ function login() {
       commment form here
     </div>
   </ModalWrapper>
+  <ModalWrapperXL modalId="editProfile" modalHeader="Update your profile!">
+    <section v-if="account">
+      <EditProfileForm />
+    </section>
+  </ModalWrapperXL>
 </template>
 
 <style lang="scss" scoped>

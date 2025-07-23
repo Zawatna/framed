@@ -5,6 +5,11 @@ import { logger } from "../utils/Logger.js";
 import { api } from "./AxiosService.js";
 
 class AccountService {
+  async editAccountInfo(profileEditData) {
+    const response = await api.put(`/account`, profileEditData)
+    const updatedAccountData = new Account(response.data)
+    AppState.account = updatedAccountData
+  }
   async getAlbumsByAccountId() {
     const response = await api.get(`/account/albums`);
     logger.log(response.data);
@@ -19,6 +24,8 @@ class AccountService {
       logger.error("HAVE YOU STARTED YOUR SERVER YET???", err);
     }
   }
+
+
 }
 
 export const accountService = new AccountService();

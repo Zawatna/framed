@@ -7,6 +7,7 @@ import { logger } from '@/utils/Logger.js';
 import { Pop } from '@/utils/Pop.js';
 import { computed, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
+import EditProfileForm from './EditProfileForm.vue';
 
 
 onMounted(() => {
@@ -15,6 +16,7 @@ onMounted(() => {
   getTagCount();
 })
 
+const account = computed(() => AppState.account)
 const profile = computed(() => AppState.profile)
 const profileTags = computed(() => AppState.profileTags)
 
@@ -61,6 +63,11 @@ async function getTagCount() {
 <template>
   <section v-if="profile" class="container-fluid">
 
+    <button v-if="account" class="btn bg-secondary fixed-button m-2" type="button" data-bs-toggle="modal"
+      data-bs-target="#editProfile">
+      Edit Profile
+    </button>
+
     <div class="row">
       <div class="col-md-3 p-3 text-center">
         <img class=" profile-picture border border-light" :src="profile.picture"
@@ -86,14 +93,14 @@ async function getTagCount() {
               tagObject.tag }}
           </p>
         </div>
-        <!-- //TODO - Get Tags back that they use most and put them here in order with links to the search by that tag string -->
+
       </div>
     </div>
   </section>
 
-  <section v-if="profile" class="container-fluid text-light">
-
-  </section>
+  <!-- <section v-if="profile">
+    <EditProfileForm />
+  </section> -->
 </template>
 
 
