@@ -4,7 +4,7 @@
   <div class="mb-3">
     <button
       type="button"
-      class="btn btn-success"
+      class="btn btn-success text-shadow text-light"
       data-bs-toggle="modal"
       data-bs-target="#albumPhoto"
     >

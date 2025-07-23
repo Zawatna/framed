@@ -57,7 +57,7 @@ class AlbumsService {
   }
 
   async getAllAlbums() {
-    const response = await api.get("api/albums?limit=3");
+    const response = await api.get("api/albums");
     // logger.log("albums", response.data);
     const albums = response.data.map((album) => new Album(album));
     logger.log("reformatted albums", albums);

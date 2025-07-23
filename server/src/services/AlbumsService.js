@@ -47,8 +47,9 @@ class AlbumsService {
   async getAllAlbums() {
     const albums = await dbContext.Albums.find().populate([
       { path: "creator", select: "name picture" },
-      { path: "photocount" },
       { path: "tags", populate: "tag" },
+      { path: "photos", options: { limit: 3 }, populate: { path: "photo" } },
+      { path: "photocount" },
     ]);
     return albums;
   }
