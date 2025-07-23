@@ -3,6 +3,15 @@ import { logger } from "@/utils/Logger.js"
 import { api } from "./AxiosService.js"
 
 class PhotoCommentsService {
+    async createComment(editableCommentData) {
+        const response = await api.post('api/photocomments', editableCommentData)
+        logger.log('✏️💬😀 Created Comment', response.data)
+
+
+
+
+
+    }
     async getPhotoComments(photoId) {
         // logger.log('Service is getting photo comments 🏃‍♀️🏃‍♀️🖼️💬🏃‍♀️', photoId)
         AppState.photoComments = []

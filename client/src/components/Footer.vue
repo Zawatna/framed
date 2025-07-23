@@ -7,8 +7,11 @@ import AlbumForm from "@/components/AlbumForm.vue";
 import { computed } from "vue";
 import { AuthService } from "@/services/AuthService.js";
 import AlbumPhotoForm from "./AlbumPhotoForm.vue";
+import PhotoCommentForm from "./PhotoCommentForm.vue";
+import PhotoCommentCard from "./PhotoCommentCard.vue";
 
 const account = computed(() => AppState.account);
+const photoComments = computed(() => AppState.photoComments)
 
 function updateImgI() {
   AppState.choicePhotoIndex++;
@@ -62,12 +65,12 @@ function login() {
     <AlbumPhotoForm />
   </ModalWrapper>
   <ModalWrapper modalId="commentModal" modalHeader="comments go here">
-    <div>
+    <div v-for="photoComment in photoComments" :key="photoComment.creatorId">
       comments here
+      <PhotoCommentCard :photoComment="photoComment" />
     </div>
     <div>
-
-      commment form here
+      <PhotoCommentForm />
     </div>
   </ModalWrapper>
 </template>
