@@ -2,6 +2,7 @@
 import { AppState } from '@/AppState.js';
 import { accountService } from '@/services/AccountService.js';
 import { Pop } from '@/utils/Pop.js';
+import { Modal } from 'bootstrap';
 import { onMounted, ref } from 'vue';
 
 
@@ -16,6 +17,14 @@ const profile = AppState.profile
 async function editProfile() {
   try {
     await accountService.editAccountInfo(formData.value)
+
+    formData.value = {
+      bio: '',
+      picture: '',
+      name: '',
+    }
+    Modal.getOrCreateInstance('#editProfile').hide()
+
   }
   catch (error) {
     Pop.error(error);

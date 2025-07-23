@@ -5,6 +5,12 @@ import { AppState } from "@/AppState.js";
 import { AlbumPhoto } from "@/models/AlbumPhoto.js";
 
 class AlbumsService {
+  async likeAlbum(albumId) {
+    const response = await api.put(`api/albums/${albumId}/likes`);
+    logger.log(response.data);
+    const album = new Album(response.data);
+    AppState.album = album;
+  }
   async addPhotoToAlbum(photoId, albumId) {
     logger.log(photoId, albumId, "service");
     const response = await api.post("api/albumphotos", {

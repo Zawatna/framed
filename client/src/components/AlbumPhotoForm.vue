@@ -48,7 +48,7 @@ async function addPhotoToAlbum() {
     <div>
       <select
         v-model="albumId"
-        class="form-select"
+        class="form-select mb-2"
         aria-label="Default select example"
         required
       >
@@ -57,7 +57,9 @@ async function addPhotoToAlbum() {
             {{ album.name }}
         </option>
       </select>
-      <button type="submit">Add this photo to your album</button>
+      <button class="btn btn-success" type="submit">
+        Add this photo to your album
+      </button>
     </div>
   </form>
 </template>
