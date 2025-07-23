@@ -114,6 +114,18 @@ class AlbumsService {
     }
     return albums;
   }
+  async likeAlbum(albumId, userId) {
+    const likedAlbum = await this.getAlbumById(albumId);
+    if (likedAlbum.likes.includes(userId)) {
+      const userIndex = likedAlbum.likes.findIndex((id) => id == userId);
+      likedAlbum.likes.splice(userIndex, 1);
+      likedAlbum.save();
+      return likedAlbum;
+    }
+    likedAlbum.likes.push(userId);
+    likedAlbum.save();
+    return likedAlbum;
+  }
 }
 
 export const albumsService = new AlbumsService();

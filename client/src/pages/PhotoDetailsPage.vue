@@ -1,7 +1,6 @@
 <script setup>
 import { AppState } from "@/AppState.js";
 import AlbumPhotoButton from "@/components/AlbumPhotoButton.vue";
-import ModalWrapper from "@/components/ModalWrapper.vue";
 import { photoCommentsService } from "@/services/PhotoCommentsService.js";
 import { photosService } from "@/services/PhotosService.js";
 import { logger } from "@/utils/Logger.js";
@@ -16,7 +15,7 @@ onMounted(() => {
 });
 
 const route = useRoute();
-const router = useRouter()
+const router = useRouter();
 const photo = computed(() => AppState.photo);
 const account = computed(() => AppState.account);
 const photoComments = computed(() => AppState.photoComments);
@@ -41,10 +40,10 @@ async function deletePhoto() {
   if (!confirmed) return;
   try {
     const photoId = route.params.photoId;
-    await photosService.deleteAlbumPhoto(photoId)
+    await photosService.deleteAlbumPhoto(photoId);
     await photosService.deletePhoto(photoId);
 
-    router.push({name:'Home'})
+    router.push({ name: "Home" });
   } catch (error) {
     Pop.error(error);
   }
@@ -134,7 +133,10 @@ async function likePhoto() {
                   @click="likePhoto()"
                   class="btn fs-1 text-warning text-shadow"
                 >
-                  <i v-if="photo.likes == account.id" class="mdi mdi-heart"></i>
+                  <i
+                    v-if="photo.likes.find((id) => id == account?.id)"
+                    class="mdi mdi-heart"
+                  ></i>
                   <i v-else class="mdi mdi-heart-outline"></i>
                 </button>
               </div>

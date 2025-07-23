@@ -12,7 +12,7 @@ export class PhotosController extends BaseController {
       .get("/:photoId", this.getPhotosById)
       .get("/:photoId/comments", this.getCommentsByPhotoId)
       .use(Auth0Provider.getAuthorizedUserInfo)
-      .put("/:photoId/like", this.likePhoto)
+      .put("/:photoId/likes", this.likePhoto)
       .delete("/:photoId", this.deletePhoto)
       .post("", this.createPhoto);
   }
