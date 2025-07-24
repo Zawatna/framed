@@ -113,32 +113,18 @@ function toggleView() {
           
           <h4 class="img-desc main-font">{{ photo.description }}</h4>
           <div class="row align-items-center">
-            <div
-              class="col-12 d-flex ps-4 align-items-center justify-content-between"
-            >
+            <div class="col-12 d-flex ps-4 align-items-center justify-content-between">
               <div>
-                <button
-                  class="btn fixed-button m-2"
-                  type="button"
-                  data-bs-toggle="modal"
-                  data-bs-target="#commentModal"
-                >
-                  <i
-                    class="mdi mdi-comment mdi-flip-h fs-1 text-light text-shadow"
-                  ></i>
+                <button class="btn fixed-button m-2" type="button" data-bs-toggle="modal"
+                  data-bs-target="#commentModal">
+                  <i class="mdi mdi-comment mdi-flip-h fs-1 text-light text-shadow"></i>
                 </button>
                 <span class="mt-2 ms-1 fs-3">{{ photoComments.length }}</span>
               </div>
               <div class="d-flex align-items-center">
                 <p class="like-num me-1 fs-4">{{ photo.likes.length }}</p>
-                <button
-                  @click="likePhoto()"
-                  class="btn fs-1 text-warning text-shadow"
-                >
-                  <i
-                    v-if="photo.likes.find((id) => id == account?.id)"
-                    class="mdi mdi-heart"
-                  ></i>
+                <button @click="likePhoto()" class="btn fs-1 text-warning text-shadow">
+                  <i v-if="photo.likes.find((id) => id == account?.id)" class="mdi mdi-heart"></i>
                   <i v-else class="mdi mdi-heart-outline"></i>
                 </button>
               </div>
@@ -150,25 +136,16 @@ function toggleView() {
     <div class="ms-5 display-inline d-flex gap-4">
       <AlbumPhotoButton v-if="account" />
       <div>
-        <button
-          v-if="photo.creatorId == account?.id"
-          @click="deletePhoto()"
-          type="button"
-          class="btn btn-danger text-light text-shadow"
-        >
+        <button v-if="photo.creatorId == account?.id" @click="deletePhoto()" type="button"
+          class="btn btn-danger text-light text-shadow">
           Delete this photo
         </button>
       </div>
     </div>
     <div class="row text-center bg-primary">
-      <h1
-        v-if="photo.creatorId != account?.id"
-        class="col-12 text-light mt-3 mb-3"
-      >
+      <h1 v-if="photo.creatorId != account?.id" class="col-12 text-light mt-3 mb-3">
         More Photos from
-        <RouterLink
-          :to="{ name: 'Profile', params: { profileId: photo.creatorId } }"
-        >
+        <RouterLink :to="{ name: 'Profile', params: { profileId: photo.creatorId } }">
           <span class="username">@{{ photo.creator.name }}</span>
         </RouterLink>
       </h1>

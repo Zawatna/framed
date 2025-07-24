@@ -13,9 +13,7 @@ const account = computed(() => AppState.account);
 const photos = computed(() => AppState.album.photos);
 // const albumPhoto = ref([])
 
-
 // const gridPattern = ref(['box-md', 'box-sm', 'box-sm', ])
-
 
 async function getAlbumById() {
   try {
@@ -76,7 +74,7 @@ onMounted(() => {
         <div class="">
           <h1 class="display-1 fw-bold">{{ album.name }}</h1>
         </div>
-        <!-- <div class="ms-5">
+        <div class="ms-5">
           <div v-if="album.creator.id != account?.id">
             <button class="rounded pill text-light btn btn-warning fs-4">
               Follow Album
@@ -91,10 +89,10 @@ onMounted(() => {
               Archive Album
             </button>
           </div>
-          <div v-if="album.isArchived">
-            <span class="fs-2">Album is archived</span>
+          <div v-if="album.isArchived" class="mt-2">
+            <span class="fs-1">Album is archived</span>
           </div>
-        </div> -->
+        </div>
       </div>
       <div class="d-flex d-flex justify-content-between align-items-center">
         <div class="d-inline-flex flex-wrap profile-text ms-2">
@@ -106,14 +104,23 @@ onMounted(() => {
           <span class="fs-3 ms-2 me-2">||</span>
           <h1>{{ album.photoCount }} Photos</h1>
         </div>
-        <div class="align-items-center d-flex">
-          <span class="fs-2">{{ album.likes.length }}</span>
-          <button @click="likeAlbum()" class="btn text-warning text-end fs-2">
-            <i
-              v-if="album.likes.find((id) => id == account?.id)"
-              class="mdi mdi-heart"
-            ></i>
-            <i v-else class="mdi mdi-heart-outline"></i>
+        <div>
+          <div class="align-items-center d-flex">
+            <span class="fs-2">{{ album.likes.length }}</span>
+            <button @click="likeAlbum()" class="btn text-warning text-end fs-2">
+              <i
+                v-if="album.likes.find((id) => id == account?.id)"
+                class="mdi mdi-heart"
+              ></i>
+              <i v-else class="mdi mdi-heart-outline"></i>
+            </button>
+          </div>
+          <button
+            class="btn text-success fs-1"
+            data-bs-target="#albumCommentModal"
+            data-bs-toggle="modal"
+          >
+            <i class="mdi mdi-message-outline"></i>
           </button>
         </div>
       </div>
@@ -121,7 +128,13 @@ onMounted(() => {
         <p class="fs-2">{{ album.description }}</p>
       </div>
       <div class="d-flex flex-wrap justify-content-center align-items-center">
-        <div v-for="tag in album.tags" :key="tag.id" class="badge border rounded bg-success text-light fs-5 px-1 me-2 ms-2 mb-2">{{ tag.tag.name }}</div>
+        <div
+          v-for="tag in album.tags"
+          :key="tag.id"
+          class="badge border rounded bg-success text-light fs-5 px-1 me-2 ms-2 mb-2"
+        >
+          {{ tag.tag.name }}
+        </div>
       </div>
     </div>
 
@@ -169,7 +182,7 @@ onMounted(() => {
           </div>
       </div>
     </div> -->
-  <div class="container mt-4 mt-xl-5 page-mb " v-if="album">
+  <div class="container mt-4 mt-xl-5 page-mb" v-if="album">
     <!-- NOTE If all images were 1/1 Aspect Ratio, use this Masonry -->
     <!-- <div class="wrapper">
       <div v-for="(albumPhoto, i) in photos" :key="`photo${i}`" :class="gridPattern[i % gridPattern.length]">
@@ -179,7 +192,7 @@ onMounted(() => {
       </div>
     </div> -->
 
-      <!--NOTE differing dimension photos - Masonry formatting -->
+    <!--NOTE differing dimension photos - Masonry formatting -->
     <div class="masonry-wrapper flex-wrap">
       <div class="" v-for="(albumPhoto, i) in photos" :key="albumPhoto[i]">
         <RouterLink :to="{ name: 'Photo Details', params: { photoId: albumPhoto.photoId } }">
@@ -191,8 +204,6 @@ onMounted(() => {
 
   <!-- !SECTION -->
   <!-- <div v-else>add pictures to the album to see them here!</div> -->
-
-
 </template>
 
 <style lang="scss" scoped>
@@ -224,7 +235,6 @@ p {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: masonry;
-
 }
 
 .profile-text {
@@ -243,14 +253,14 @@ p {
   border-radius: 30px;
 }
 
-@media  (max-width: 1024px) {
+@media (max-width: 1024px) {
   .masonry-wrapper {
     column-count: 2;
     column-gap: 0;
   }
 
   .item {
-    break-inside:avoid;
+    break-inside: avoid;
   }
 }
 
@@ -261,7 +271,7 @@ p {
   }
 
   .item {
-    break-inside:avoid;
+    break-inside: avoid;
   }
 }
 
@@ -272,10 +282,9 @@ p {
   }
 
   .item {
-    break-inside:avoid;
+    break-inside: avoid;
   }
 }
-
 
 .wrapper {
   display: grid;
