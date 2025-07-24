@@ -5,6 +5,7 @@ import { photoTagsService } from "../services/PhotoTagsService.js";
 import { profileService } from "../services/ProfileService.js";
 import BaseController from "../utils/BaseController.js";
 import { Auth0Provider } from "@bcwdev/auth0provider";
+import { albumsService } from "../services/AlbumsService.js";
 
 export class ProfilesController extends BaseController {
   constructor() {
@@ -15,6 +16,7 @@ export class ProfilesController extends BaseController {
       .get("/:id/photos", this.getPhotosByProfileId)
       .get("/:id/tags", this.getTagsByProfileId)
       .get("/:id", this.getProfile)
+      .get("/:id/albums", this.getAlbumsByProfileId)
       .use(Auth0Provider.getAuthorizedUserInfo)
 
   }
@@ -49,6 +51,16 @@ export class ProfilesController extends BaseController {
       next(error);
     }
   }
+  async getAlbumsByProfileId(request, response, next) {
+    try {
+      const profileId = request.params.id;
+      const albums = await albumsService.getAlbumsByProfileId(profileId);
+      response.send(albums);
+    } catch (error) {
+      next(error);
+    }
+  }
+
   async getProfilesByQuery(req, res, next) {
     try {
       const profileQuery = req.query.query;

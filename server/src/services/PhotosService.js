@@ -74,9 +74,11 @@ class PhotosService {
   }
 
   async getPhotosByProfileId(profileId) {
-    const photos = await dbContext.Photos.find({ creatorId: profileId });
+    const photos = await dbContext.Photos.find({ creatorId: profileId }).populate('creator')
+
     return photos;
   }
+
   async likePhoto(photoId, userId) {
     const likedPhoto = await dbContext.Photos.findById(photoId).populate([
       { path: "creator", select: "name picture" },
