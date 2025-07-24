@@ -8,6 +8,7 @@ import { Pop } from '@/utils/Pop.js';
 import { computed, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import EditProfileForm from './EditProfileForm.vue';
+import { AuthService } from '@/services/AuthService.js';
 
 
 onMounted(() => {
@@ -56,6 +57,9 @@ async function getTagCount() {
   }
 }
 
+function logout() {
+  AuthService.logout()
+}
 
 </script>
 
@@ -63,10 +67,11 @@ async function getTagCount() {
 <template>
   <section v-if="profile" class="container-fluid">
 
-    <button v-if="account?.id == profile.id" class="btn bg-secondary fixed-button m-2" type="button"
+    <button v-if="account?.id == profile.id" class="btn bg-light framed-font my-3 mx-2" type="button"
       data-bs-toggle="modal" data-bs-target="#editProfile">
       Edit Profile
     </button>
+    <button v-if="account" @click="logout()" type="button" class="btn bg-light framed-font">Log Out</button>
 
     <div class="row">
       <div class="col-md-3 p-3 text-center">
