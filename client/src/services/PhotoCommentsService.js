@@ -1,7 +1,7 @@
 import { AppState } from "@/AppState.js"
 import { logger } from "@/utils/Logger.js"
 import { api } from "./AxiosService.js"
-import { PhotoComment } from "@/models/PhotoComment.js"
+import { PhotoComment } from "@/models/Comment.js"
 
 class PhotoCommentsService {
     async createComment(editableCommentData) {
