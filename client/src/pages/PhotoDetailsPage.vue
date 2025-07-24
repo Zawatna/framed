@@ -34,6 +34,7 @@ async function getPhotoById() {
     Pop.error(error);
     logger.log("could not get photo by id", error);
   }
+  await getPhotosByCreatorId();
 }
 
 async function deletePhoto() {
