@@ -4,6 +4,7 @@ import { photosService } from "../services/PhotosService.js";
 import { photoTagsService } from "../services/PhotoTagsService.js";
 import { profileService } from "../services/ProfileService.js";
 import BaseController from "../utils/BaseController.js";
+import { Auth0Provider } from "@bcwdev/auth0provider";
 
 export class ProfilesController extends BaseController {
   constructor() {
@@ -13,8 +14,9 @@ export class ProfilesController extends BaseController {
       .get("", this.getProfiles)
       .get("/:id/photos", this.getPhotosByProfileId)
       .get("/:id/tags", this.getTagsByProfileId)
+      .get("/:id", this.getProfile)
+      .use(Auth0Provider.getAuthorizedUserInfo)
 
-      .get("/:id", this.getProfile);
   }
 
   async getProfiles(req, res, next) {
@@ -88,4 +90,6 @@ export class ProfilesController extends BaseController {
       next(error);
     }
   }
+
+
 }

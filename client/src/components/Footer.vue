@@ -7,6 +7,8 @@ import AlbumForm from "@/components/AlbumForm.vue";
 import { computed } from "vue";
 import { AuthService } from "@/services/AuthService.js";
 import AlbumPhotoForm from "./AlbumPhotoForm.vue";
+import EditProfileForm from "./EditProfileForm.vue";
+import ModalWrapperXL from "./ModalWrapperXL.vue";
 import PhotoCommentForm from "./PhotoCommentForm.vue";
 import PhotoCommentCard from "./PhotoCommentCard.vue";
 
@@ -73,6 +75,11 @@ function login() {
       <PhotoCommentForm />
     </div>
   </ModalWrapper>
+  <ModalWrapperXL modalId="editProfile" modalHeader="Update your profile!">
+    <section v-if="account">
+      <EditProfileForm />
+    </section>
+  </ModalWrapperXL>
 </template>
 
 <style lang="scss" scoped>

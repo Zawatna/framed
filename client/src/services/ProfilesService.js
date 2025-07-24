@@ -4,6 +4,8 @@ import { Account } from "@/models/Account.js";
 import { AppState } from "@/AppState.js";
 
 class ProfilesService {
+
+
   async getProfilesByQuery(profileQuery) {
     AppState.profiles = [];
     AppState.searchTerm = profileQuery;
@@ -13,6 +15,7 @@ class ProfilesService {
     AppState.profiles = profiles;
   }
   async getProfileById(profileId) {
+    AppState.profile = null
     const response = await api.get(`api/profiles/${profileId}`);
     logger.log("Profile Data? 🤼🫂👯🧑‍🤝‍🧑", response.data);
     const profile = new Account(response.data);
