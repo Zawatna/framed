@@ -11,6 +11,9 @@ import { RouterLink, useRoute, useRouter } from "vue-router";
 onMounted(() => {
   getPhotoById();
   getPhotoComments();
+  if (photo.value) {
+    getPhotosByCreatorId();
+  }
 });
 
 const route = useRoute();
@@ -73,9 +76,9 @@ async function getPhotosByCreatorId() {
   try {
     const creatorId = photo.value.creatorId;
     await photosService.getUserPhotos(creatorId);
-  }
-  catch (error) {
+  } catch (error) {
     Pop.error(error);
+    logger.error("getphotosbycreatorid");
   }
 }
 
@@ -84,8 +87,6 @@ function toggleView() {
   view.value = !view.value;
   logger.log(`the view is: ${view.value}`);
 }
-
-
 </script>
 
 <template>

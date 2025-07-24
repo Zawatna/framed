@@ -6,16 +6,16 @@ import { api } from "./AxiosService.js";
 
 class AccountService {
   async editAccountInfo(profileEditData) {
-    const response = await api.put(`/account`, profileEditData)
-    const updatedAccountData = new Account(response.data)
-    AppState.account = updatedAccountData
-    AppState.profile = updatedAccountData
+    const response = await api.put(`/account`, profileEditData);
+    const updatedAccountData = new Account(response.data);
+    AppState.account = updatedAccountData;
+    AppState.profile = updatedAccountData;
   }
   async getAlbumsByAccountId() {
     const response = await api.get(`/account/albums`);
-    logger.log(response.data);
     const albums = response.data.map((pojo) => new Album(pojo));
     AppState.userAlbums = albums;
+    logger.log(AppState.userAlbums);
   }
   async getAccount() {
     try {
@@ -25,8 +25,6 @@ class AccountService {
       logger.error("HAVE YOU STARTED YOUR SERVER YET???", err);
     }
   }
-
-
 }
 
 export const accountService = new AccountService();
