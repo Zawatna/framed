@@ -8,10 +8,7 @@ defineProps({ photo: Photo });
 <template>
   <RouterLink :to="{ name: 'Photo Details', params: { photoId: photo.id } }">
     <div class="position-relative photo">
-      <img
-        src="../assets/img/polaroid-frame-PNG-for-photoshop.png"
-        class="polaroid-frame-1"
-      />
+      <img src="../assets/img/polaroid-frame-PNG-for-photoshop.png" class="polaroid-frame-1" />
       <img class="album-photo photo-1" :src="photo.imgUrl" :alt="photo.name" />
       <p class="photo-title">
         {{ photo.name }} by <b>{{ photo.creator.name }}</b>
@@ -25,6 +22,7 @@ defineProps({ photo: Photo });
   width: 300px;
   aspect-ratio: 1/1;
 }
+
 .photo-title {
   z-index: 9999;
   position: absolute;
@@ -37,6 +35,7 @@ defineProps({ photo: Photo });
   color: var(--bs-light);
   text-shadow: 0px 0px 2px black;
 }
+
 .polaroid-frame-1 {
   height: 300px;
   position: absolute;
@@ -44,12 +43,14 @@ defineProps({ photo: Photo });
   left: -90px;
   z-index: 9998;
 }
+
 .album-photo {
   height: 210px;
   aspect-ratio: 1/1;
   object-fit: cover;
   object-position: center;
 }
+
 .photo-1 {
   position: absolute;
   top: 15px;

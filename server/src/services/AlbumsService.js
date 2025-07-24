@@ -4,6 +4,9 @@ import { albumTagsService } from "./AlbumTagsService.js";
 import { tagsService } from "./TagsService.js";
 
 class AlbumsService {
+
+
+
   async editAlbum(albumId, editedData, userId) {
     const album = await this.getAlbumById(albumId);
     if (album.creatorId != userId) {
@@ -54,6 +57,15 @@ class AlbumsService {
       { path: "photocount" },
     ]);
     return albums;
+  }
+
+  async getAlbumsByProfileId(profileId) {
+    const albums = await dbContext.Albums.find({ creatorId: profileId }).populate([
+      { path: "creator", select: "name picture" },
+      { path: "photos", options: { limit: 3 }, populate: { path: "photo" } },
+      { path: "photocount" },
+    ])
+    return albums
   }
 
   async createAlbum(albumData) {

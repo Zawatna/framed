@@ -43,4 +43,6 @@ export const AppState = reactive({
 
   /**@type {import('./models/Comment.js').PhotoComment[]} */
   photoComments: [],
+
+  displayChecker: "albums",
 });
