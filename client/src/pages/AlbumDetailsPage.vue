@@ -25,19 +25,19 @@ async function getAlbumById() {
   }
 }
 
-// async function archiveAlbum() {
-//   const confirmed = await Pop.confirm(
-//     "Are you sure you want to archive this album?"
-//   );
-//   if (!confirmed) return;
-//   try {
-//     const albumId = route.params.albumId;
-//     await albumsService.archiveAlbum(albumId);
-//   } catch (error) {
-//     Pop.error(error);
-//     logger.error(error);
-//   }
-// }
+async function archiveAlbum() {
+  const confirmed = await Pop.confirm(
+    "Are you sure you want to archive this album?"
+  );
+  if (!confirmed) return;
+  try {
+    const albumId = route.params.albumId;
+    await albumsService.archiveAlbum(albumId);
+  } catch (error) {
+    Pop.error(error);
+    logger.error(error);
+  }
+}
 async function likeAlbum() {
   try {
     const albumId = album.value.id;
@@ -195,8 +195,17 @@ onMounted(() => {
     <!--NOTE differing dimension photos - Masonry formatting -->
     <div class="masonry-wrapper flex-wrap">
       <div class="" v-for="(albumPhoto, i) in photos" :key="albumPhoto[i]">
-        <RouterLink :to="{ name: 'Photo Details', params: { photoId: albumPhoto.photoId } }">
-          <img :src="album.photos[i].photo.imgUrl" :alt="`a photo in @${album.creator.name}'s album`" class="img-fluid item">
+        <RouterLink
+          :to="{
+            name: 'Photo Details',
+            params: { photoId: albumPhoto.photoId },
+          }"
+        >
+          <img
+            :src="album.photos[i].photo.imgUrl"
+            :alt="`a photo in @${album.creator.name}'s album`"
+            class="img-fluid item"
+          />
         </RouterLink>
       </div>
     </div>
@@ -215,7 +224,6 @@ img {
   border: 2px solid tan;
   width: 100%;
   height: auto;
-
 }
 
 a {
