@@ -13,12 +13,14 @@ defineProps({
 <template>
     <div class="card">
         <div class="card-body">
-            <img src="" alt="">Image
-            <h4 class="card-title">Name{{ photoComment.photoId }}</h4>
+            <img :src="" alt="">Image
+            <h5 class="card-title">Name{{ photoComment.body }}</h5>
             <p class="card-text">Comment</p>
         </div>
     </div>
 </template>
 
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+
+</style>
