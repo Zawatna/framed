@@ -5,11 +5,11 @@ export class Photo {
     this.name = data.name;
     this.imgUrl = data.imgUrl;
     this.description = data.description;
-    this.uploadedAt = new Date(data.uploadedAt);
+    this.uploadedAt = new Date(data.updatedAt);
     this.originalDate = new Date(data.originalDate);
     this.likes = data.likes;
     this.location = data.location;
-    this.subjectTags = data.subjectTags;
+    this.tags = data.tags;
     this.creator = data.creator;
   }
 }

@@ -88,9 +88,10 @@ function login() {
   >
     <AlbumPhotoForm />
   </ModalWrapper>
+
+  <!-- photocomments -->
   <ModalWrapper modalId="commentModal" modalHeader="comments go here">
     <div v-for="photoComment in photoComments" :key="photoComment.creatorId">
-      comments here
       <PhotoCommentCard :photoComment="photoComment" />
     </div>
     <div>
