@@ -105,7 +105,7 @@ onMounted(() => {
           <h1>{{ album.photoCount }} Photos</h1>
         </div>
         <div>
-          <div class="align-items-center d-flex">
+          <div class="align-items-center gap-2 d-flex">
             <span class="fs-2">{{ album.likes.length }}</span>
             <button @click="likeAlbum()" class="btn text-warning text-end fs-2">
               <i
@@ -115,13 +115,16 @@ onMounted(() => {
               <i v-else class="mdi mdi-heart-outline"></i>
             </button>
           </div>
-          <button
-            class="btn text-success fs-1"
-            data-bs-target="#albumCommentModal"
-            data-bs-toggle="modal"
-          >
-            <i class="mdi mdi-message-outline"></i>
-          </button>
+          <div class="d-flex align-items-center gap-1">
+            <span class="fs-2">{{ album.comments.length }}</span>
+            <button
+              class="btn text-success fs-2"
+              data-bs-target="#albumCommentModal"
+              data-bs-toggle="modal"
+            >
+              <i class="mdi mdi-message-outline"></i>
+            </button>
+          </div>
         </div>
       </div>
       <div class="d-flex flex-wrap ms-3">

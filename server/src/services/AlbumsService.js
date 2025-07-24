@@ -4,9 +4,6 @@ import { albumTagsService } from "./AlbumTagsService.js";
 import { tagsService } from "./TagsService.js";
 
 class AlbumsService {
-
-
-
   async editAlbum(albumId, editedData, userId) {
     const album = await this.getAlbumById(albumId);
     if (album.creatorId != userId) {
@@ -44,7 +41,10 @@ class AlbumsService {
         path: "photocount",
       },
       { path: "photos", populate: { path: "photo" } },
-      { path: "comments" },
+      {
+        path: "comments",
+        populate: { path: "creator", select: "name picture" },
+      },
     ]);
     if (album == null) throw new BadRequest("this album does not exist");
     return album;
@@ -60,12 +60,14 @@ class AlbumsService {
   }
 
   async getAlbumsByProfileId(profileId) {
-    const albums = await dbContext.Albums.find({ creatorId: profileId }).populate([
+    const albums = await dbContext.Albums.find({
+      creatorId: profileId,
+    }).populate([
       { path: "creator", select: "name picture" },
       { path: "photos", options: { limit: 3 }, populate: { path: "photo" } },
       { path: "photocount" },
-    ])
-    return albums
+    ]);
+    return albums;
   }
 
   async createAlbum(albumData) {

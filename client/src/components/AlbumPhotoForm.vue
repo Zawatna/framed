@@ -5,20 +5,18 @@ import { albumsService } from "@/services/AlbumsService.js";
 import { logger } from "@/utils/Logger.js";
 import { Pop } from "@/utils/Pop.js";
 import { Modal } from "bootstrap";
-import { computed, ref, watch } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
-const account = computed(() => AppState.account);
 const route = useRoute();
-const userAlbums = computed(() => AppState.userAlbums.filter(album => album.isArchived == false));
+const userAlbums = computed(() =>
+  AppState.userAlbums.filter((album) => !album.isArchived)
+);
 
-watch(account, getAlbumsByProfileId);
+onMounted(getAlbumsByProfileId);
 
 const albumId = ref("");
 
 async function getAlbumsByProfileId() {
-  if (!account.value) {
-    return;
-  }
   try {
     const albums = await accountService.getAlbumsByAccountId();
     logger.log("getting your albums" + albums);
@@ -54,7 +52,7 @@ async function addPhotoToAlbum() {
       >
         <option selected disabled>Select Your Album</option>
         <option v-for="album in userAlbums" :key="album.id" :value="album.id">
-            {{ album.name }}
+          {{ album.name }}
         </option>
       </select>
       <button class="btn btn-success" type="submit">

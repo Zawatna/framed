@@ -53,8 +53,13 @@ async function submitComment() {
     </form>
     <hr />
     <div v-for="comment in comments" :key="comment.id" class="col-12">
-      <div>
-        <span>{{ comment.body }}</span>
+      <div class="d-flex justify-content-between mb-2 align-items-center">
+        <img
+          class="commenter-photo"
+          :src="comment.creator.picture"
+          :alt="comment.creator.name"
+        />
+        <p>{{ comment.body }}</p>
       </div>
     </div>
   </section>
@@ -65,5 +70,9 @@ textarea {
   resize: none;
   height: 4rem;
   width: 100%;
+}
+.commenter-photo {
+  height: 150px;
+  aspect-ratio: 1/1;
 }
 </style>
