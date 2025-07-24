@@ -11,7 +11,6 @@ import { RouterLink, useRoute, useRouter } from "vue-router";
 onMounted(() => {
   getPhotoById();
   getPhotoComments();
-  getPhotosByCreatorId();
 });
 
 const route = useRoute();
@@ -32,6 +31,7 @@ async function getPhotoById() {
     Pop.error(error);
     logger.log("could not get photo by id", error);
   }
+  await getPhotosByCreatorId();
 }
 
 async function deletePhoto() {
