@@ -100,8 +100,6 @@ function toggleView() {
           <div class="frame justify-content-start mt-3 pb-1 px-1">
             <div class="text-center">
               <img
-                role="button"
-                @click="toggleView()"
                 :src="photo.imgUrl"
                 :alt="`@${photo.creator.name}'s posted photo`"
                 class="img-fluid"
@@ -137,6 +135,14 @@ function toggleView() {
                   </button>
                   <span class="mt-2 ms-1 fs-3">{{ photoComments.length }}</span>
                 </div>
+                <button
+                  class="btn fs-1"
+                  type="button"
+                  @click="toggleView()"
+                  title="flip photo over"
+                >
+                  <i class="mdi mdi-cached"></i>
+                </button>
                 <div class="d-flex align-items-center">
                   <p class="like-num me-1 fs-4">{{ photo.likes.length }}</p>
                   <button
@@ -275,14 +281,13 @@ function toggleView() {
   background-color: transparent;
   width: 525px;
   height: 100dvh;
-
   perspective: 1000px;
 }
 
 .flip-box-inner {
   position: relative;
   width: 100%;
-  height: auto;
+  height: 100%;
   text-align: center;
   transition: transform 0.8s;
   transform-style: preserve-3d;
@@ -290,6 +295,10 @@ function toggleView() {
 
 .flip-photo .flip-box-inner {
   transform: rotateY(180deg);
+}
+.flip-photo .flip-box-front {
+  transition: ease 0.5s;
+  opacity: 0;
 }
 
 .flip-box-front,
@@ -303,6 +312,7 @@ function toggleView() {
 
 .flip-box-front {
   color: black;
+  transition: ease 0.5s;
 }
 
 .flip-box-back {
@@ -327,7 +337,7 @@ img {
   object-fit: cover;
   background-repeat: no-repeat;
   border-radius: 3%;
-  width: 700px;
+  width: 100%;
   aspect-ratio: 2/2;
 }
 
