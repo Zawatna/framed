@@ -29,7 +29,7 @@ function login() {
   <section class="container-fluid fixed-bottom">
     <div class="row footer-wrapper">
       <div class="col-3">
-        <RouterLink
+        <RouterLink v-if="account"
           :to="{ name: 'Profile', params: { profileId: account.id } }"
         >
           <i
@@ -104,7 +104,7 @@ function login() {
       <EditProfileForm />
     </section>
   </ModalWrapperXL>
-  <ModalWrapper
+  <ModalWrapper v-if="album"
     modalId="albumCommentModal"
     :modalHeader="'Comments for ' + album.name + ' album'"
   >
