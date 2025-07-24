@@ -9,9 +9,12 @@ import { AuthService } from "@/services/AuthService.js";
 import AlbumPhotoForm from "./AlbumPhotoForm.vue";
 import EditProfileForm from "./EditProfileForm.vue";
 import ModalWrapperXL from "./ModalWrapperXL.vue";
+import PhotoCommentForm from "./PhotoCommentForm.vue";
+import PhotoCommentCard from "./PhotoCommentCard.vue";
 
 const account = computed(() => AppState.account);
 const album = computed(() => AppState.album);
+const photoComments = computed(() => AppState.photoComments);
 
 function updateImgI() {
   AppState.choicePhotoIndex++;
@@ -87,8 +90,13 @@ function login() {
     <AlbumPhotoForm />
   </ModalWrapper>
   <ModalWrapper modalId="commentModal" modalHeader="comments go here">
-    <div>comments here</div>
-    <div>commment form here</div>
+    <div v-for="photoComment in photoComments" :key="photoComment.creatorId">
+      comments here
+      <PhotoCommentCard :photoComment="photoComment" />
+    </div>
+    <div>
+      <PhotoCommentForm />
+    </div>
   </ModalWrapper>
   <ModalWrapperXL modalId="editProfile" modalHeader="Update your profile!">
     <section v-if="account">
