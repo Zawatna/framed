@@ -40,3 +40,9 @@ AlbumSchema.virtual("photos", {
   ref: "AlbumPhoto",
   justOne: false,
 });
+AlbumSchema.virtual("comments", {
+  localField: "_id",
+  foreignField: "albumId",
+  ref: "AlbumComment",
+  justOne: false,
+});

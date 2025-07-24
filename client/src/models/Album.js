@@ -1,4 +1,5 @@
 import { AlbumPhoto } from "./AlbumPhoto.js";
+import { AlbumComment } from "./Comment.js";
 
 export class Album {
   constructor(data) {
@@ -27,6 +28,8 @@ export class Album {
     this.tags = data.tags;
     /** @type {import('../models/AlbumPhoto.js').AlbumPhoto[]} */
     this.photos = data.photos?.map((pojo) => new AlbumPhoto(pojo));
+    /** @type {import('../models/Comment.js').AlbumComment[]} */
+    this.comments = data.comments?.map((pojo) => new AlbumComment(pojo));
   }
 }
 

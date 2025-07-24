@@ -41,6 +41,7 @@ class AlbumsService {
         path: "photocount",
       },
       { path: "photos", populate: { path: "photo" } },
+      { path: "comments" },
     ]);
     if (album == null) throw new BadRequest("this album does not exist");
     return album;
