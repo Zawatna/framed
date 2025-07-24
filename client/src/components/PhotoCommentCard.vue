@@ -1,14 +1,10 @@
 <script setup>
-import { PhotoComment } from '@/models/PhotoComment.js';
-
-
+import { PhotoComment } from "@/models/Comment.js";
 
 defineProps({
-    photoComment: { type: PhotoComment, required: true }
-})
-
+    photoComment: { type: PhotoComment, required: true },
+});
 </script>
-
 
 <template>
     <div class="card">
@@ -20,7 +16,4 @@ defineProps({
     </div>
 </template>
 
-
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>

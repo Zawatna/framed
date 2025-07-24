@@ -57,7 +57,7 @@ async function getAllAlbums() {
       <div class="row">
         <p class="fs-1">Check out these great albums</p>
         <div
-          class="col-lg-3 col-md-4 px-5"
+          class="col-lg-3 col-md-4 px-5 mb-5"
           v-for="album in albums"
           :key="album.id"
         >
