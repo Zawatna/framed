@@ -4,7 +4,7 @@ export const PhotoCommentSchema = new Schema(
     {
         body: { type: String, maxLength: 100, required: true },
         creatorId: { type: Schema.ObjectId, required: true, ref: 'Account' },
-        photoId: { type: Schema.ObjectId, requred: true, ref: 'Photo' }
+        photoId: { type: Schema.ObjectId, required: true, ref: 'Photo' }
     },
 
     {
