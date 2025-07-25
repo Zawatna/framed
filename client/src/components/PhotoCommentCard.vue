@@ -62,7 +62,7 @@ const account = computed(() => AppState.account)
 }
 
 .comment-container {
-    width: 375px;
+    width: 98%;
     color: #1E1E1E;
     border-radius: 20px;
     border-width: 2px;

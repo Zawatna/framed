@@ -42,7 +42,7 @@ async function createComment() {
 .comment-container {
     background-color: #BEBEBE;
     color: #1E1E1E;
-    width: 460px;
+    width: 98%;
     border-radius: 20px;
     border-width: 2px;
     border-style: solid;

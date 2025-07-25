@@ -14,7 +14,7 @@ export class PhotoCommentsController extends BaseController {
     }
     async deletePhotoComment(request, response, next) {
         // logger.log('delete Photo Comment 💥🖼️💬')
-        const photoCommentId = request.params.photoCommentId
+        const photoCommentId = request.params.commentId
         const userId = request.userInfo.id
         try {
             const deletePhotoComment = await photoCommentsService.deletePhotoComment(photoCommentId, userId)

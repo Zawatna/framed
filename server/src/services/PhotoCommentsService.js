@@ -12,7 +12,7 @@ class PhotoCommentsService {
         if (photoComment == null)
             throw new BadRequest('No comment found')
 
-        if (photoCommentId.creatorId != userId)
+        if (photoComment.creatorId != userId)
             throw new Forbidden("You cannot delete another user's comment!");
 
         await photoComment.deleteOne();
