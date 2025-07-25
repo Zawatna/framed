@@ -30,7 +30,7 @@ async function createComment() {
 
 <template>
     <form @submit.prevent="createComment()">
-        <textarea v-model="editableCommentData.body" class="form-control"
+        <textarea v-model="editableCommentData.body" class="form-control comment-container mt-3"
             placeholder="Add a comment to the conversation..." id="photo-comment" maxlength="250" required></textarea>
         <label for="photo-comment"></label>
         <button class="btn btn-success m-3" type="submit">Submit Comment</button>
@@ -38,4 +38,16 @@ async function createComment() {
 </template>
 
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.comment-container {
+    background-color: #BEBEBE;
+    color: #1E1E1E;
+    width: 460px;
+    border-radius: 20px;
+    border-width: 2px;
+    border-style: solid;
+    border-color: #1E1E1E;
+    font-weight: 500;
+
+}
+</style>
