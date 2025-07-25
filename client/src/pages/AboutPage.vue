@@ -8,10 +8,10 @@ import { computed, onMounted, ref } from 'vue';
 let FramedCreators = ref([])
 computed(()=> FramedCreators)
 const profiles = [
-  {name: 'Anthony', profileId: '6877e5c630869a91f0f2dc3a'},
+  {name: 'Anthony', profileId: '6883a8f9e4cbf0e7c6fa9a26'},
   {name: 'Greg', profileId: '68531eb14fff83a1438f0b52'},
-  {name: 'Julia', profileId: '68531f90130f9a90a88a5023'},
-  {name: 'Owen', profileId: '68780036208feb2e8a5c2372'},
+  {name: 'Julia', profileId: '6877e5c630869a91f0f2dc3a'},
+  {name: 'Owen', profileId: '6883a58c2d6378b4827b2ff4'},
   {name: 'Ryan', profileId: '6877e8a31b42de13a18c6299'},
 ];
 
@@ -57,7 +57,7 @@ onMounted(()=> getProfilesForAbout())
       playing off of early 2000's nostalgia with the color scheme and background being examples of this.
       The functionality of the site is quite extensive. 
     </p>
-      <div class="fs-2 mb-3 col-12">An App By:</div>
+      <div class="fs-2 mb-3 mt-4 col-12">An App By:</div>
       <div v-for="FramedCreator in FramedCreators" :key="FramedCreator.profileId" class="mb-4">
         <div class="d-flex align-items-center justify-content-center">
           <img :src="FramedCreator.picture" class="pfp" alt="">

@@ -83,7 +83,6 @@ const formData = ref(
 
 
         </div>
-        <div>This is the best day ever</div>
       </div>
     </form>
   </section>
