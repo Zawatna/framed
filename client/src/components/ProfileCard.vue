@@ -7,7 +7,6 @@ import { logger } from '@/utils/Logger.js';
 import { Pop } from '@/utils/Pop.js';
 import { computed, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
-import EditProfileForm from './EditProfileForm.vue';
 import { AuthService } from '@/services/AuthService.js';
 
 

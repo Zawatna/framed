@@ -12,7 +12,7 @@ class TagsService {
     return photoTags;
   }
   async getAlbumTagsByQuery(tagsQuery) {
-    const photoTags = await dbContext.Tags.find({ name: tagsQuery }).populate({
+    const albumTags = await dbContext.Tags.find({ name: tagsQuery }).populate({
       path: "albumTags",
       populate: {
         path: "album",
@@ -20,11 +20,15 @@ class TagsService {
           { path: "creator", select: "name picture" },
           {
             path: "photos",
+            populate: [
+              { path: "photo" }
+            ]
           },
+
         ],
       },
     });
-    return photoTags;
+    return albumTags;
   }
 
   async checkForNewTags(tags) {

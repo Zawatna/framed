@@ -4,7 +4,6 @@ import { AppState } from '@/AppState.js';
 import AlbumSearchCard from '@/components/AlbumSearchCard.vue';
 import PhotoSearchCard from '@/components/PhotoSearchCard.vue';
 import ProfileCard from '@/components/ProfileCard.vue';
-import { AuthService } from '@/services/AuthService.js';
 import { profilesService } from '@/services/ProfilesService.js';
 import { logger } from '@/utils/Logger.js';
 import { Pop } from '@/utils/Pop.js';

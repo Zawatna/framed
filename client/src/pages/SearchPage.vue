@@ -45,11 +45,11 @@ async function searchFramed(type) {
     if (type == "tags") {
       const photoTags = await tagsService.getPhotoTagsByQuery(queryTerm);
       // const albumTags = await tagsService.getAlbumTagsByQuery(queryTerm);
-      logger.log("getting Albums", photoTags);
+      logger.log("getting Albums ", photoTags);
     }
   } catch (error) {
     Pop.error(error);
-    logger.error("could not search framed");
+    logger.error("could not search framed", error);
   }
 }
 </script>
@@ -74,8 +74,8 @@ async function searchFramed(type) {
       <div class="col-12">
         <div class="d-flex gap-2 justify-content-center">
           <button v-for="type in searchTypes" :key="type" type="button" @click="searchFramed(type)" :class="selectedSearch != type
-              ? 'btn-warning text-light'
-              : 'btn-success fw-bold'
+            ? 'btn-warning text-light'
+            : 'btn-success fw-bold'
             " class="btn fs-5">
             {{ type }}
           </button>

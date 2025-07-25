@@ -41,9 +41,10 @@ class ProfileService {
         },
       ],
     });
-    if (profiles.length <= 0) {
-      return `no profiles found containing "${profileQuery}"`;
-    }
+    // with the if statement below it returns a string and our search is looking for an array to map. throws an error due to no array.
+    // if (profiles.length <= 0) {
+    //   return `no profiles found containing "${profileQuery}"`;
+    // }
     return profiles;
   }
 }

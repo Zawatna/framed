@@ -11,7 +11,7 @@ class ProfilesService {
     AppState.profiles = [];
     AppState.searchTerm = profileQuery;
     const response = await api.get(`api/profiles/search?query=${profileQuery}`);
-    logger.log(response.data);
+    logger.log("should be profiles data --> 🀄🀄🀄🀄", response.data);
     const profiles = response.data.map((pojo) => new Account(pojo));
     AppState.profiles = profiles;
   }

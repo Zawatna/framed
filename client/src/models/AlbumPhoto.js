@@ -7,6 +7,6 @@ export class AlbumPhoto {
     this.id = data.id || data._id;
     this.photoId = data.photoId;
     /** @type {import('../models/Photo.js').Photo} */
-    this.photo = new Photo(data.photo);
+    this.photo = data.photo ? new Photo(data.photo) : null
   }
 }
