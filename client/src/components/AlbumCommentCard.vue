@@ -27,31 +27,6 @@ async function submitComment() {
 
 <template>
   <section class="container-fluid main-font">
-    <form @submit.prevent="submitComment()">
-      <div class="row">
-        <div class="col-11">
-          <div class="form-floating">
-            <textarea
-              v-model="commentBody"
-              name="body"
-              class="form-control"
-              title="comment body"
-              id="commentBody"
-            ></textarea>
-            <label for="commentBody">Leave a comment here</label>
-          </div>
-        </div>
-        <div class="col-1">
-          <button
-            type="submit"
-            class="btn btn-success w-100 h-100 text-center p-0"
-          >
-            Submit
-          </button>
-        </div>
-      </div>
-    </form>
-    <hr />
     <div v-for="comment in comments" :key="comment.id" class="col-12">
       <div class="d-flex justify-content-between mb-2 align-items-center">
         <img
@@ -62,6 +37,30 @@ async function submitComment() {
         <p>{{ comment.body }}</p>
       </div>
     </div>
+    <div class="comment-bar">
+      <form @submit.prevent="submitComment()">
+          <div class="d-flex align-items-end">
+            <div class="w-100">
+              <div class="form-floating">
+                <textarea
+                  v-model="commentBody"
+                  name="body"
+                  class="form-control"
+                  title="comment body"
+                  id="commentBody"
+                  placeholder="Leave a comment here"
+                ></textarea>
+                <label for="commentBody">Leave a comment here</label>
+              </div>
+            </div>
+            <button
+              type="submit"
+              class="btn w-25 text-center p-0 ms-2 fs-4 position-absolute">
+              <i class="mdi mdi-send"></i>
+            </button>
+          </div>
+        </form>
+      </div>
   </section>
 </template>
 
@@ -71,8 +70,66 @@ textarea {
   height: 4rem;
   width: 100%;
 }
+
+.comment-bar {
+  position: sticky;
+  bottom: 5%;
+}
+
+@media (max-width: 433px) {
+  .position-absolute {
+    right: 0;
+    margin-right: 0px;
+  }
+}
+
+@media (min-width: 434px) and (max-width: 575px) {
+    .position-absolute {
+    right: 0;
+    margin-right: -15px;
+  }
+}
+
+@media (min-width: 576px) and (max-width: 991px) {
+  .position-absolute {
+    right: 0;
+    margin-right: -20px;
+  }
+}
+@media (min-width: 992px) and (max-width: 1199px) {
+  .position-absolute {
+    right: 0;
+    margin-right: -55px;
+  }
+}
+@media (min-width: 1200px) {
+  .position-absolute {
+    right: 0;
+    margin-right: -100px;
+  }
+}
+
+
+.mdi-send {
+  color: var(--bs-warning);
+
+  &:hover {
+    color: var(--bs-success);
+  }
+
+  &:active {
+    border: none;
+    color: var(--bs-primary);
+  }
+}
+
+.btn:active {
+  border: 1px transparent;
+}
+
 .commenter-photo {
-  height: 150px;
+  height: 100px;
   aspect-ratio: 1/1;
+  border-radius: 50%;
 }
 </style>

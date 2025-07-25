@@ -11,6 +11,8 @@ import EditProfileForm from "./EditProfileForm.vue";
 import ModalWrapperXL from "./ModalWrapperXL.vue";
 import PhotoCommentForm from "./PhotoCommentForm.vue";
 import PhotoCommentCard from "./PhotoCommentCard.vue";
+import AlbumCommentCard from "./AlbumCommentCard.vue";
+import CommentModalWrapper from "./CommentModalWrapper.vue";
 
 const account = computed(() => AppState.account);
 const album = computed(() => AppState.album);
@@ -31,8 +33,8 @@ function login() {
       <div class="col-3">
         <RouterLink v-if="account" :to="{ name: 'Profile', params: { profileId: account.id } }">
           <i v-if="account" class="mdi mdi-account footer-icon text-success"></i>
-          <i v-else @click="login()" role="button" class="mdi mdi-login footer-icon text-success"></i>
         </RouterLink>
+        <i v-else @click="login()" role="button" class="mdi mdi-login footer-icon text-success"></i>
       </div>
       <div class="col-3">
         <RouterLink :to="{ name: 'Home' }">
@@ -82,8 +84,9 @@ function login() {
       <EditProfileForm />
     </section>
   </ModalWrapperXL>
-  <ModalWrapper v-if="album" modalId="albumCommentModal" :modalHeader="'Comments for ' + album.name + ' album'">
-  </ModalWrapper>
+  <CommentModalWrapper v-if="album" modalId="albumCommentModal" :modalHeader="'Comments for ' + album.name + ' album'">
+    <AlbumCommentCard />
+  </CommentModalWrapper>
 </template>
 
 <style lang="scss" scoped>
