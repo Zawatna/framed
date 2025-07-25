@@ -12,6 +12,7 @@ import ModalWrapperXL from "./ModalWrapperXL.vue";
 import PhotoCommentForm from "./PhotoCommentForm.vue";
 import PhotoCommentCard from "./PhotoCommentCard.vue";
 import AlbumCommentCard from "./AlbumCommentCard.vue";
+import CommentModalWrapper from "./CommentModalWrapper.vue";
 
 const account = computed(() => AppState.account);
 const album = computed(() => AppState.album);
@@ -106,13 +107,13 @@ function login() {
       <EditProfileForm />
     </section>
   </ModalWrapperXL>
-  <ModalWrapperXL
+  <CommentModalWrapper
     v-if="album"
     modalId="albumCommentModal"
     :modalHeader="'Comments for ' + album.name + ' album'"
   >
     <AlbumCommentCard />
-  </ModalWrapperXL>
+  </CommentModalWrapper>
 </template>
 
 <style lang="scss" scoped>
