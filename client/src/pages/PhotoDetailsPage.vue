@@ -328,8 +328,7 @@ a {
 img {
   aspect-ratio: 1/1;
   border-radius: 5%;
-  padding-inline: 10px;
-  padding-top: 5px;
+  padding-top: 0.5rem;
 }
 
 .frame {
@@ -342,8 +341,7 @@ img {
 }
 
 .img-desc {
-  margin-left: 20px;
-  margin-top: 0px;
+  margin-left: 2rem;
 }
 
 .username {
@@ -351,13 +349,11 @@ img {
 }
 
 .img-username {
-  margin-left: 11px;
-  margin-top: 5px;
   margin-bottom: 0px;
 }
 
 p {
-  margin-top: 10px;
+  margin-top: 0px;
   margin-bottom: 0px;
 }
 </style>

@@ -11,6 +11,7 @@ import EditProfileForm from "./EditProfileForm.vue";
 import ModalWrapperXL from "./ModalWrapperXL.vue";
 import PhotoCommentForm from "./PhotoCommentForm.vue";
 import PhotoCommentCard from "./PhotoCommentCard.vue";
+import AlbumCommentCard from "./AlbumCommentCard.vue";
 
 const account = computed(() => AppState.account);
 const album = computed(() => AppState.album);
@@ -29,10 +30,21 @@ function login() {
   <section class="container-fluid fixed-bottom">
     <div class="row footer-wrapper">
       <div class="col-3">
-        <RouterLink v-if="account" :to="{ name: 'Profile', params: { profileId: account.id } }">
-          <i v-if="account" class="mdi mdi-account footer-icon text-success"></i>
-          <i v-else @click="login()" role="button" class="mdi mdi-login footer-icon text-success"></i>
+        <RouterLink
+          v-if="account"
+          :to="{ name: 'Profile', params: { profileId: account.id } }"
+        >
+          <i
+            v-if="account"
+            class="mdi mdi-account footer-icon text-success"
+          ></i>
         </RouterLink>
+        <i
+          v-else
+          @click="login()"
+          role="button"
+          class="mdi mdi-login footer-icon text-success"
+        ></i>
       </div>
       <div class="col-3">
         <RouterLink :to="{ name: 'Home' }">
@@ -41,8 +53,13 @@ function login() {
       </div>
       <div class="col-3">
         <!--ADD CREATE IMAGE MODAL HERE-->
-        <i class="col-3 mdi mdi-image footer-icon text-warning" role="button" data-bs-toggle="modal"
-          data-bs-target="#popChoice" @click="updateImgI()"></i>
+        <i
+          class="col-3 mdi mdi-image footer-icon text-warning"
+          role="button"
+          data-bs-toggle="modal"
+          data-bs-target="#popChoice"
+          @click="updateImgI()"
+        ></i>
       </div>
       <div class="col-3">
         <RouterLink :to="{ name: 'Search' }">
@@ -58,14 +75,21 @@ function login() {
   </ModalWrapper>
   <!-- NOTE MODAL WRAPPER FOR "popChoice" MODAL -->
   <!-- NOTE All modals need to be on the footer to be interactable -->
-  <ModalWrapper modalId="popChoice" modalHeader="What Would You Like to Create?">
+  <ModalWrapper
+    modalId="popChoice"
+    modalHeader="What Would You Like to Create?"
+  >
     <PopChoice />
   </ModalWrapper>
   <ModalWrapper modalId="albumUploadForm" modalHeader="Add An Album">
     <AlbumForm />
   </ModalWrapper>
-  <ModalWrapper v-if="account" modalId="albumPhoto" modalHeader="Which album would you like to add this photo to?">
-    <AlbumPhotoForm />
+  <ModalWrapper
+    v-if="account"
+    modalId="albumPhoto"
+    modalHeader="Which album would you like to add this photo to?"
+  >
+    <AlbumPhotoForm v-if="AppState.userAlbums" />
   </ModalWrapper>
 
   <!-- photocomments -->
@@ -82,8 +106,13 @@ function login() {
       <EditProfileForm />
     </section>
   </ModalWrapperXL>
-  <ModalWrapper v-if="album" modalId="albumCommentModal" :modalHeader="'Comments for ' + album.name + ' album'">
-  </ModalWrapper>
+  <ModalWrapperXL
+    v-if="album"
+    modalId="albumCommentModal"
+    :modalHeader="'Comments for ' + album.name + ' album'"
+  >
+    <AlbumCommentCard />
+  </ModalWrapperXL>
 </template>
 
 <style lang="scss" scoped>
@@ -110,9 +139,11 @@ a {
 .footer-wrapper {
   height: 80px;
   background: #0f0050;
-  background: radial-gradient(circle,
-      rgba(15, 0, 80, 0.53) 33%,
-      rgba(0, 0, 0, 0.6) 100%);
+  background: radial-gradient(
+    circle,
+    rgba(15, 0, 80, 0.53) 33%,
+    rgba(0, 0, 0, 0.6) 100%
+  );
   backdrop-filter: blur(5px);
 }
 </style>

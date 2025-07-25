@@ -13,6 +13,11 @@ class AccountService {
   }
   async getAlbumsByAccountId() {
     const response = await api.get(`/account/albums`);
+    if (response.data.length == 0 || (response.data = String)) {
+      logger.log(`no albums found for ${AppState.account.name}`);
+      return;
+    }
+    logger.log(response.data);
     const albums = response.data.map((pojo) => new Album(pojo));
     AppState.userAlbums = albums;
     logger.log(AppState.userAlbums);

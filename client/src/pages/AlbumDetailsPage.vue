@@ -48,6 +48,10 @@ async function likeAlbum() {
   }
 }
 async function deleteAlbumPhoto(aPhotoId) {
+  const confirmed = Pop.confirm("Remove this photo from the album?");
+  if (!confirmed) {
+    return;
+  }
   try {
     logger.log(aPhotoId);
     await albumsService.deleteAlbumPhoto(aPhotoId);
@@ -213,7 +217,7 @@ onMounted(() => {
         <RouterLink
           :to="{
             name: 'Photo Details',
-            params: { photoId: photo.id },
+            params: { photoId: photo.photo.id },
           }"
         >
           <img

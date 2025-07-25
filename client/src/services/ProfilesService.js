@@ -6,7 +6,6 @@ import { Album } from "@/models/Album.js";
 import { Photo } from "@/models/Photo.js";
 
 class ProfilesService {
-
   async getProfilesByQuery(profileQuery) {
     AppState.profiles = [];
     AppState.searchTerm = profileQuery;
@@ -16,7 +15,7 @@ class ProfilesService {
     AppState.profiles = profiles;
   }
   async getProfileById(profileId) {
-    AppState.profile = null
+    AppState.profile = null;
     const response = await api.get(`api/profiles/${profileId}`);
     logger.log("Profile Data? 🤼🫂👯🧑‍🤝‍🧑", response.data);
     const profile = new Account(response.data);
@@ -24,20 +23,20 @@ class ProfilesService {
   }
 
   async getAllProfileAlbumns(profileId) {
-    AppState.albums = []
-    const response = await api.get(`api/profiles/${profileId}/albums`)
-    logger.log(response.data)
-    const profileAlbums = await response.data.map((podjo) => new Album(podjo))
-    logger.log("profile albums 🚆🚂🚃🚄🚅", profileAlbums)
-    AppState.albums = profileAlbums
+    AppState.albums = [];
+    const response = await api.get(`api/profiles/${profileId}/albums`);
+    logger.log(response.data);
+    const profileAlbums = await response.data.map((podjo) => new Album(podjo));
+    logger.log("profile albums 🚆🚂🚃🚄🚅", profileAlbums);
+    AppState.albums = profileAlbums;
+    AppState.userAlbums = profileAlbums;
   }
 
   async getAllProfilePhotos(profileId) {
-    AppState.photos = []
-    const response = await api.get(`api/profiles/${profileId}/photos`)
-    const profilePhotos = await response.data.map((podjo) => new Photo(podjo))
-    AppState.photos = profilePhotos
-
+    AppState.photos = [];
+    const response = await api.get(`api/profiles/${profileId}/photos`);
+    const profilePhotos = await response.data.map((podjo) => new Photo(podjo));
+    AppState.photos = profilePhotos;
   }
 }
 

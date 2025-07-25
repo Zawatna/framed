@@ -65,6 +65,10 @@ class PhotosService {
   async getUserPhotos(profileId) {
     const res = await api.get(`api/profiles/${profileId}/photos`);
     logger.log("Got Photos by profile Id", res.data);
+    if (res.data.length == 0) {
+      logger.log(`no photos found from ${AppState.account.name}`);
+      return;
+    }
     const photos = res.data.map((pojo) => new Photo(pojo));
     AppState.photos = photos;
   }
