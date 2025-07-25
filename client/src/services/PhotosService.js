@@ -2,6 +2,7 @@ import { logger } from "@/utils/Logger.js";
 import { api } from "./AxiosService.js";
 import { Photo } from "@/models/Photo.js";
 import { AppState } from "@/AppState.js";
+import { Pop } from "@/utils/Pop.js";
 
 class PhotosService {
   async likePhoto(photoId) {
@@ -15,6 +16,11 @@ class PhotosService {
     AppState.searchTerm = photoQuery;
     const response = await api.get(`api/photos/search?query=${photoQuery}`);
     logger.log(response.data);
+    if (typeof response.data == "string") {
+      Pop.error(Error, response.data);
+      logger.error(response.data);
+      return;
+    }
     const photos = response.data.map((pojo) => new Photo(pojo));
     AppState.photos = photos;
   }
