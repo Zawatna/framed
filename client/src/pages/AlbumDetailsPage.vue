@@ -10,7 +10,6 @@ const route = useRoute();
 
 const album = computed(() => AppState.album);
 const account = computed(() => AppState.account);
-const photos = computed(() => AppState.album.photos);
 // const albumPhoto = ref([])
 
 // const gridPattern = ref(['box-md', 'box-sm', 'box-sm', ])
@@ -46,6 +45,15 @@ async function likeAlbum() {
   } catch (error) {
     Pop.error(error);
     logger.error(error, "could not like photo");
+  }
+}
+async function deleteAlbumPhoto(aPhotoId) {
+  try {
+    logger.log(aPhotoId);
+    await albumsService.deleteAlbumPhoto(aPhotoId);
+  } catch (error) {
+    Pop.error(error);
+    logger.error(error, `could not delete album photo ${aPhotoId}`);
   }
 }
 // async function getAlbumPictureById() {
@@ -102,7 +110,7 @@ onMounted(() => {
             <h1>@{{ album.creator.name }}</h1>
           </RouterLink>
           <span class="fs-3 ms-2 me-2">||</span>
-          <h1>{{ album.photoCount }} Photos</h1>
+          <h1>{{ album.photos.length }} Photos</h1>
         </div>
         <div>
           <div class="align-items-center gap-2 d-flex">
@@ -197,19 +205,32 @@ onMounted(() => {
 
     <!--NOTE differing dimension photos - Masonry formatting -->
     <div class="masonry-wrapper flex-wrap">
-      <div class="" v-for="(albumPhoto, i) in photos" :key="albumPhoto[i]">
+      <div
+        class="position-relative album-photo"
+        v-for="photo in album.photos"
+        :key="photo.id"
+      >
         <RouterLink
           :to="{
             name: 'Photo Details',
-            params: { photoId: albumPhoto.photoId },
+            params: { photoId: photo.id },
           }"
         >
           <img
-            :src="album.photos[i].photo.imgUrl"
+            :src="photo.photo.imgUrl"
             :alt="`a photo in @${album.creator.name}'s album`"
             class="img-fluid item"
           />
         </RouterLink>
+        <button
+          v-if="album.creator.id == account?.id"
+          class="btn text-danger floating-delete"
+          :title="'Remove ' + photo.photo.name + ' from ' + album.name"
+          type="button"
+          @click="deleteAlbumPhoto(photo.id)"
+        >
+          <i class="fs-1 mdi mdi-trash-can-outline"></i>
+        </button>
       </div>
     </div>
   </div>
@@ -241,7 +262,30 @@ a {
 p {
   line-height: 110%;
 }
-
+.floating-delete {
+  position: absolute;
+  top: 0;
+  right: 0;
+  backdrop-filter: blur(1px);
+  padding: 0;
+  border: none;
+  border-radius: 20%;
+  opacity: 0;
+  transition: ease 0.5s;
+  &:hover {
+    filter: brightness(1.1);
+  }
+  &:active {
+    filter: brightness(0.9);
+    transform: scale(0.95, 0.95);
+  }
+}
+.album-photo {
+  &:hover .floating-delete {
+    opacity: 1;
+    transition: ease 0.2s;
+  }
+}
 .grid-container {
   display: grid;
   grid-template-columns: repeat(2, 1fr);

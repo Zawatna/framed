@@ -5,6 +5,15 @@ import { AppState } from "@/AppState.js";
 import { AlbumPhoto } from "@/models/AlbumPhoto.js";
 
 class AlbumsService {
+  async deleteAlbumPhoto(aPhotoId) {
+    const albumPhotos = AppState.album.photos;
+    const photoIndex = albumPhotos.findIndex((photo) => photo.id == aPhotoId);
+    logger.log(photoIndex);
+    const response = await api.delete(`api/albumphotos/${aPhotoId}`);
+    logger.log(response.data);
+    albumPhotos.splice(photoIndex, 1);
+    AppState.album.photoCount--;
+  }
   async likeAlbum(albumId) {
     const response = await api.put(`api/albums/${albumId}/likes`);
     logger.log(response.data);
@@ -70,7 +79,5 @@ class AlbumsService {
     AppState.albums = albums;
   }
 }
-
-
 
 export const albumsService = new AlbumsService();

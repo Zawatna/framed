@@ -51,9 +51,9 @@ class AlbumPhotosService {
     }
     return albumPhotos;
   }
-  async removeAlbumPhoto(albumPhotoId, userInfo) {
+  async removeAlbumPhotobyPhotoId(photoId, userInfo) {
     const photoToRemove = await dbContext.AlbumPhotos.findById(
-      albumPhotoId
+      photoId
     ).populate("photo album");
     if (photoToRemove.photo.creatorId == userInfo.id) {
       await photoToRemove.deleteOne();
@@ -66,6 +66,18 @@ class AlbumPhotosService {
     }
     await photoToRemove.deleteOne();
     return `${photoToRemove.photo.name} has been removed from ${photoToRemove.album.name}`;
+  }
+  async removeAlbumPhoto(albumPhotoId, userInfo) {
+    const albumPhotoToRemove = await dbContext.AlbumPhotos.findById(
+      albumPhotoId
+    ).populate("album");
+    if (userInfo.id != albumPhotoToRemove.creatorId) {
+      throw new Forbidden(
+        `You cannot remove a photo from someone else's album, ${userInfo.nickname}`
+      );
+    }
+    await albumPhotoToRemove.deleteOne();
+    return `Photo has been removed from ${albumPhotoToRemove.album.name}`;
   }
 }
 export const albumPhotosService = new AlbumPhotosService();

@@ -2,6 +2,7 @@ import { Auth0Provider } from "@bcwdev/auth0provider";
 import BaseController from "../utils/BaseController.js";
 import { photosService } from "../services/PhotosService.js";
 import { photoCommentsService } from "../services/PhotoCommentsService.js";
+import { albumPhotosService } from "../services/AlbumPhotosService.js";
 
 export class PhotosController extends BaseController {
   constructor() {
@@ -62,6 +63,7 @@ export class PhotosController extends BaseController {
       const photoId = request.params.photoId;
       const userInfo = request.userInfo;
       await photosService.deletePhoto(photoId, userInfo);
+      await albumPhotosService.removeAlbumPhotobyPhotoId(photoId);
       response.send("Deleted photo!");
     } catch (error) {
       next(error);
