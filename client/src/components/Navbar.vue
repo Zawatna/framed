@@ -2,7 +2,7 @@
 
 <template>
   <nav class="bg-primary border-bottom border-vue">
-    <div class="container-fluid">
+    <div class="container-fluid d-flex justify-content-between">
       <RouterLink
         :to="{ name: 'Home' }"
         class="d-flex align-items-center text-light"
@@ -14,7 +14,11 @@
           height="45"
         />
         <b class="fs-2 framed-font text-warning ms-1 mt-4">ramed</b>
+        
       </RouterLink>
+            <RouterLink :to="{ name: 'About' }" class="btn text-green selectable fs-4 align-items-center d-flex">
+              About
+            </RouterLink>
     </div>
   </nav>
 </template>
